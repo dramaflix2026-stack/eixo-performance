@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./offer.css";
 
 type OfferProps={answers:(number|null)[];name:string;onReset:()=>void};
-type Bonus={num:string;icon:string;title:string;subtitle:string;detail:string[]};
+type Bonus={num:string;icon:string;title:string;subtitle:string;format:string;eyebrow:string;duration:string;chapters:{heading:string;copy:string}[];action:string};
 const ANSWERS={
   age:["18 a 24 anos","25 a 34 anos","35 a 44 anos","45 anos ou mais","Não informado"],
   moment:["Antes de transar","Durante o sexo","Depois do sexo","Em vários momentos","Não sinto essa pressão"],
@@ -23,12 +23,71 @@ const DAYS=[
   {day:"07",tag:"REVISÃO",title:"Escolha seu próximo passo",text:"Revise as anotações e escolha o que vale continuar. Em caso de sofrimento ou dificuldade persistente, procure orientação profissional."}
 ];
 const BONUSES:Bonus[]=[
-  {num:"01",icon:"✦",title:"Guia para conversar sem vergonha",subtitle:"3 maneiras simples de abrir um diálogo",detail:["Queria falar sobre algo que às vezes me deixa inseguro na intimidade. Você pode me ouvir?","Eu me sinto mais tranquilo quando a gente não coloca pressão sobre o que deve acontecer.","O que faz você se sentir à vontade? Quero entender isso melhor também."]},
-  {num:"02",icon:"◎",title:"Ritual de presença",subtitle:"Uma pausa educativa antes da hora H",detail:["Sente-se confortavelmente e perceba os pés apoiados no chão.","Observe sua respiração sem tentar alcançar um desempenho específico.","Repare em três sensações do corpo e volte sua atenção ao ambiente."]},
-  {num:"03",icon:"◈",title:"Checklist da autocobrança",subtitle:"5 perguntas para reconhecer gatilhos",detail:["Estou me cobrando por uma duração ou resultado específico?","Estou antecipando algo que ainda nem aconteceu?","O estresse do dia está influenciando meus pensamentos?","Estou deixando de lado o conforto e a comunicação?","O que eu diria a alguém que estivesse sentindo o mesmo?"]},
-  {num:"04",icon:"☾",title:"Roteiro para uma noite sem cobrança",subtitle:"Conforto, conversa e mais presença",detail:["Comece sem definir uma meta de desempenho.","Dê espaço para diálogo, consentimento e conforto mútuo.","Se a ansiedade surgir, respeite seus limites e desacelere."]},
-  {num:"05",icon:"✓",title:"Mapa de hábitos da semana",subtitle:"Acompanhe o que faz sentido repetir",detail:["Registre situações que geraram pressão e o que ajudou a lidar com elas.","Observe sono, cansaço e outros aspectos da rotina.","Ao fim da semana, escolha uma prática possível para continuar."]}
+  {
+    num:"01",icon:"◎",title:"Protocolo SOS — Antes de Transar",
+    subtitle:"Uma sequência guiada de cinco minutos para desacelerar antes da hora H",
+    format:"PROTOCOLO GUIADO EM TEXTO",eyebrow:"MENOS PRESSÃO, MAIS PRESENÇA",duration:"5 MINUTOS",
+    chapters:[
+      {heading:"Minuto 1 · Reconheça a preocupação",copy:"Faça uma pausa. Perceba se surgiu algum pensamento do tipo ‘e se eu falhar?’. Não tente se convencer de que ele não existe. Apenas reconheça que é um pensamento, não uma previsão."},
+      {heading:"Minuto 2 · Volte ao ambiente",copy:"Com os pés apoiados no chão, observe três elementos ao seu redor. Se for confortável, relaxe ombros e mandíbula. A intenção é voltar a atenção ao presente, não controlar o corpo."},
+      {heading:"Minuto 3 · Respire no seu ritmo",copy:"Respire naturalmente, sem prender o ar nem forçar inspirações profundas. Observe o movimento do ar entrando e saindo por alguns instantes."},
+      {heading:"Minuto 4 · Troque a cobrança por uma intenção",copy:"Em vez de ‘preciso durar’ ou ‘não posso falhar’, experimente: ‘quero viver esse momento respeitando o meu conforto e o da outra pessoa’."},
+      {heading:"Minuto 5 · Decida sem pressa",copy:"Pergunte a si mesmo: estou confortável? Quero continuar? Preciso conversar, desacelerar ou mudar de ideia? Você não tem obrigação de transar nem de atingir um resultado."}
+    ],
+    action:"Experimente esta pausa como prática de atenção; ela não garante melhora de ereção, duração ou ansiedade."
+  },
+  {
+    num:"02",icon:"↗",title:"Manual — E Se Eu Brochar?",
+    subtitle:"Como lidar com o medo de perder a ereção sem transformar o momento em fracasso",
+    format:"MANUAL PRÁTICO",eyebrow:"SEM VERGONHA, SEM AUTOSSABOTAGEM",duration:"4 PARTES",
+    chapters:[
+      {heading:"01 · Um episódio não define sua sexualidade",copy:"Oscilações de ereção podem acontecer por diferentes motivos. Uma experiência isolada não diz tudo sobre seu desejo, sua masculinidade ou sua saúde."},
+      {heading:"02 · O que fazer na hora",copy:"Se algo sair diferente do esperado, evite se cobrar para ‘corrigir’ imediatamente. É possível conversar, desacelerar, mudar o foco para o conforto mútuo ou encerrar o momento com respeito."},
+      {heading:"03 · O que evitar depois",copy:"Não transforme o episódio em uma identidade (‘sempre vou falhar’). Anote o contexto com curiosidade, sem criar uma obrigação de ‘compensar’ na próxima vez."},
+      {heading:"04 · Quando procurar orientação",copy:"Se a dificuldade de ereção for recorrente, persistente, causar sofrimento ou começar de repente, procure um profissional de saúde. Questões vasculares, hormonais, medicamentos e fatores emocionais podem estar envolvidos."}
+    ],
+    action:"Apoio profissional é especialmente importante diante de mudanças súbitas ou persistentes. Este manual não substitui avaliação clínica."
+  },
+  {
+    num:"03",icon:"✦",title:"Sexo Sem Vergonha — Guia de Conversas",
+    subtitle:"Frases prontas para falar de insegurança, desejo e expectativas",
+    format:"GUIA COM EXEMPLOS",eyebrow:"CONEXÃO COMEÇA COM DIÁLOGO",duration:"5 SITUAÇÕES",
+    chapters:[
+      {heading:"01 · Para iniciar sem constrangimento",copy:"‘Queria conversar sobre uma coisa íntima. Às vezes fico inseguro e acho que preciso corresponder a uma expectativa. Você topa me ouvir?’"},
+      {heading:"02 · Para aliviar a pressão",copy:"‘Eu gosto de estar com você e me sinto mais tranquilo quando a gente não transforma o sexo em uma prova de desempenho.’"},
+      {heading:"03 · Para perguntar o que a outra pessoa deseja",copy:"‘O que faz você se sentir confortável? Quero entender o que funciona para nós, sem presumir que eu já sei.’"},
+      {heading:"04 · Quando algo não sai como esperado",copy:"‘Fiquei um pouco ansioso agora. Podemos desacelerar, conversar ou mudar de ideia? Não quero fingir que está tudo bem se não estou à vontade.’"},
+      {heading:"05 · Para falar sobre limites",copy:"‘Se eu quiser parar ou fazer uma pausa, quero poder dizer isso. E quero que você também se sinta livre para me falar o que precisa.’"}
+    ],
+    action:"Use as frases como inspiração, não como roteiro obrigatório. Diálogo e consentimento precisam ser mútuos."
+  },
+  {
+    num:"04",icon:"☾",title:"Modo Hora H — Mais Presença, Menos Pressão",
+    subtitle:"Um roteiro antes, durante e depois da intimidade",
+    format:"CHECKLIST POR ETAPAS",eyebrow:"SEM CRONÔMETRO, SEM COMPETIÇÃO",duration:"3 MOMENTOS",
+    chapters:[
+      {heading:"ANTES · Tire o peso da expectativa",copy:"Cheque se você tem vontade e está confortável. Evite prometer um resultado, duração ou desempenho. Se houver preocupação, considere conversar brevemente antes de começar."},
+      {heading:"DURANTE · Atenção ao que é compartilhado",copy:"Observe seu conforto e o da outra pessoa. Se surgirem pensamentos de cobrança, perceba-os e volte a atenção à comunicação e ao momento, sem tentar forçar uma resposta física."},
+      {heading:"SE A ANSIEDADE APARECER · Você pode pausar",copy:"Não é preciso insistir. Dê espaço para diálogo, respiração natural e respeito aos limites de ambos. Mudar de ideia é uma opção válida."},
+      {heading:"DEPOIS · Sem nota de desempenho",copy:"Evite classificar a experiência como sucesso ou fracasso por um único detalhe. Se fizer sentido, conversem sobre como se sentiram e o que gostariam de ajustar."}
+    ],
+    action:"A meta é ampliar a percepção e o diálogo, não estabelecer uma performance ideal."
+  },
+  {
+    num:"05",icon:"◈",title:"Entenda Sua Ereção — Corpo, Mente e Ansiedade",
+    subtitle:"Mini-aula educativa sobre fatores que podem influenciar a ereção",
+    format:"MINI-AULA EM TEXTO",eyebrow:"INFORMAÇÃO SEM MITOS",duration:"5 TÓPICOS",
+    chapters:[
+      {heading:"01 · A ereção não é apenas ‘força de vontade’",copy:"A ereção envolve processos vasculares, nervosos e hormonais, além do contexto emocional e relacional. Não existe uma explicação única que sirva para todas as pessoas."},
+      {heading:"02 · O papel da ansiedade",copy:"Preocupações e vigilância constante do próprio desempenho podem coexistir com dificuldades na intimidade. Isso não significa que todo problema de ereção seja psicológico."},
+      {heading:"03 · Rotina e outras influências",copy:"Sono, consumo de álcool, tabagismo, condições de saúde e alguns medicamentos podem influenciar a função sexual. Alterar medicamentos sem orientação profissional não é seguro."},
+      {heading:"04 · O que o quiz pode e não pode dizer",copy:"Suas respostas mostram preocupações relatadas, mas não identificam a causa de uma dificuldade de ereção nem determinam um tratamento apropriado."},
+      {heading:"05 · Quando buscar avaliação",copy:"Procure médico habilitado se houver dificuldade persistente, mudança súbita, dor ou outros sintomas, ou se a situação afetar seu bem-estar. Um profissional poderá avaliar causas e opções de cuidado."}
+    ],
+    action:"Material informativo; não constitui diagnóstico, tratamento ou orientação para interromper medicamentos."
+  }
 ];
+
 const FAQ=[
   ["O EIXO promete acabar com a ansiedade sexual?","Não. Este material ajuda a refletir sobre autocobrança e estratégias gerais de bem-estar. Não é tratamento, diagnóstico nem promessa de desempenho."],
   ["O conteúdo do roteiro de 7 dias é realmente gratuito?","Sim. As sete etapas e os cinco materiais complementares estão disponíveis nesta página após a raspadinha, sem pagamento."],
@@ -187,11 +246,41 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <section className="eixo-offer-section" id="eixo-bonus">
+    <section className="eixo-offer-section eixo-bonus-section" id="eixo-bonus">
       <div className="eixo-offer-wrap eixo-column">
-        <div className="eixo-section-head"><span className="eixo-offer-kicker">05 / BÔNUS REAIS</span><h2>VOCÊ GANHOU <em>5 CONTEÚDOS EXTRAS.</em></h2><p>São materiais gratuitos que existem nesta própria página. Abra cada cartão para acessar as orientações — sem preços riscados fictícios.</p></div>
-        <div className="eixo-bonus-grid">{BONUSES.map(b=><details key={b.num} className="eixo-bonus-item"><summary><div className="eixo-bonus-icon">{b.icon}</div><div className="eixo-bonus-head"><span>BÔNUS {b.num} · LIBERADO</span><h3>{b.title}</h3><p>{b.subtitle}</p></div><span className="eixo-bonus-free">GRÁTIS</span><b className="eixo-bonus-plus">+</b></summary><div className="eixo-bonus-detail">{b.detail.map((line,i)=><p key={line}><span>{String(i+1).padStart(2,"0")}</span>{line}</p>)}</div></details>)}</div>
-        <div className="eixo-all-unlocked">✦ TODOS OS CINCO MATERIAIS PODEM SER ABERTOS AGORA</div>
+        <div className="eixo-section-head">
+          <span className="eixo-offer-kicker">05 / CONTEÚDO EXCLUSIVO EIXO</span>
+          <h2>MAIS DO QUE BÔNUS. <em>FERRAMENTAS PARA A HORA H.</em></h2>
+          <p>Cinco materiais complementares, práticos e com linguagem direta. O conteúdo escrito já está disponível para leitura nesta página, sem cadastro ou pagamento.</p>
+        </div>
+        <div className="eixo-bonus-grid">
+          {BONUSES.map(b=><details key={b.num} className="eixo-bonus-item">
+            <summary>
+              <div className={"eixo-bonus-cover eixo-bonus-cover-"+b.num} aria-hidden="true">
+                <div className="eixo-bonus-cover-top"><span>EIXO</span><span>{b.num}/05</span></div>
+                <div className="eixo-bonus-cover-center"><span>{b.icon}</span><strong>{b.eyebrow}</strong></div>
+                <div className="eixo-bonus-cover-bottom">{b.format}</div>
+              </div>
+              <div className="eixo-bonus-head">
+                <span>BÔNUS {b.num} · CONTEÚDO DISPONÍVEL</span>
+                <h3>{b.title}</h3>
+                <p>{b.subtitle}</p>
+                <div className="eixo-bonus-meta"><span>{b.format}</span><span>{b.duration}</span></div>
+                <span className="eixo-bonus-open">ACESSAR MEU BÔNUS <b>↗</b></span>
+              </div>
+              <span className="eixo-bonus-free">INCLUÍDO</span>
+              <b className="eixo-bonus-plus" aria-hidden="true">+</b>
+            </summary>
+            <div className="eixo-bonus-content">
+              <div className="eixo-bonus-content-header"><span>CONTEÚDO EXCLUSIVO EIXO · {b.num}/05</span><h4>{b.title}</h4><p>{b.subtitle}</p></div>
+              <div className="eixo-bonus-chapters">{b.chapters.map((chapter,i)=><div className="eixo-bonus-chapter" key={chapter.heading}><span>{String(i+1).padStart(2,"0")}</span><div><h5>{chapter.heading}</h5><p>{chapter.copy}</p></div></div>)}</div>
+              <p className="eixo-bonus-caution">{b.action}</p>
+              <div className="eixo-bonus-end">✦ MATERIAL CONCLUÍDO · EIXO</div>
+            </div>
+          </details>)}
+        </div>
+        <div className="eixo-all-unlocked">✦ TODOS OS CINCO MATERIAIS ESTÃO DISPONÍVEIS · ABRA OS CARDS PARA ACESSAR</div>
+        <p className="eixo-bonus-footnote">Nesta versão, os bônus são materiais digitais escritos. Não anunciamos vídeos, áudios ou aplicativo instalável antes de produzi-los.</p>
       </div>
     </section>
 

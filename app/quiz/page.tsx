@@ -222,6 +222,7 @@ export default function Quiz(){
   const [name,setName]=useState("");
   const [revealed,setRevealed]=useState(false);
   const [restartKey,setRestartKey]=useState(0);
+  useEffect(()=>{window.scrollTo({top:0,behavior:"auto"});},[position]);
   const step=FLOW[position];
   const answered=answers.filter(a=>a!==null).length;
   const progress=Math.round(100*answered/QUESTIONS.length);

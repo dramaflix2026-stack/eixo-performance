@@ -5,275 +5,289 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import Link from "next/link";
 import "./quiz.css";
 
-type Response = number | null;
-type QuizQuestion = { title: string; options: string[] };
+type Question = { prompt: string; options: string[]; eyebrow?: string };
+type Step = { kind: "question"; number: number } | { kind: "story"; number: number } | { kind: "prep" } | { kind: "scratch" } | { kind: "result" };
+type StageImage = { src: string; alt: string };
 
-const QUESTIONS: QuizQuestion[] = [
-  { title: "Antes de um momento íntimo, com que frequência você se preocupa com seu desempenho?", options: ["Nunca", "Raramente", "Às vezes", "Frequentemente"] },
-  { title: "Você sente que precisa corresponder a expectativas ou provar alguma coisa?", options: ["Nunca", "Raramente", "Às vezes", "Frequentemente"] },
-  { title: "Durante a intimidade, sua atenção fica mais no desempenho do que no momento?", options: ["Nunca", "Raramente", "Às vezes", "Frequentemente"] },
-  { title: "Uma experiência desagradável anterior aumenta sua preocupação com as próximas?", options: ["Nunca", "Raramente", "Às vezes", "Frequentemente"] },
-  { title: "O estresse do dia a dia influencia sua confiança nos momentos íntimos?", options: ["Nunca", "Raramente", "Às vezes", "Frequentemente"] },
-  { title: "Você evita conversar sobre suas preocupações íntimas por receio de julgamento?", options: ["Nunca", "Raramente", "Às vezes", "Frequentemente"] },
-  { title: "Gostaria de conhecer estratégias para lidar melhor com essa pressão?", options: ["Não neste momento", "Talvez", "Sim, algumas", "Sim, bastante"] }
+const QUESTIONS: Question[] = [
+  {prompt:"Vamos começar. Qual é sua faixa de idade?",options:["18 a 24 anos","25 a 34 anos","35 a 44 anos","45 anos ou mais","Prefiro não informar"],eyebrow:"01 · SEU PERFIL"},
+  {prompt:"Em qual momento a pressão costuma aparecer?",options:["Antes da intimidade","Durante o momento íntimo","Depois, ao pensar no que aconteceu","Em vários momentos","Não sinto essa pressão"],eyebrow:"01 · SEU PERFIL"},
+  {prompt:"Com que frequência o medo de falhar ocupa seus pensamentos?",options:["Nunca","Raramente","Às vezes","Frequentemente"],eyebrow:"01 · SEU PERFIL"},
+  {prompt:"Qual dessas preocupações mais se aproxima da sua experiência?",options:["Receio de não corresponder às expectativas","Preocupação com o tempo da relação","Medo de perder a ereção","Dificuldade de estar presente","Outra preocupação ou nenhuma"],eyebrow:"02 · EXPECTATIVAS"},
+  {prompt:"Quando pensa na próxima experiência íntima, o que mais gostaria de sentir?",options:["Mais confiança","Menos ansiedade","Mais conexão","Mais tranquilidade","Já me sinto bem"],eyebrow:"02 · EXPECTATIVAS"},
+  {prompt:"A ansiedade já veio acompanhada de tensão, respiração acelerada ou pensamentos repetitivos?",options:["Não percebo isso","Raramente","Algumas vezes","Com frequência"],eyebrow:"02 · EXPECTATIVAS"},
+  {prompt:"Uma experiência anterior desagradável aumenta sua preocupação nas próximas ocasiões?",options:["Nunca","Raramente","Às vezes","Frequentemente"],eyebrow:"03 · O CICLO DA PRESSÃO"},
+  {prompt:"Você já evitou uma situação íntima por receio de não corresponder?",options:["Nunca","Uma vez ou outra","Algumas vezes","Muitas vezes"],eyebrow:"03 · O CICLO DA PRESSÃO"},
+  {prompt:"Como você costuma conversar sobre essas preocupações?",options:["Converso abertamente","Converso com alguma dificuldade","Quase nunca falo sobre isso","Não tenho com quem conversar"],eyebrow:"03 · O CICLO DA PRESSÃO"},
+  {prompt:"O estresse do trabalho ou da rotina influencia a sua confiança íntima?",options:["Não percebo relação","Um pouco","Moderadamente","Bastante"],eyebrow:"04 · SUA ROTINA"},
+  {prompt:"Como tem sido seu sono nas últimas semanas?",options:["Tenho dormido bem","Oscila bastante","Durmo menos do que gostaria","Tenho muitas noites ruins"],eyebrow:"04 · SUA ROTINA"},
+  {prompt:"Você já buscou alguma estratégia para lidar com essa pressão?",options:["Ainda não tentei","Já tentei respirar ou relaxar","Já conversei com alguém","Já procurei orientação profissional","Tentei outras alternativas"],eyebrow:"04 · SUA ROTINA"},
+  {prompt:"Qual é sua situação afetiva atualmente?",options:["Em um relacionamento","Conhecendo alguém","Solteiro","Prefiro não informar"],eyebrow:"05 · CONEXÃO"},
+  {prompt:"Antes da intimidade, quanto espaço a autocobrança ocupa na sua atenção?",options:["Quase nenhum","Um pouco","Bastante","É difícil pensar em outra coisa"],eyebrow:"05 · CONEXÃO"},
+  {prompt:"O que costuma ajudar você a ficar mais à vontade?",options:["Conversar e sentir confiança","Respirar e desacelerar","Ter mais tempo e tranquilidade","Ainda não descobri","Não costumo sentir dificuldade"],eyebrow:"05 · CONEXÃO"},
+  {prompt:"Quanto tempo por dia você conseguiria dedicar a estratégias de bem-estar?",options:["Até 5 minutos","5 a 10 minutos","10 a 15 minutos","Mais de 15 minutos","Ainda não sei"],eyebrow:"06 · PRÓXIMOS PASSOS"},
+  {prompt:"Qual mudança faria mais diferença para você neste momento?",options:["Reduzir o medo de falhar","Ficar mais presente na intimidade","Comunicar melhor minhas inseguranças","Lidar melhor com o estresse da rotina","Entender melhor o que estou sentindo"],eyebrow:"06 · PRÓXIMOS PASSOS"},
+  {prompt:"Você gostaria de receber um roteiro educativo inicial baseado nas suas respostas?",options:["Sim, quero começar","Quero conhecer primeiro","Talvez, ainda estou pensando","Prefiro apenas ver minha reflexão"],eyebrow:"06 · PRÓXIMOS PASSOS"}
 ];
 
-// Uma experiência única e contínua: 3 questões, pausa visual, 3 questões,
-// pausa visual, questão 7, raspadinha obrigatória, reflexão final.
-const FLOW: Array<{type: "question"; index: number} | {type: "impact"; index: 0 | 1} | {type:"scratch"} | {type:"result"}> = [
-  {type:"question",index:0}, {type:"question",index:1}, {type:"question",index:2},
-  {type:"impact",index:0},
-  {type:"question",index:3}, {type:"question",index:4}, {type:"question",index:5},
-  {type:"impact",index:1},
-  {type:"question",index:6}, {type:"scratch"}, {type:"result"}
-];
-
-const IMPACTS = [
-  {
-    index:"01",
-    overline:"O CICLO DA PRESSÃO",
-    title:"A cobrança pode começar antes mesmo da intimidade.",
-    copy:"Expectativas, lembranças e o medo de falhar podem ocupar espaço demais. Perceber esse ciclo ajuda a entender de onde vem a tensão.",
-    image:"/images/pressao.jpg",
-    alt:"Retrato de um homem em expressão reflexiva",
-    action:"ENTENDI, CONTINUAR",
-    footer:"PRIMEIRO, ENTENDER. DEPOIS, AGIR."
-  },
-  {
-    index:"02",
-    overline:"UM NOVO PONTO DE PARTIDA",
-    title:"Você não precisa transformar a intimidade em um teste.",
-    copy:"A confiança pode ser trabalhada com menos cobrança, mais diálogo e atenção ao momento. Agora, só falta uma pergunta para concluir sua reflexão.",
-    image:"/images/clareza.jpg",
-    alt:"Retrato masculino com expressão serena e concentrada",
-    action:"QUERO CONTINUAR",
-    footer:"MENOS PRESSÃO. MAIS PRESENÇA."
-  }
+const STORIES = [
+  {badge:"01 / ENTENDER A PRESSÃO",heading:"A ANSIEDADE PODE ENTRAR EM CENA ANTES MESMO DA INTIMIDADE.",body:"Quando a mente antecipa o pior cenário, o corpo pode responder com tensão. Reconhecer esse movimento é um primeiro passo — não uma sentença sobre você.",photo:"/images/pressao.jpg",alt:"Retrato masculino em reflexão",visual:"breath",button:"ENTENDI, CONTINUAR",tag:"PRESSÃO NÃO DEFINE QUEM VOCÊ É."},
+  {badge:"02 / CORPO E MENTE",heading:"SEU CORPO E SUA ATENÇÃO NÃO PRECISAM ESTAR EM GUERRA.",body:"O estresse pode influenciar a maneira como você percebe cada momento. Desacelerar, respirar e observar os próprios pensamentos são práticas de atenção, não promessas de resultado.",photo:"/images/clareza.jpg",alt:"Retrato masculino sereno",visual:"wave",button:"CONTINUAR MINHA REFLEXÃO",tag:"MAIS PRESENÇA, MENOS AUTOCONTROLE FORÇADO."},
+  {badge:"03 / UMA NOVA PERSPECTIVA",heading:"DO MEDO DE FALHAR PARA A POSSIBILIDADE DE ESTAR PRESENTE.",body:"Não existe uma medida única de desempenho. Uma experiência íntima envolve conexão, comunicação, contexto e bem-estar — não apenas uma meta de tempo.",photo:"/images/partida.jpg",alt:"Retrato masculino confiante",visual:"split",button:"QUERO AVANÇAR",tag:"O SEU RITMO IMPORTA."},
+  {badge:"04 / ROTINA E CONFIANÇA",heading:"NÃO É SÓ SOBRE AQUELE MOMENTO. A ROTINA TAMBÉM CONTA.",body:"Sono, preocupações, expectativas e disposição podem fazer parte da experiência. Por isso, olhar para o cotidiano pode ser tão importante quanto olhar para a intimidade.",photo:"/images/hero.jpg",alt:"Retrato masculino editorial",visual:"meter",button:"SEGUIR COM O QUESTIONÁRIO",tag:"SEM FÓRMULA MÁGICA. COM MAIS CLAREZA."},
+  {badge:"05 / O QUE VEM A SEGUIR",heading:"VOCÊ JÁ IDENTIFICOU PADRÕES. AGORA VAMOS ORGANIZAR O PRÓXIMO PASSO.",body:"O EIXO reúne reflexões e práticas educativas de atenção, diálogo e organização da rotina. Você decidirá o que faz sentido experimentar e quando procurar apoio especializado.",photo:"/images/clareza.jpg",alt:"Retrato editorial de um homem",visual:"steps",button:"QUERO CONCLUIR",tag:"UM PASSO DE CADA VEZ."}
 ] as const;
 
-function ScratchCard({ onReveal }: { onReveal: () => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const dragging = useRef(false);
-  const lastPoint = useRef<{x:number; y:number}|null>(null);
-  const finished = useRef(false);
-  const [opened, setOpened] = useState(false);
+const FLOW:Step[] = [];
+QUESTIONS.forEach((_,number)=>{
+  FLOW.push({kind:"question",number});
+  if((number+1)%3===0 && number<15) FLOW.push({kind:"story",number:Math.floor(number/3)});
+});
+FLOW.push({kind:"prep"},{kind:"scratch"},{kind:"result"});
 
-  const reveal = () => {
-    if (finished.current) return;
-    finished.current = true;
-    setOpened(true);
+const FINISH_INDEX=FLOW.length-1;
+const ageOptions=QUESTIONS[0].options;
+
+function StoryAnimation({variant}:{variant:string}){
+  if(variant==="breath") return <div className="funnel-breath" aria-hidden="true"><i/><i/><i/><span>RESPIRE · OBSERVE</span></div>;
+  if(variant==="wave") return <div className="funnel-wave" aria-hidden="true">{Array.from({length:16},(_,i)=><i key={i} style={{animationDelay:(i*.085)+"s"}}/>)}<span>ATENÇÃO AO MOMENTO</span></div>;
+  if(variant==="split") return <div className="funnel-compare" aria-hidden="true"><span>PRESSÃO</span><b>→</b><span>PRESENÇA</span></div>;
+  if(variant==="meter") return <div className="funnel-meter" aria-hidden="true"><i/><i/><i/><i/><strong>ROTINA • EMOÇÕES • CONTEXTO</strong></div>;
+  return <div className="funnel-steps-visual" aria-hidden="true"><span>01 NOTAR</span><span>02 RESPIRAR</span><span>03 CONVERSAR</span></div>;
+}
+
+function ScratchCard({onReveal}:{onReveal:()=>void}){
+  const canvasRef=useRef<HTMLCanvasElement>(null);
+  const dragging=useRef(false);
+  const last=useRef<{x:number;y:number}|null>(null);
+  const revealed=useRef(false);
+  const [isRevealed,setIsRevealed]=useState(false);
+
+  const finish=()=>{
+    if(revealed.current)return;
+    revealed.current=true;
+    setIsRevealed(true);
     onReveal();
   };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", {willReadFrequently: true});
-    if (!ctx) return;
-    const bounds = canvas.getBoundingClientRect();
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    const width = Math.max(1, bounds.width);
-    const height = Math.max(1, bounds.height);
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round(height * ratio);
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    const gold = ctx.createLinearGradient(0, 0, width, height);
-    gold.addColorStop(0, "#eccd8d");
-    gold.addColorStop(.48, "#bd9348");
-    gold.addColorStop(1, "#f1d08c");
-    ctx.fillStyle = gold;
-    ctx.fillRect(0, 0, width, height);
-    // Textura discreta gravada no cartão, não depende de imagens externas.
-    for(let i=0; i<160; i++){
-      const x=((i*127.7)%width), y=((i*59.9)%height);
-      ctx.fillStyle = i%3===0 ? "rgba(255,255,255,.20)" : "rgba(77,52,25,.13)";
-      ctx.beginPath(); ctx.arc(x,y,i%4===0?1.3:.65,0,Math.PI*2);ctx.fill();
-    }
-    ctx.fillStyle = "#241a0d";
-    ctx.textAlign = "center";
-    ctx.font = "900 " + Math.min(31,Math.max(21,width*.065)) + "px Arial, sans-serif";
-    ctx.fillText("RASPE AQUI",width/2,height/2-4);
-    ctx.font = "700 12px Arial, sans-serif";
-    ctx.fillText("DESLIZE O DEDO PARA REVELAR",width/2,height/2+27);
-    ctx.textAlign = "start";
-  }, []);
-
-  const point = (event: ReactPointerEvent<HTMLCanvasElement>) => {
+  useEffect(()=>{
     const canvas=canvasRef.current;
-    if (!canvas) return {x:0,y:0};
+    if(!canvas)return;
+    const ctx=canvas.getContext("2d",{willReadFrequently:true});
+    if(!ctx)return;
     const rect=canvas.getBoundingClientRect();
-    return {x:event.clientX-rect.left,y:event.clientY-rect.top};
-  };
+    const width=Math.max(1,rect.width);
+    const height=Math.max(1,rect.height);
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(width*dpr);
+    canvas.height=Math.round(height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const gradient=ctx.createLinearGradient(0,0,width,height);
+    gradient.addColorStop(0,"#eac776");
+    gradient.addColorStop(.5,"#bb903f");
+    gradient.addColorStop(1,"#f9d98d");
+    ctx.fillStyle=gradient;
+    ctx.fillRect(0,0,width,height);
+    for(let n=0;n<130;n++){
+      const x=(n*171.73)%width,y=(n*83.31)%height;
+      ctx.fillStyle=n%2?"rgba(255,255,255,.18)":"rgba(78,52,20,.13)";
+      ctx.beginPath();ctx.arc(x,y,n%4?0.8:1.4,0,Math.PI*2);ctx.fill();
+    }
+    ctx.fillStyle="#271b0b";
+    ctx.textAlign="center";
+    ctx.font="900 "+Math.min(34,Math.max(22,width*.072))+"px Arial";
+    ctx.fillText("RASPE AQUI",width/2,height/2-8);
+    ctx.font="700 12px Arial";
+    ctx.fillText("DESLIZE O DEDO PARA REVELAR",width/2,height/2+26);
+    ctx.textAlign="start";
+  },[]);
 
-  const scratchAt = (event: ReactPointerEvent<HTMLCanvasElement>) => {
-    if(!dragging.current || finished.current) return;
+  const draw=(event:ReactPointerEvent<HTMLCanvasElement>)=>{
+    if(!dragging.current || revealed.current)return;
     const canvas=canvasRef.current;
     const ctx=canvas?.getContext("2d",{willReadFrequently:true});
-    if(!ctx) return;
-    const next=point(event);
+    if(!canvas||!ctx)return;
+    const bounds=canvas.getBoundingClientRect();
+    const pos={x:event.clientX-bounds.left,y:event.clientY-bounds.top};
     ctx.save();
     ctx.globalCompositeOperation="destination-out";
     ctx.lineCap="round";
     ctx.lineJoin="round";
     ctx.lineWidth=48;
     ctx.beginPath();
-    if(lastPoint.current) ctx.moveTo(lastPoint.current.x,lastPoint.current.y);
-    else ctx.moveTo(next.x,next.y);
-    ctx.lineTo(next.x,next.y);
+    if(last.current)ctx.moveTo(last.current.x,last.current.y);
+    else ctx.moveTo(pos.x,pos.y);
+    ctx.lineTo(pos.x,pos.y);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(next.x,next.y,24,0,Math.PI*2);
-    ctx.fill();
+    ctx.beginPath();ctx.arc(pos.x,pos.y,24,0,Math.PI*2);ctx.fill();
     ctx.restore();
-    lastPoint.current=next;
+    last.current=pos;
   };
 
-  const checkReveal = () => {
+  const inspect=()=>{
     const canvas=canvasRef.current;
     const ctx=canvas?.getContext("2d",{willReadFrequently:true});
-    if(!canvas || !ctx || finished.current) return;
-    const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
-    let clear=0, samples=0;
-    for(let i=3;i<data.length;i+=4*18){
-      samples++;
-      if(data[i]<100) clear++;
-    }
-    if(samples && clear/samples>=.33) reveal();
+    if(!canvas||!ctx||revealed.current)return;
+    const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let removed=0,count=0;
+    for(let p=3;p<pixels.length;p+=4*24){count++;if(pixels[p]<100)removed++;}
+    if(count&&removed/count>=.32)finish();
   };
 
-  return <div className="eq-scratch-wrap">
-    <div className="eq-scratch-surface">
-      <div className="eq-scratch-reward" aria-live="polite">
-        <span>✦ EIXO · DESBLOQUEADO</span>
-        <strong>SEU PONTO DE PARTIDA ESTÁ PRONTO</strong>
-        <small>Uma reflexão baseada nas suas respostas está disponível.</small>
+  return <div className="funnel-scratch">
+    <div className="funnel-scratch-card">
+      <div className="funnel-scratch-prize">
+        <span>✦ PRESENTE EIXO LIBERADO</span>
+        <strong>SEU ROTEIRO INICIAL DE 7 DIAS</strong>
+        <small>Um guia educativo de atenção, presença e comunicação.</small>
       </div>
       <canvas
         ref={canvasRef}
-        className={"eq-scratch-canvas" + (opened ? " eq-scratch-open" : "")}
-        aria-label="Cartão dourado para raspar e revelar seu próximo passo"
-        onPointerDown={e => {
-          if(finished.current)return;
+        className={"funnel-scratch-canvas"+(isRevealed?" is-open":"")}
+        aria-label="Cartão dourado interativo para raspar e revelar um guia educativo"
+        onPointerDown={e=>{
+          if(revealed.current)return;
           dragging.current=true;
-          lastPoint.current=null;
+          last.current=null;
           e.currentTarget.setPointerCapture(e.pointerId);
-          scratchAt(e);
+          draw(e);
         }}
-        onPointerMove={scratchAt}
-        onPointerUp={e => {if(!dragging.current)return; scratchAt(e);dragging.current=false;lastPoint.current=null;checkReveal()}}
-        onPointerCancel={() => {dragging.current=false;lastPoint.current=null;checkReveal()}}
-        onLostPointerCapture={() => {dragging.current=false;lastPoint.current=null}}
+        onPointerMove={draw}
+        onPointerUp={e=>{if(!dragging.current)return;draw(e);dragging.current=false;last.current=null;inspect()}}
+        onPointerCancel={()=>{dragging.current=false;last.current=null;inspect()}}
+        onLostPointerCapture={()=>{dragging.current=false;last.current=null}}
       />
     </div>
-    {!opened ? <button type="button" className="eq-accessible-reveal" onClick={reveal}>
-      Não consegue raspar? Toque para revelar
-    </button> : <p className="eq-reveal-confirmation">✦ Seu próximo passo foi revelado.</p>}
+    {isRevealed?<p className="funnel-scratch-caption">✦ Seu bônus está liberado.</p>:
+      <button type="button" className="funnel-scratch-alt" onClick={finish}>Não consegue raspar? Revelar por toque</button>}
   </div>;
 }
 
-function ResultCopy({answers}:{answers:Response[]}) {
-  const score=answers.slice(0,6).reduce<number>((total,response)=>total+(response ?? 0),0);
-  const level = score<=5 ? {
-    kicker:"MENOS PRESSÃO RELATADA",
-    heading:"Você percebe poucos episódios de cobrança.",
-    text:"Nas respostas de hoje, as preocupações apareceram com menor frequência. Ainda assim, cultivar presença e diálogo pode ser útil."
-  } : score<=11 ? {
-    kicker:"ALGUMA PRESSÃO RELATADA",
-    heading:"A autocobrança aparece em alguns momentos.",
-    text:"Você identificou situações em que a preocupação pode afetar sua experiência. Perceber os gatilhos pode ser um bom começo."
-  } : {
-    kicker:"PRESSÃO FREQUENTE RELATADA",
-    heading:"A preocupação parece ocupar bastante espaço.",
-    text:"Suas respostas indicam relatos frequentes de pressão. Isso não determina uma causa; se houver sofrimento ou dificuldades persistentes, vale buscar orientação profissional."
-  };
-  return <div className="eq-result">
-    <span className="eq-overline">REFLEXÃO CONCLUÍDA · EIXO</span>
-    <h1>O SEU PONTO DE PARTIDA <em>É A CONSCIÊNCIA.</em></h1>
-    <div className="eq-result-highlight"><span>{level.kicker}</span><h2>{level.heading}</h2><p>{level.text}</p></div>
-    <div className="eq-next-header"><span>PRIMEIROS PASSOS</span><h2>Três atitudes para explorar</h2></div>
-    <div className="eq-next-grid">
-      <article><span>01</span><strong>OBSERVE</strong><p>Reconheça os pensamentos de cobrança quando eles surgirem, sem se julgar por isso.</p></article>
-      <article><span>02</span><strong>RESPIRE</strong><p>Experimente desacelerar, notar a respiração e voltar sua atenção ao momento presente.</p></article>
-      <article><span>03</span><strong>CONVERSE</strong><p>Se possível, compartilhe suas preocupações. Procure ajuda profissional se persistirem.</p></article>
+const DAYS=[
+  ["DIA 01","IDENTIFICAR","Anote quando a autocobrança aparece e o que você pensa nesse momento."],
+  ["DIA 02","DESACELERAR","Reserve alguns minutos para perceber sua respiração e relaxar os ombros, sem exigir um resultado."],
+  ["DIA 03","REVER EXPECTATIVAS","Reflita sobre a diferença entre conexão e cobrança por desempenho."],
+  ["DIA 04","CONVERSAR","Quando possível, pratique uma conversa aberta sobre expectativas, limites e conforto."],
+  ["DIA 05","PRESENÇA","Em uma atividade cotidiana, experimente prestar atenção às sensações do momento, sem se avaliar."],
+  ["DIA 06","ROTINA","Observe como sono, cansaço e estresse podem influenciar sua disposição."],
+  ["DIA 07","REVISAR","Retome suas anotações e identifique quais estratégias fazem sentido continuar. Se houver sofrimento persistente, considere buscar apoio profissional."]
+];
+
+function PersonalizedResult({answers,name}:{answers:(number|null)[];name:string}){
+  const focus=QUESTIONS[16].options[answers[16]??4];
+  const concern=QUESTIONS[3].options[answers[3]??4];
+  const time=QUESTIONS[15].options[answers[15]??4];
+  const greeting=name.trim()?name.trim().slice(0,40)+",":"";
+  return <div className="funnel-result">
+    <span className="funnel-tag">SEU RESULTADO · EIXO</span>
+    <h1>{greeting&&<span className="funnel-result-name">{greeting} </span>}SEU PONTO DE PARTIDA ESTÁ <em>PRONTO.</em></h1>
+    <p className="funnel-result-intro">Você concluiu 18 perguntas e desbloqueou um roteiro educativo para começar com mais consciência e menos cobrança.</p>
+    <div className="funnel-summary">
+      <span className="funnel-small-label">SUA REFLEXÃO PESSOAL</span>
+      <h2>{focus}</h2>
+      <p>Você destacou como preocupação: <strong>{concern.toLowerCase()}</strong>. E indicou esta disponibilidade de tempo: <strong>{time.toLowerCase()}</strong>. Essas respostas ajudam a orientar os temas de reflexão, mas não constituem diagnóstico.</p>
     </div>
-    <p className="eq-legal">Esta é uma reflexão educativa, não um teste clínico, diagnóstico ou tratamento. Dificuldades íntimas podem ter causas emocionais e físicas diferentes.</p>
+    <div className="funnel-plan-heading"><span className="funnel-tag">BÔNUS LIBERADO NA RASPADINHA</span><h2>SEU ROTEIRO INICIAL DE <em>7 DIAS</em></h2><p>São sugestões educativas, não uma prescrição clínica, treinamento comprovado ou promessa de desempenho.</p></div>
+    <div className="funnel-days">{DAYS.map(([day,title,copy])=><details key={day}><summary><span>{day}</span><strong>{title}</strong><b>+</b></summary><p>{copy}</p></details>)}</div>
+    <p className="funnel-medical">A ansiedade de desempenho e dificuldades sexuais podem envolver múltiplos fatores. Se a situação incomoda, persiste ou surge de repente, procure atendimento médico ou psicológico apropriado.</p>
   </div>;
 }
 
 export default function Quiz(){
-  const [screen,setScreen]=useState(0);
-  const [answers,setAnswers]=useState<Response[]>(Array(7).fill(null));
-  const [scratchRevealed,setScratchRevealed]=useState(false);
-  const current=FLOW[screen];
+  const [position,setPosition]=useState(0);
+  const [answers,setAnswers]=useState<(number|null)[]>(Array(QUESTIONS.length).fill(null));
+  const [name,setName]=useState("");
+  const [revealed,setRevealed]=useState(false);
+  const [restartKey,setRestartKey]=useState(0);
+  const step=FLOW[position];
   const answered=answers.filter(a=>a!==null).length;
-  const progress=Math.round(answered/QUESTIONS.length*100);
-  const choose=(index:number,value:number)=>{
-    setAnswers(prev=>{const next=[...prev];next[index]=value;return next;});
-    setScreen(prev=>Math.min(prev+1,FLOW.length-1));
+  const progress=Math.round(100*answered/QUESTIONS.length);
+  const isResult=step.kind==="result";
+  const questionNumber=step.kind==="question"?step.number:0;
+  const showProgress=step.kind!=="result";
+  const select=(value:number)=>{
+    setAnswers(old=>{const next=[...old];next[questionNumber]=value;return next;});
+    setPosition(old=>Math.min(FINISH_INDEX,old+1));
   };
-  const backward=()=>setScreen(prev=>Math.max(0,prev-1));
-  const reset=()=>{setAnswers(Array(7).fill(null));setScratchRevealed(false);setScreen(0);};
-  const isLast=current.type==="result";
-  const phaseLabel=current.type==="question" ? "PERGUNTA "+(current.index+1)+" DE 7" : current.type==="impact" ? "PAUSA DE REFLEXÃO" : current.type==="scratch" ? "ETAPA FINAL · RASPADINHA" : "SUA REFLEXÃO";
-  return <main className="eq-page">
-    <header className="eq-header"><div className="eq-header-inner">
-      <Link className="eq-brand" href="/" aria-label="EIXO, página inicial"><span className="eq-brand-symbol">E</span><strong>EIXO</strong></Link>
-      <span className="eq-header-note"><span className="eq-lock">◆</span> EXPERIÊNCIA DISCRETA</span>
+  const goBack=()=>setPosition(old=>Math.max(0,old-1));
+  const reset=()=>{
+    setPosition(0);setAnswers(Array(QUESTIONS.length).fill(null));
+    setName("");setRevealed(false);setRestartKey(old=>old+1);
+  };
+  const currentLabel=step.kind==="question"?"PERGUNTA "+(step.number+1)+" DE "+QUESTIONS.length:
+    step.kind==="story"?"MOMENTO EIXO · "+(step.number+1):
+    step.kind==="prep"?"SEU ROTEIRO":"RASPADINHA EIXO";
+  const profileAge=ageOptions[answers[0]??4];
+
+  return <main className="funnel-page">
+    <header className="funnel-header"><div className="funnel-header-inner">
+      <Link href="/" className="funnel-brand" aria-label="EIXO, página inicial"><span>◈</span>EIXO</Link>
+      <div className="funnel-private">◉ &nbsp; CONTEÚDO DISCRETO E EDUCATIVO</div>
     </div></header>
-    <div className="eq-flow">
-      <div className="eq-progress-area">
-        <div className="eq-progress-header">
-          <span>{phaseLabel}</span><span>{isLast?"CONCLUÍDO":progress+"% DAS RESPOSTAS"}</span>
-        </div>
-        <div className="eq-progress-bar" aria-label={progress+"% das perguntas respondidas"}>
-          {QUESTIONS.map((_,index)=><span key={index} className={answers[index]!==null?"eq-progress-done":""}/>)}
-        </div>
-      </div>
+    <div className="funnel-content">
+      {showProgress&&<div className="funnel-progress">
+        <div className="funnel-progress-line"><span>{currentLabel}</span><span>{progress}% CONCLUÍDO</span></div>
+        <div className="funnel-progress-segments">{Array.from({length:6},(_,i)=><i key={i} style={{background:answered>=((i+1)*3)?"#d9a95f":"#35302a"}}/>)}</div>
+      </div>}
 
-      {current.type==="question" && <section key={"q"+current.index} className="eq-stage eq-question-stage">
-        <div className="eq-side-label"><span>0{current.index+1}</span><span>PERFORMANCE MENTAL</span></div>
-        <div className="eq-question-content">
-          <div className="eq-eyebrow"><span className="eq-dot"/> ENTENDA SUA RELAÇÃO COM A PRESSÃO</div>
-          <h1>{QUESTIONS[current.index].title}</h1>
-          <p className="eq-helper">Escolha a opção que mais se aproxima da sua experiência.</p>
-          <div className="eq-options">{QUESTIONS[current.index].options.map((option,index)=><button
-            type="button" key={option}
-            className={"eq-option"+(answers[current.index]===index?" eq-option-selected":"")}
-            onClick={()=>choose(current.index,index)}>
-              <span className="eq-radio"/><span>{option}</span><span className="eq-option-arrow">↗</span>
-            </button>)}</div>
+      {step.kind==="question"&&<section className="funnel-question" key={"q"+questionNumber}>
+        <span className="funnel-tag">{QUESTIONS[questionNumber].eyebrow}</span>
+        <h1>{QUESTIONS[questionNumber].prompt}</h1>
+        <p>Responda com sinceridade. Não existem respostas certas ou erradas.</p>
+        <div className="funnel-options">
+          {QUESTIONS[questionNumber].options.map((label,index)=><button
+            key={label}
+            type="button"
+            className={"funnel-option"+(answers[questionNumber]===index?" is-selected":"")}
+            onClick={()=>select(index)}>
+              <span className="funnel-radio"/><span>{label}</span><b>↗</b>
+          </button>)}
         </div>
       </section>}
 
-      {current.type==="impact" && <section key={"impact"+current.index} className="eq-stage eq-impact-stage">
-        <div className="eq-impact-copy">
-          <span className="eq-overline">REFLEXÃO {IMPACTS[current.index].index} · {IMPACTS[current.index].overline}</span>
-          <h1>{IMPACTS[current.index].title}</h1>
-          <p>{IMPACTS[current.index].copy}</p>
-          <div className="eq-impact-footer">{IMPACTS[current.index].footer}</div>
-          <button type="button" className="eq-primary" onClick={()=>setScreen(v=>v+1)}>{IMPACTS[current.index].action}<span>↗</span></button>
+      {step.kind==="story"&&<section className="funnel-story" key={"story"+step.number}>
+        <span className="funnel-tag">{STORIES[step.number].badge}</span>
+        <h1>{STORIES[step.number].heading}</h1>
+        <div className="funnel-story-media">
+          <img src={STORIES[step.number].photo} alt={STORIES[step.number].alt} />
+          <div className="funnel-story-overlay"><StoryAnimation variant={STORIES[step.number].visual}/></div>
+          <span className="funnel-story-media-tag">EIXO / PERFORMANCE MENTAL</span>
         </div>
-        <div className="eq-impact-photo"><img src={IMPACTS[current.index].image} alt={IMPACTS[current.index].alt}/><span>CONFIANÇA COMEÇA NA MENTE.</span></div>
+        <p>{STORIES[step.number].body}</p>
+        <div className="funnel-story-foot">{STORIES[step.number].tag}</div>
+        <button className="funnel-main-cta" type="button" onClick={()=>setPosition(pos=>pos+1)}>{STORIES[step.number].button} <span>↗</span></button>
       </section>}
 
-      {current.type==="scratch" && <section className="eq-stage eq-scratch-stage">
-        <span className="eq-overline">ETAPA FINAL · EIXO</span>
-        <h1>VOCÊ CHEGOU ATÉ AQUI.<br/><em>REVELE SEU PRÓXIMO PASSO.</em></h1>
-        <p className="eq-scratch-intro">Seu questionário está completo. Raspe o cartão dourado para liberar sua reflexão e conhecer os próximos passos.</p>
-        <ScratchCard onReveal={()=>setScratchRevealed(true)}/>
-        {scratchRevealed && <button type="button" className="eq-primary eq-scratch-continue" onClick={()=>setScreen(10)}>VER MINHA REFLEXÃO <span>↗</span></button>}
-        <p className="eq-scratch-note">Este cartão revela conteúdo educativo. Não é um sorteio nem uma promessa de desconto.</p>
+      {step.kind==="prep"&&<section className="funnel-prep">
+        <span className="funnel-tag">18 / 18 PERGUNTAS RESPONDIDAS</span>
+        <div className="funnel-icon">◈</div>
+        <h1>SEU PONTO DE PARTIDA ESTÁ <em>PRONTO.</em></h1>
+        <p>Organizamos uma reflexão a partir das suas respostas. Para liberar seu roteiro inicial, falta apenas uma etapa.</p>
+        <div className="funnel-private-panel"><span>◈ PRIVACIDADE EM PRIMEIRO LUGAR</span>
+          <p>Sem cadastro, sem envio das respostas para um servidor. Você pode informar um nome para personalizar a tela final, se quiser.</p>
+          <label htmlFor="eixo-display-name">COMO PODEMOS TE CHAMAR? <small>(OPCIONAL)</small></label>
+          <input id="eixo-display-name" value={name} onChange={e=>setName(e.target.value)} maxLength={40} placeholder="Seu primeiro nome"/>
+        </div>
+        <div className="funnel-offer-perks"><span>✓ 18 respostas consideradas</span><span>✓ Roteiro inicial de 7 dias</span><span>✓ Experiência discreta</span></div>
+        <button type="button" className="funnel-main-cta" onClick={()=>setPosition(pos=>pos+1)}>LIBERAR MINHA RASPADINHA <span>↗</span></button>
       </section>}
 
-      {current.type==="result" && <section className="eq-stage eq-result-stage"><ResultCopy answers={answers}/>
-        <div className="eq-result-actions"><Link href="/" className="eq-primary">CONHECER O EIXO <span>↗</span></Link><button type="button" className="eq-text-button" onClick={reset}>REFAZER QUESTIONÁRIO</button></div>
+      {step.kind==="scratch"&&<section className="funnel-scratch-step">
+        <span className="funnel-tag">ETAPA FINAL · BENEFÍCIO EIXO</span>
+        <h1>{name.trim()?name.trim().slice(0,40)+", ":""}VOCÊ DESBLOQUEOU UMA <em>RASPADINHA!</em></h1>
+        <p>Raspe o cartão dourado para revelar o bônus educativo que preparamos para esta experiência.</p>
+        <ScratchCard key={restartKey} onReveal={()=>setRevealed(true)}/>
+        {revealed&&<button type="button" className="funnel-main-cta funnel-scratch-next" onClick={()=>setPosition(FINISH_INDEX)}>ACESSAR MEU ROTEIRO <span>↗</span></button>}
+        <small>O bônus é gratuito e igual para todos. Não há sorteio nem desconto anunciado.</small>
       </section>}
 
-      <div className="eq-bottom-actions">
-        {screen>0 && current.type!=="result" && <button type="button" className="eq-back" onClick={backward}>← VOLTAR</button>}
-        <span>SEM RESPOSTAS CERTAS OU ERRADAS</span>
-      </div>
+      {step.kind==="result"&&<section className="funnel-result-screen">
+        <PersonalizedResult answers={answers} name={name}/>
+        <div className="funnel-result-actions"><Link className="funnel-main-cta" href="/">CONHECER O EIXO <span>↗</span></Link><button type="button" onClick={reset}>REFAZER QUESTIONÁRIO</button></div>
+      </section>}
+
+      {position>0&&step.kind!=="result"&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
     </div>
-    <footer className="eq-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE.</span><span>As respostas ficam somente nesta página durante o questionário.</span></footer>
+    <footer className="funnel-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE</span><span>Conteúdo educativo. As respostas permanecem apenas nesta página.</span></footer>
   </main>;
 }

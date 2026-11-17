@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function PhonePreview(){
  return <div className="eixo-visual" aria-label="Prévia visual do questionário EIXO">
-  <div className="eixo-halo" aria-hidden="true"/>
+  <div className="eixo-halo" aria-hidden="true"/><div className="eixo-orbit eixo-orbit-one" aria-hidden="true"/><div className="eixo-orbit eixo-orbit-two" aria-hidden="true"/><div className="eixo-spark eixo-spark-one" aria-hidden="true">✦</div><div className="eixo-spark eixo-spark-two" aria-hidden="true">✧</div>
   <div className="eixo-phone">
    <div className="eixo-phone-top"><span>9:41</span><span className="eixo-island"/><span>•••</span></div>
    <div className="eixo-phone-screen">
@@ -18,7 +18,7 @@ function PhonePreview(){
    </div>
    <div className="eixo-home-bar"/>
   </div>
-  <div className="eixo-floating-pill">✦ Clareza antes da cobrança</div>
+  <div className="eixo-floating-pill">✦ Clareza antes da cobrança</div><div className="eixo-floating-pill eixo-floating-pill-second"><span className="eixo-pulse-dot"/> Sua jornada começa aqui</div>
  </div>;
 }
 
@@ -33,7 +33,7 @@ export default function Home(){
    <section className="eixo-hero"><div className="eixo-container eixo-hero-grid">
     <div className="eixo-copy">
      <span className="eixo-eyebrow"><span className="eixo-eyebrow-dot"/> UM ESPAÇO PARA RETOMAR SUA CONFIANÇA</span>
-     <h1>Menos pressão.<br/>Mais <em>presença.</em><br/>Mais confiança.</h1>
+     <h1>Menos <span className="eixo-accent">pressão.</span><br/>Mais <em>presença.</em><br/>Mais <span className="eixo-text-glow">confiança.</span></h1>
      <p>Quando a ansiedade transforma a intimidade em um teste, entender o que você sente pode ser o primeiro passo. Comece com uma reflexão guiada, discreta e sem julgamentos.</p>
      <div className="eixo-actions"><Link className="eixo-primary" href="/quiz">Iniciar meu questionário <span aria-hidden="true">→</span></Link><a className="eixo-secondary" href="#sobre">Como funciona <span aria-hidden="true">↗</span></a></div>
      <div className="eixo-trust"><span className="eixo-trust-icon">✓</span><span>Gratuito para começar · 7 perguntas · Sem cadastro</span></div>
@@ -42,7 +42,7 @@ export default function Home(){
    </div></section>
    <section className="eixo-about" id="sobre"><div className="eixo-container eixo-about-grid">
     <div><span className="eixo-section-label">SOBRE O EIXO</span><h2>O momento íntimo não precisa ser uma prova.</h2></div>
-    <div><p>A pressão pelo desempenho pode fazer com que a atenção se afaste da conexão e se concentre no medo de falhar. O EIXO propõe um ponto de partida educativo para perceber esses padrões.</p><Link href="/quiz" className="eixo-inline-link">Começar minha reflexão <span>→</span></Link></div>
+    <div><p>A pressão pelo desempenho pode fazer com que a atenção se afaste da conexão e se concentre no medo de falhar. O EIXO propõe um ponto de partida educativo para perceber esses padrões.</p><div className="eixo-benefit-list"><div><span>01</span><strong>Discreto</strong><small>Sem exposição pessoal</small></div><div><span>02</span><strong>Rápido</strong><small>7 perguntas objetivas</small></div><div><span>03</span><strong>Sem julgamentos</strong><small>No seu ritmo</small></div></div><Link href="/quiz" className="eixo-inline-link">Começar minha reflexão <span>→</span></Link></div>
    </div></section>
    <section className="eixo-faq" id="perguntas"><div className="eixo-container eixo-faq-inner">
     <span className="eixo-section-label">PERGUNTAS FREQUENTES</span><h2>Antes de começar</h2>
@@ -52,6 +52,6 @@ export default function Home(){
     <details><summary>E se eu sentir dificuldades persistentes?<span>+</span></summary><p>Ansiedade e dificuldades sexuais podem ter diferentes causas. Um profissional de saúde habilitado pode ajudar a investigar e orientar os próximos passos.</p></details>
    </div></section>
   </main>
-  <footer className="eixo-site-footer"><div className="eixo-container eixo-footer-content"><Link className="eixo-wordmark" href="/"><span className="eixo-symbol"><i/></span><span>EIXO</span></Link><span>Confiança começa na mente.</span><span>Conteúdo educativo, não substitui orientação profissional.</span></div></footer>
+  <footer className="eixo-site-footer"><div className="eixo-container eixo-footer-content"><Link className="eixo-wordmark" href="/"><span className="eixo-symbol"><i/></span><span>EIXO</span></Link><span className="eixo-footer-tagline">Confiança começa na mente.</span><span>Conteúdo educativo, não substitui orientação profissional.</span></div></footer>
  </div>;
 }

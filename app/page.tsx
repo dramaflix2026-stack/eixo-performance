@@ -16,7 +16,7 @@ export default function Home(){
      <div className="mx-hero-copy">
       <div className="mx-eyebrow"><span/> MENTE FORTE. MENOS COBRANÇA.</div>
       <h1>O MAIOR PESO<br/>NÃO ESTÁ NO<br/><em>SEU CORPO.</em><br/><span>ESTÁ NA PRESSÃO.</span></h1>
-      <p>Medo de falhar. Pensamentos acelerados. A sensação de precisar provar alguma coisa. Entenda como a ansiedade pode afetar seus momentos íntimos — e dê o primeiro passo para lidar melhor com ela.</p>
+      <p>Medo de brochar, de não durar o quanto gostaria ou de decepcionar alguém? A ansiedade na hora de transar pode transformar o sexo em uma prova. Entenda seus gatilhos e comece a lidar com essa pressão.</p>
       <div className="mx-hero-actions"><Link className="mx-button mx-button-primary" href="/quiz">DESCOBRIR COMO A PRESSÃO ME AFETA <span>↗</span></Link></div>
       <div className="mx-hero-proof"><span>01 / DISCRETO</span><span>02 / 18 PERGUNTAS</span><span>03 / SEM CADASTRO</span></div>
      </div>
@@ -29,7 +29,7 @@ export default function Home(){
    </section>
    <section id="metodo" className="mx-method">
     <div className="mx-wrap">
-     <div className="mx-method-head"><div><span className="mx-overline">POR QUE O EIXO EXISTE</span><h2>QUANDO A MENTE<br/>COBRA DEMAIS,<br/><em>O MOMENTO MUDA.</em></h2></div><p>A autocobrança pode transformar a intimidade em uma avaliação constante. O primeiro passo não é fingir que a pressão não existe — é reconhecer como ela aparece para você.</p></div>
+     <div className="mx-method-head"><div><span className="mx-overline">POR QUE O EIXO EXISTE</span><h2>QUANDO A MENTE<br/>COBRA DEMAIS,<br/><em>O MOMENTO MUDA.</em></h2></div><p>Na hora de transar, o medo de falhar pode ocupar o lugar do prazer. O primeiro passo não é fingir que isso não existe — é entender como a ansiedade e a autocobrança aparecem para você.</p></div>
      <div className="mx-steps">
       <article><div className="mx-step-top"><span>01</span><b>↗</b></div><div className="mx-step-graphic mx-graphic-one"><img className="mx-card-photo" src="/images/pressao.jpg" alt="Homem pensativo em ambiente escuro" loading="lazy"/></div><div className="mx-step-foot"><h3>PRESSÃO</h3><h4>RECONHEÇA O CICLO</h4><p>Observe expectativas, pensamentos antecipatórios e medo de falhar.</p></div></article>
       <article><div className="mx-step-top"><span>02</span><b>↗</b></div><div className="mx-step-graphic mx-graphic-two"><img className="mx-card-photo" src="/images/clareza.jpg" alt="Retrato masculino em preto e branco" loading="lazy"/></div><div className="mx-step-foot"><h3>CLAREZA</h3><h4>ENTENDA SEUS PADRÕES</h4><p>Responda a 18 perguntas objetivas, com pausas visuais e reflexão no seu ritmo.</p></div></article>
@@ -38,7 +38,7 @@ export default function Home(){
      <div className="mx-method-cta"><span>SEM CADASTRO. SEM EXPOSIÇÃO. SEM PROMESSAS MILAGROSAS.</span><Link className="mx-button mx-button-dark" href="/quiz">FAZER MINHA REFLEXÃO <span>↗</span></Link></div>
     </div>
    </section>
-   <section className="mx-manifesto"><div className="mx-wrap mx-manifesto-inner"><span>EIXO / MANIFESTO</span><h2>VOCÊ NÃO PRECISA<br/><em>PROVAR NADA.</em></h2><p>A intimidade não precisa ser um teste. Comece entendendo o que a pressão provoca em você.</p><Link className="mx-button mx-button-primary mx-manifesto-cta" href="/quiz">COMEÇAR QUESTIONÁRIO <span aria-hidden="true">↗</span></Link><small>18 perguntas · Pausas visuais · Raspadinha educativa</small></div></section>
+   <section className="mx-manifesto"><div className="mx-wrap mx-manifesto-inner"><span>EIXO / MANIFESTO</span><h2>VOCÊ NÃO PRECISA<br/><em>PROVAR NADA.</em></h2><p>Transar não precisa ser uma prova de desempenho. Comece entendendo o que o medo de falhar provoca em você.</p><Link className="mx-button mx-button-primary mx-manifesto-cta" href="/quiz">COMEÇAR QUESTIONÁRIO <span aria-hidden="true">↗</span></Link><small>18 perguntas · Pausas visuais · Raspadinha educativa</small></div></section>
    <section className="mx-faq" id="perguntas"><div className="mx-wrap mx-faq-grid"><div><span className="mx-overline">DÚVIDAS FREQUENTES</span><h2>SEM TABUS.<br/><em>SEM ENROLAÇÃO.</em></h2><p>As informações abaixo ajudam você a entender o propósito dessa experiência.</p></div><div className="mx-faq-items">{faqs.map(([question,answer],i)=><details key={question}><summary><span>{String(i+1).padStart(2,"0")}</span>{question}<b>+</b></summary><p>{answer}</p></details>)}</div></div></section>
   </main>
   <footer className="mx-footer"><div className="mx-wrap"><Brand/><p>EIXO — Confiança começa na mente.</p><small>Conteúdo educativo. Não substitui aconselhamento médico ou psicológico.</small><Link href="/quiz">INICIAR QUESTIONÁRIO ↗</Link></div></footer>

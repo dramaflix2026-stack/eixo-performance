@@ -62,6 +62,7 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
   const last=useRef<{x:number;y:number}|null>(null);
   const revealed=useRef(false);
   const [isRevealed,setIsRevealed]=useState(false);
+  const [scratchProgress,setScratchProgress]=useState(0);
 
   const finish=()=>{
     if(revealed.current)return;
@@ -82,23 +83,32 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
     canvas.width=Math.round(width*dpr);
     canvas.height=Math.round(height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
+    // Película dourada metálica: textura, borda gravada e chamada central.
     const gradient=ctx.createLinearGradient(0,0,width,height);
-    gradient.addColorStop(0,"#eac776");
-    gradient.addColorStop(.5,"#bb903f");
-    gradient.addColorStop(1,"#f9d98d");
+    gradient.addColorStop(0,"#fae4a9");
+    gradient.addColorStop(.22,"#d1a557");
+    gradient.addColorStop(.49,"#f2cf81");
+    gradient.addColorStop(.73,"#bd8f40");
+    gradient.addColorStop(1,"#f9dfa0");
     ctx.fillStyle=gradient;
     ctx.fillRect(0,0,width,height);
-    for(let n=0;n<130;n++){
+    for(let n=0;n<220;n++){
       const x=(n*171.73)%width,y=(n*83.31)%height;
-      ctx.fillStyle=n%2?"rgba(255,255,255,.18)":"rgba(78,52,20,.13)";
-      ctx.beginPath();ctx.arc(x,y,n%4?0.8:1.4,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=n%2?"rgba(255,255,255,.17)":"rgba(65,43,13,.10)";
+      ctx.beginPath();ctx.arc(x,y,n%4?0.9:1.4,0,Math.PI*2);ctx.fill();
     }
-    ctx.fillStyle="#271b0b";
+    ctx.strokeStyle="rgba(72,43,6,.38)";ctx.lineWidth=2;
+    ctx.strokeRect(11,11,width-22,height-22);
+    ctx.fillStyle="#342514";
     ctx.textAlign="center";
-    ctx.font="900 "+Math.min(34,Math.max(22,width*.072))+"px Arial";
-    ctx.fillText("RASPE AQUI",width/2,height/2-8);
-    ctx.font="700 12px Arial";
-    ctx.fillText("DESLIZE O DEDO PARA REVELAR",width/2,height/2+26);
+    ctx.font="800 11px Arial";
+    ctx.fillText("✦  EIXO  ·  EXCLUSIVO PARA VOCÊ  ✦",width/2,44);
+    ctx.font="900 "+Math.min(34,Math.max(23,width*.079))+"px Arial";
+    ctx.fillText("RASPE AQUI",width/2,height/2+3);
+    ctx.font="700 "+Math.min(12,Math.max(10,width*.028))+"px Arial";
+    ctx.fillText("DESLIZE O DEDO OU O MOUSE",width/2,height/2+31);
+    ctx.font="800 10px Arial";
+    ctx.fillText("DESCUBRA SEU BÔNUS",width/2,height-26);
     ctx.textAlign="start";
   },[]);
 
@@ -131,20 +141,31 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
     const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;
     let removed=0,count=0;
     for(let p=3;p<pixels.length;p+=4*24){count++;if(pixels[p]<100)removed++;}
-    if(count&&removed/count>=.32)finish();
+    if(count){
+      const ratio=removed/count;
+      setScratchProgress(Math.min(100,Math.round(ratio/.32*100)));
+      if(ratio>=.32)finish();
+    }
   };
 
-  return <div className="funnel-scratch">
+  return <div className={"funnel-scratch"+(isRevealed?" funnel-scratch-done":"")}>
     <div className="funnel-scratch-card">
       <div className="funnel-scratch-prize">
-        <span>✦ PRESENTE EIXO LIBERADO</span>
-        <strong>SEU ROTEIRO INICIAL DE 7 DIAS</strong>
-        <small>Um guia educativo de atenção, presença e comunicação.</small>
+        <div className="funnel-scratch-gift-head"><span>✦ EIXO EXCLUSIVO</span><span>LIBERADO ✓</span></div>
+        <div className="funnel-scratch-gift-body">
+          <div className="funnel-scratch-number">07<span>DIAS</span></div>
+          <div className="funnel-scratch-gift-copy">
+            <span>SEU BÔNUS</span>
+            <strong>GUIA DE CONFIANÇA NA HORA H</strong>
+            <small>Práticas educativas para lidar com ansiedade, presença e comunicação.</small>
+          </div>
+        </div>
+        <div className="funnel-scratch-gift-footer"><span>✓ ACESSO NA HORA</span><span>✓ SEM CADASTRO</span></div>
       </div>
       <canvas
         ref={canvasRef}
         className={"funnel-scratch-canvas"+(isRevealed?" is-open":"")}
-        aria-label="Cartão dourado interativo para raspar e revelar um guia educativo"
+        aria-label="Raspe a cobertura dourada para revelar seu guia de sete dias"
         onPointerDown={e=>{
           if(revealed.current)return;
           dragging.current=true;
@@ -158,8 +179,12 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
         onLostPointerCapture={()=>{dragging.current=false;last.current=null}}
       />
     </div>
-    {isRevealed?<p className="funnel-scratch-caption">✦ Seu bônus está liberado.</p>:
-      <button type="button" className="funnel-scratch-alt" onClick={finish}>Não consegue raspar? Revelar por toque</button>}
+    {isRevealed?<p className="funnel-scratch-caption">✦ PRESENTE LIBERADO — CLIQUE ABAIXO PARA ABRIR</p>:
+      <div className="funnel-scratch-progress">
+        <div className="funnel-scratch-progress-track"><i style={{width:scratchProgress+"%"}}/></div>
+        <span>{scratchProgress>0?scratchProgress+"% RASPADO":"RASPE O CARTÃO DOURADO"}</span>
+        <button type="button" className="funnel-scratch-alt" onClick={finish}>Não consegue raspar? Revelar por toque</button>
+      </div>}
   </div>;
 }
 

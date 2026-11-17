@@ -322,8 +322,7 @@
 }
 
 
-/* Vertical video slot below "SEU RESULTADO ESTÁ PRONTO · EIXO".
-   A reserved 9:16 container only: no unprovided video or nonfunctional player. */
+/* Video slot after the complete hero, before the profile section. No video is embedded yet. */
 .eixo-hero-video-slot {
   width:min(100%,290px);
   aspect-ratio:9 / 16;
@@ -376,5 +375,30 @@
   .eixo-hero-video-slot{
     width:min(100%,300px);
     margin:19px auto 29px;
+  }
+}
+
+
+/* Video: its own section, strictly AFTER the full hero */
+.eixo-presentation-video-section{
+  padding:60px 0 72px;
+  background:#0e0f11;
+  border-top:1px solid #332a1e;
+  border-bottom:1px solid #332a1e;
+}
+.eixo-presentation-video-layout{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.eixo-presentation-video-section .eixo-hero-video-slot{
+  width:min(100%,315px);
+  margin:0 auto;
+}
+@media(max-width:700px){
+  .eixo-presentation-video-section{padding:36px 0 47px}
+  .eixo-presentation-video-section .eixo-hero-video-slot{
+    width:min(100%,300px);
+    margin:0 auto;
   }
 }

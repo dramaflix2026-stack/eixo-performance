@@ -320,3 +320,61 @@
 @media(prefers-reduced-motion:reduce){
   .eixo-offer-cta{transition:none}
 }
+
+
+/* Vertical video slot below "SEU RESULTADO ESTÁ PRONTO · EIXO".
+   A reserved 9:16 container only: no unprovided video or nonfunctional player. */
+.eixo-hero-video-slot {
+  width:min(100%,290px);
+  aspect-ratio:9 / 16;
+  margin:21px 0 29px;
+  border:1px solid #b98c4f;
+  border-radius:18px;
+  padding:6px;
+  background:linear-gradient(155deg,rgba(221,168,83,.16),rgba(17,18,20,.82));
+  box-shadow:0 15px 45px rgba(0,0,0,.36),0 0 0 4px rgba(211,157,79,.07);
+}
+.eixo-hero-video-placeholder {
+  display:flex;
+  width:100%;
+  height:100%;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:17px;
+  text-align:center;
+  padding:22px 15px;
+  border:1px dashed rgba(237,192,119,.44);
+  border-radius:13px;
+  background:radial-gradient(ellipse at center,rgba(105,72,37,.24),rgba(11,12,15,.96) 68%);
+  color:#efcb90;
+}
+.eixo-hero-video-play {
+  display:grid;
+  place-items:center;
+  width:65px;
+  height:65px;
+  border:1.5px solid rgba(237,190,112,.75);
+  border-radius:50%;
+  font-size:25px;
+  padding-left:4px;
+  color:#edc27e;
+  background:rgba(215,162,82,.12);
+}
+.eixo-hero-video-placeholder strong{
+  font-size:12px;
+  line-height:1.4;
+  letter-spacing:1.35px;
+  font-weight:900;
+}
+.eixo-hero-video-placeholder>span:last-child {
+  font-size:10px;
+  letter-spacing:1px;
+  color:#b8a489;
+}
+@media(max-width:700px){
+  .eixo-hero-video-slot{
+    width:min(100%,300px);
+    margin:19px auto 29px;
+  }
+}

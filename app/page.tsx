@@ -38,7 +38,7 @@ export default function Home(){
      <div className="mx-method-cta"><span>SEM CADASTRO. SEM EXPOSIÇÃO. SEM PROMESSAS MILAGROSAS.</span><Link className="mx-button mx-button-dark" href="/quiz">FAZER MINHA REFLEXÃO <span>↗</span></Link></div>
     </div>
    </section>
-   <section className="mx-manifesto"><div className="mx-wrap mx-manifesto-inner"><span>EIXO / MANIFESTO</span><h2>VOCÊ NÃO PRECISA<br/>TRANSFORMAR A INTIMIDADE<br/>EM UMA <em>PROVA.</em></h2><Link className="mx-button mx-button-primary" href="/quiz">COMEÇAR QUESTIONÁRIO <span>↗</span></Link></div></section>
+   <section className="mx-manifesto"><div className="mx-wrap mx-manifesto-inner"><span>EIXO / MANIFESTO</span><h2>VOCÊ NÃO PRECISA<br/>TRANSFORMAR A INTIMIDADE<br/>EM UMA <em>PROVA.</em></h2><Link className="mx-button mx-button-primary mx-manifesto-cta" href="/quiz">COMEÇAR QUESTIONÁRIO <span aria-hidden="true">↗</span></Link></div></section>
    <section className="mx-faq" id="perguntas"><div className="mx-wrap mx-faq-grid"><div><span className="mx-overline">DÚVIDAS FREQUENTES</span><h2>SEM TABUS.<br/><em>SEM ENROLAÇÃO.</em></h2><p>As informações abaixo ajudam você a entender o propósito dessa experiência.</p></div><div className="mx-faq-items">{faqs.map(([question,answer],i)=><details key={question}><summary><span>{String(i+1).padStart(2,"0")}</span>{question}<b>+</b></summary><p>{answer}</p></details>)}</div></div></section>
   </main>
   <footer className="mx-footer"><div className="mx-wrap"><Brand/><p>EIXO — Confiança começa na mente.</p><small>Conteúdo educativo. Não substitui aconselhamento médico ou psicológico.</small><Link href="/quiz">INICIAR QUESTIONÁRIO ↗</Link></div></footer>

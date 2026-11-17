@@ -78,7 +78,6 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
   const pressure=selected(answers,2,["Nunca","Raramente","Às vezes","Frequentemente"]);
   const stress=selected(answers,9,["Não percebo relação","Um pouco","Moderadamente","Bastante"]);
   const talk=selected(answers,8,["Consigo conversar","Com alguma dificuldade","Quase nunca","Não tenho com quem conversar"]);
-  const lead=[cleanName?cleanName+", ":"","sua próxima experiência íntima não precisa começar com medo."].join("");
   const insights=[
     {active:(answers[2]??0)>=2,title:"Medo antecipatório",text:"Você relatou que a preocupação com falhar aparece em alguns momentos."},
     {active:(answers[9]??0)>=2,title:"Estresse da rotina",text:"O estresse do dia também apareceu na forma como você percebe a intimidade."},
@@ -105,7 +104,7 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       <div className="eixo-offer-wrap eixo-hero-grid">
         <div className="eixo-hero-copy">
           <span className="eixo-offer-kicker">SEU RESULTADO ESTÁ PRONTO · EIXO</span>
-          <h1>{lead.split(" ").slice(0,cleanName?1:0).join(" ")}{cleanName&&<>{cleanName}, </>}<em>SUA VIDA SEXUAL</em> PODE TER MENOS PRESSÃO.</h1>
+          <h1>{cleanName&&<>{cleanName}, </>}<em>SUA VIDA SEXUAL</em> PODE TER MENOS PRESSÃO.</h1>
           <p>Você chegou até aqui para entender o que está atrapalhando sua confiança na hora de transar. Agora tem um ponto de partida baseado no que respondeu — sem promessas milagrosas.</p>
           <div className="eixo-hero-facts"><span>✓ 18 RESPOSTAS CONSIDERADAS</span><span>✓ CONTEÚDO DISCRETO</span><span>✓ SEM DIAGNÓSTICO INVENTADO</span></div>
           <InPageCta label="VER MEU PONTO DE PARTIDA" href="#eixo-perfil"/>

@@ -38,6 +38,27 @@ const STORIES = [
   {badge:"05 / O QUE VEM A SEGUIR",heading:"QUER TRANSAR COM MENOS MEDO? COMECE ENTENDENDO A PRESSÃO.",body:"Depois de reconhecer seus gatilhos, o próximo passo é experimentar estratégias possíveis no seu ritmo. O EIXO organiza um roteiro inicial de atenção, diálogo e rotina.",photo:"/images/clareza.jpg",alt:"Retrato editorial de um homem",visual:"steps",button:"QUERO CONCLUIR",tag:"UM PASSO DE CADA VEZ."}
 ] as const;
 
+const HINTS = [
+  "O ponto de partida é conhecer você. Só leva alguns segundos.",
+  "Pense no que acontece de verdade, mesmo que não seja fácil falar disso.",
+  "A frequência desses pensamentos ajuda a identificar padrões de cobrança.",
+  "Qual dessas situações mais mexe com a sua segurança na cama?",
+  "Não existe meta de desempenho igual para todo mundo.",
+  "Tensão e pensamentos acelerados podem aparecer juntos.",
+  "Uma experiência ruim não precisa definir a sua vida sexual.",
+  "Às vezes, o medo de falhar pesa mais do que a vontade de transar.",
+  "Falar sobre sexo pode ser difícil. Responda como acontece com você.",
+  "A pressão da rotina nem sempre termina quando o dia acaba.",
+  "O descanso pode fazer diferença no seu bem-estar.",
+  "Vale considerar o que você já experimentou e como se sentiu.",
+  "Essa informação ajuda a contextualizar sua experiência.",
+  "Você consegue curtir a intimidade ou fica analisando seu desempenho?",
+  "O que te deixa mais seguro quando chega a hora H?",
+  "Alguns minutos podem ser suficientes para começar uma reflexão.",
+  "Pense na mudança que faria sentido para a sua vida, não na expectativa dos outros.",
+  "Depois desta resposta, você poderá revelar seu bônus de 7 dias."
+] as const;
+
 const FLOW:Step[] = [];
 QUESTIONS.forEach((_,number)=>{
   FLOW.push({kind:"question",number});
@@ -282,7 +303,7 @@ export default function Quiz(){
       {step.kind==="question"&&<section className="funnel-question" key={"q"+questionNumber}>
         <span className="funnel-tag">{QUESTIONS[questionNumber].eyebrow}</span>
         <h1>{QUESTIONS[questionNumber].prompt}</h1>
-        <p>Responda sem filtros. Sua vida sexual não precisa ser um tabu.</p>
+        <p>{HINTS[questionNumber]}</p>
         <div className="funnel-options">
           {QUESTIONS[questionNumber].options.map((label,index)=><button
             key={label}

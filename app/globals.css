@@ -483,3 +483,60 @@
 @media(prefers-reduced-motion:reduce){
   .mx-manifesto .mx-manifesto-cta{transition:none!important}
 }
+
+
+/* EIXO: active, unmistakable pulsing CTA — not a static highlight */
+.mx-manifesto .mx-manifesto-cta{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+  background:linear-gradient(120deg,#efaa4b 0%,#ffd17c 50%,#eaa145 100%);
+  border:2px solid #f6c978;
+  box-shadow:0 0 0 0 rgba(255,187,85,.15),0 7px 24px rgba(244,158,49,.24);
+  transform-origin:center center;
+  will-change:transform;
+  animation:eixoCtaHeartbeat 2.5s ease-in-out infinite !important;
+}
+.mx-manifesto .mx-manifesto-cta::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  z-index:-1;
+  border-radius:11px;
+  border:2px solid rgba(255,195,95,.82);
+  pointer-events:none;
+  animation:eixoCtaRing 2.5s ease-out infinite;
+}
+.mx-manifesto .mx-manifesto-cta:hover{
+  background:linear-gradient(120deg,#ffd078,#ffe4a0,#f4b25a);
+}
+.mx-manifesto .mx-manifesto-cta > span{
+  animation:eixoCtaArrow 2.5s ease-in-out infinite;
+}
+@keyframes eixoCtaHeartbeat{
+  0%,100%{transform:scale(1);filter:brightness(1);box-shadow:0 0 0 0 rgba(255,188,77,.1),0 7px 24px rgba(244,158,49,.22)}
+  42%{transform:scale(1.046);filter:brightness(1.15);box-shadow:0 0 0 7px rgba(255,184,71,.2),0 0 36px rgba(255,179,72,.67)}
+  56%{transform:scale(1.026);filter:brightness(1.06);box-shadow:0 0 0 4px rgba(255,188,77,.12),0 0 20px rgba(255,179,72,.40)}
+  72%{transform:scale(1);filter:brightness(1);box-shadow:0 0 0 0 rgba(255,188,77,0),0 7px 24px rgba(244,158,49,.22)}
+}
+@keyframes eixoCtaRing{
+  0%,22%{opacity:0;transform:scale(.985)}
+  42%{opacity:.85;transform:scale(1.018)}
+  78%,100%{opacity:0;transform:scale(1.075)}
+}
+@keyframes eixoCtaArrow{
+  0%,30%,100%{transform:translate(0,0)}
+  46%{transform:translate(3px,-3px)}
+  64%{transform:translate(0,0)}
+}
+@media(max-width:760px){
+  .mx-manifesto .mx-manifesto-cta{width:100%;margin-inline:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .mx-manifesto .mx-manifesto-cta,
+  .mx-manifesto .mx-manifesto-cta::after,
+  .mx-manifesto .mx-manifesto-cta > span{
+    animation:none!important;
+    will-change:auto!important;
+  }
+}

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import Link from "next/link";
+import OfferPage from "./offer";
 import "./quiz.css";
 
 type Question = { prompt: string; options: string[]; eyebrow?: string };
@@ -251,59 +252,6 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
   </div>;
 }
 
-const DAYS=[
-  ["DIA 01","IDENTIFICAR","Anote quando a autocobrança aparece e o que você pensa nesse momento."],
-  ["DIA 02","DESACELERAR","Reserve alguns minutos para perceber sua respiração e relaxar os ombros, sem exigir um resultado."],
-  ["DIA 03","REVER EXPECTATIVAS","Reflita sobre a diferença entre conexão e cobrança por desempenho."],
-  ["DIA 04","CONVERSAR","Quando possível, pratique uma conversa aberta sobre expectativas, limites e conforto."],
-  ["DIA 05","PRESENÇA","Em uma atividade cotidiana, experimente prestar atenção às sensações do momento, sem se avaliar."],
-  ["DIA 06","ROTINA","Observe como sono, cansaço e estresse podem influenciar sua disposição."],
-  ["DIA 07","REVISAR","Retome suas anotações e identifique quais estratégias fazem sentido continuar. Se houver sofrimento persistente, considere buscar apoio profissional."]
-];
-
-function PersonalizedResult({answers,name}:{answers:(number|null)[];name:string}){
-  const focus=QUESTIONS[16].options[answers[16]??4];
-  const concern=QUESTIONS[3].options[answers[3]??4];
-  const time=QUESTIONS[15].options[answers[15]??4];
-  const greeting=name.trim()?name.trim().slice(0,40)+",":"";
-  const insights=[
-    {show:(answers[2]??0)>=2,text:"Você indicou que o medo de falhar aparece com alguma frequência."},
-    {show:(answers[5]??0)>=2,text:"Você percebeu reações de tensão ou pensamentos repetitivos em alguns momentos."},
-    {show:(answers[6]??0)>=2,text:"Experiências anteriores parecem influenciar suas expectativas atuais."},
-    {show:(answers[7]??0)>=2,text:"Você relatou ter evitado situações íntimas por preocupação com o desempenho."},
-    {show:(answers[8]??0)>=2,text:"Conversar sobre essas preocupações pode ser especialmente importante para você."},
-    {show:(answers[9]??0)>=2,text:"O estresse da rotina apareceu como um fator relevante nas suas respostas."},
-    {show:(answers[10]??0)>=2,text:"Seu sono pode ser uma dimensão da rotina que merece atenção."},
-    {show:(answers[13]??0)>=2,text:"A autocobrança parece ocupar bastante espaço antes da intimidade."}
-  ].filter(item=>item.show).map(item=>item.text).slice(0,3);
-  const observations=insights.length?insights:[
-    "Você identificou suas próprias prioridades para lidar com a intimidade com menos cobrança.",
-    "Perceber o que ajuda você a se sentir confortável já é um ponto de partida."
-  ];
-  const situation=QUESTIONS[1].options[answers[1]??4].toLowerCase();
-  const adjustedDays=DAYS.map(([day,title,copy],index)=>{
-    if(index===0)return [day,title,"Observe como você se sente especialmente "+situation+". Registre pensamentos e situações, sem se julgar."];
-    if(index===3 && (answers[8]??0)>=2)return [day,title,"Se houver segurança e abertura, pratique uma conversa pequena e honesta sobre suas preocupações. Você não precisa explicar tudo de uma vez."];
-    if(index===5 && (answers[10]??0)>=2)return [day,title,"Observe seu padrão de sono e cansaço e o impacto que a rotina tem na sua disposição. Não busque perfeição."];
-    return [day,title,copy];
-  });
-  return <div className="funnel-result">
-    <span className="funnel-tag">SEU RESULTADO · EIXO</span>
-    <h1>{greeting&&<span className="funnel-result-name">{greeting} </span>}SEU GUIA PARA LIDAR COM A PRESSÃO NA HORA DO SEXO ESTÁ <em>PRONTO.</em></h1>
-    <p className="funnel-result-intro">Você concluiu 18 perguntas e desbloqueou um roteiro educativo para começar com mais consciência e menos cobrança.</p>
-    <div className="funnel-summary">
-      <span className="funnel-small-label">SUA REFLEXÃO PESSOAL</span>
-      <h2>{focus}</h2>
-      <p>Você destacou como preocupação: <strong>{concern.toLowerCase()}</strong>. Disponibilidade informada para práticas educativas: <strong>{time.toLowerCase()}</strong>.</p>
-      <div className="funnel-insights"><span>O QUE SUAS RESPOSTAS DESTACARAM</span>{observations.map((note,index)=><p key={index}><b>✓</b>{note}</p>)}</div>
-      <p className="funnel-profile-note">Essas observações são descritivas e não constituem avaliação clínica, diagnóstico ou previsão de resultados.</p>
-    </div>
-    <div className="funnel-plan-heading"><span className="funnel-tag">BÔNUS LIBERADO NA RASPADINHA</span><h2>SEU ROTEIRO INICIAL DE <em>7 DIAS</em></h2><p>São sugestões educativas ajustadas a alguns pontos da sua reflexão, não uma prescrição clínica ou promessa de desempenho.</p></div>
-    <div className="funnel-days">{adjustedDays.map(([day,title,copy])=><details key={day}><summary><span>{day}</span><strong>{title}</strong><b>+</b></summary><p>{copy}</p></details>)}</div>
-    <p className="funnel-medical">A ansiedade de desempenho e dificuldades sexuais podem envolver múltiplos fatores. Se a situação incomoda, persiste ou surge de repente, procure atendimento médico ou psicológico apropriado.</p>
-  </div>;
-}
-
 export default function Quiz(){
   const [position,setPosition]=useState(0);
   const [answers,setAnswers]=useState<(number|null)[]>(Array(QUESTIONS.length).fill(null));
@@ -336,7 +284,7 @@ export default function Quiz(){
       <Link href="/" className="funnel-brand" aria-label="EIXO, página inicial"><span>◈</span>EIXO</Link>
       <div className="funnel-private">◉ &nbsp; CONTEÚDO DISCRETO E EDUCATIVO</div>
     </div></header>
-    <div className="funnel-content">
+    <div className={"funnel-content"+(step.kind==="result"?" funnel-content-offer":"")}>
       {showProgress&&<div className="funnel-progress">
         <div className="funnel-progress-line"><span>{currentLabel}</span><span>{progress}% CONCLUÍDO</span></div>
         <div className="funnel-progress-segments">{Array.from({length:6},(_,i)=><i key={i} style={{background:answered>=((i+1)*3)?"#d9a95f":"#35302a"}}/>)}</div>
@@ -404,11 +352,7 @@ export default function Quiz(){
         <small>Campanha Esquenta Black Friday EIXO. O desconto de 80% precisará ser configurado e validado na etapa de pagamento.</small>
       </section>}
 
-      {step.kind==="result"&&<section className="funnel-result-screen">
-        <div className="funnel-bf-result-banner"><strong>🔥 ESQUENTA BLACK FRIDAY · 80% OFF</strong><span>Bônus revelado na raspadinha. O desconto depende da configuração do checkout.</span></div>
-        <PersonalizedResult answers={answers} name={name}/>
-        <div className="funnel-result-actions"><Link className="funnel-main-cta" href="/">CONHECER O EIXO <span>↗</span></Link><button type="button" onClick={reset}>REFAZER QUESTIONÁRIO</button></div>
-      </section>}
+      {step.kind==="result"&&<OfferPage answers={answers} name={name} onReset={reset}/>} 
 
       {position>0&&step.kind!=="result"&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
     </div>

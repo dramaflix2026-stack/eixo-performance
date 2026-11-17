@@ -149,7 +149,7 @@
 }
 .funnel-compare b{font-size:37px;color:#e4b068;animation:funnelArrow 2.1s ease-in-out infinite}
 @keyframes funnelArrow{0%,100%{transform:translateX(0)}50%{transform:translateX(12px)}}
-.funnel-meter{display:flex;gap:7px;align-items:end;height:140px;position:relative;padding-bottom:32px}
+.funnel-meter{display:flex;gap:7px;align-items:flex-end;height:140px;position:relative;padding-bottom:32px}
 .funnel-meter i{
   display:block;width:39px;border:1px solid #f0c985;background:linear-gradient(#d5a35a,#785223);
   height:35px;border-radius:6px;animation:funnelMeter 3s ease-in-out infinite;

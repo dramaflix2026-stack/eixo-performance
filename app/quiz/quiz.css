@@ -354,3 +354,137 @@
 .funnel-insights p{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.65;margin:12px 0;color:#e4d6c5}
 .funnel-insights p b{color:#edbe76;font-size:16px;flex-shrink:0}
 .funnel-summary p.funnel-profile-note{font-size:11px;color:#a99c89;border-top:1px solid #51412b;padding-top:15px;margin-top:17px}
+
+
+/* EIXO 3.1 — premium scratch card redesign. Gold foil + sharp legible prize. */
+.funnel-scratch-step{max-width:710px;margin-inline:auto}
+.funnel-scratch-step>h1{font-size:clamp(36px,5.3vw,62px);line-height:1.09;max-width:690px}
+.funnel-scratch{max-width:620px;width:100%;margin:27px auto}
+.funnel-scratch-card{
+  width:100%;position:relative;overflow:hidden;
+  border:1px solid #d5a75f;border-radius:22px;min-height:292px;
+  background:#1b1713;isolation:isolate;
+  box-shadow:0 24px 66px rgba(0,0,0,.6),0 0 0 6px rgba(206,155,67,.12);
+  transition:border-color .35s,box-shadow .35s;
+}
+.funnel-scratch-done .funnel-scratch-card{
+  border-color:#f9d697;
+  box-shadow:0 25px 70px rgba(0,0,0,.64),0 0 0 5px rgba(225,172,76,.19),0 0 35px rgba(222,167,73,.19);
+}
+.funnel-scratch-prize{
+  min-height:292px;display:flex;flex-direction:column;justify-content:space-between;
+  gap:0;padding:20px 24px 21px;
+  background:radial-gradient(ellipse at 36% 20%,#3b2c19 0%,#16130f 54%,#0e0e0f 100%);
+  position:relative;overflow:hidden;text-align:left;
+}
+.funnel-scratch-prize::before{
+  content:"";position:absolute;width:250px;height:250px;
+  right:-60px;top:-102px;border:1px solid rgba(227,176,94,.25);
+  border-radius:50%;box-shadow:0 0 0 36px rgba(231,178,90,.045),0 0 0 70px rgba(231,178,90,.035);
+  pointer-events:none;
+}
+.funnel-scratch-gift-head,.funnel-scratch-gift-footer{
+  width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  position:relative;z-index:1;font-size:10px;line-height:1.25;
+  font-weight:900;letter-spacing:1.5px;
+}
+.funnel-scratch-gift-head{color:#f5c97d}
+.funnel-scratch-gift-head span:last-child{
+  color:#e8dbbd;border:1px solid rgba(224,183,100,.4);
+  padding:7px 9px;border-radius:20px;background:rgba(213,164,86,.1);
+  font-size:9px;white-space:nowrap;
+}
+.funnel-scratch-gift-body{
+  display:grid;grid-template-columns:156px minmax(0,1fr);
+  align-items:center;gap:18px;margin:15px 0;
+  position:relative;z-index:1;
+}
+.funnel-scratch-number{
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-family:Arial,Helvetica,sans-serif;font-size:108px;font-weight:950;
+  letter-spacing:-10px;line-height:.84;
+  background:linear-gradient(150deg,#fff5d0,#e3b96a 50%,#a67a35);
+  background-clip:text;-webkit-background-clip:text;color:transparent;
+  text-shadow:none;
+  filter:drop-shadow(0 5px 14px rgba(245,185,87,.22));
+}
+.funnel-scratch-number span{
+  font-size:19px;line-height:1.4;letter-spacing:7px;
+  color:#e9c47d;background:none;-webkit-text-fill-color:#e9c47d;
+  margin-left:8px;margin-top:7px;
+}
+.funnel-scratch-gift-copy{display:flex;flex-direction:column;gap:8px;min-width:0}
+.funnel-scratch-gift-copy>span{font-size:11px;letter-spacing:1.7px;color:#f0bc6f;font-weight:900}
+.funnel-scratch-gift-copy strong{
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:950;color:#fff5df;
+  font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.5px;line-height:1.15;
+  overflow-wrap:break-word;white-space:normal;text-transform:uppercase;
+  text-shadow:0 2px 17px rgba(0,0,0,.55);
+}
+.funnel-scratch-gift-copy small{
+  display:block;color:#c8b9a2;font-size:12px;line-height:1.45;
+}
+.funnel-scratch-gift-footer{
+  border-top:1px solid rgba(221,165,79,.28);
+  padding-top:13px;color:#ddbd88;letter-spacing:.9px;
+}
+.funnel-scratch-canvas{
+  display:block;position:absolute;inset:0;
+  height:100%;width:100%;touch-action:none;cursor:crosshair;
+  transition:opacity .48s ease;
+}
+.funnel-scratch-canvas.is-open{pointer-events:none;opacity:0}
+.funnel-scratch-progress{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  margin-top:20px;
+}
+.funnel-scratch-progress-track{
+  height:5px;background:#453928;width:min(100%,340px);
+  overflow:hidden;border-radius:12px;
+}
+.funnel-scratch-progress-track i{
+  display:block;background:linear-gradient(90deg,#ad7837,#f9d68f);
+  height:100%;border-radius:12px;transition:width .2s;
+}
+.funnel-scratch-progress>span{
+  display:block;color:#e9bf7d;font-size:10px;letter-spacing:1.3px;font-weight:900;
+}
+.funnel-scratch-alt{
+  border:0;background:transparent;color:#b4a28a;
+  text-underline-offset:3px;text-decoration:underline;
+  margin:0;padding:9px 12px;font-size:12px;cursor:pointer;
+}
+.funnel-scratch-alt:focus-visible{outline:2px solid #ffdda2;outline-offset:2px}
+.funnel-scratch-caption{
+  background:#272014;border:1px solid #886638;
+  border-radius:30px;width:fit-content;margin:21px auto 0;
+  padding:11px 16px;color:#f7d48f;font-weight:900;
+  font-size:11px;letter-spacing:.6px;
+}
+.funnel-scratch-next{margin-top:23px}
+@media(max-width:600px){
+  .funnel-scratch-card,.funnel-scratch-prize{min-height:255px}
+  .funnel-scratch-prize{padding:16px 15px;gap:0}
+  .funnel-scratch-gift-head{font-size:9px;letter-spacing:.55px}
+  .funnel-scratch-gift-head span:last-child{font-size:8px;padding:5px 6px}
+  .funnel-scratch-gift-body{grid-template-columns:92px minmax(0,1fr);gap:12px;margin:15px 0}
+  .funnel-scratch-number{font-size:73px;letter-spacing:-6px}
+  .funnel-scratch-number span{font-size:12px;letter-spacing:4px;margin-left:5px;margin-top:7px}
+  .funnel-scratch-gift-copy{gap:6px}
+  .funnel-scratch-gift-copy>span{font-size:9px;letter-spacing:1.1px}
+  .funnel-scratch-gift-copy strong{font-size:clamp(16px,4.6vw,21px);line-height:1.15;letter-spacing:-.2px}
+  .funnel-scratch-gift-copy small{font-size:10px;line-height:1.4}
+  .funnel-scratch-gift-footer{font-size:8px;letter-spacing:.2px;padding-top:10px}
+}
+@media(max-width:360px){
+  .funnel-scratch-prize{padding:14px 12px}
+  .funnel-scratch-gift-body{grid-template-columns:77px 1fr;gap:7px}
+  .funnel-scratch-number{font-size:65px}
+  .funnel-scratch-gift-copy strong{font-size:15px}
+  .funnel-scratch-gift-copy small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .funnel-scratch-card,.funnel-scratch-canvas,.funnel-scratch-progress-track i{transition:none!important}
+}

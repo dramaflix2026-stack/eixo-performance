@@ -99,6 +99,7 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
     if(revealed.current)return;
     revealed.current=true;
     setIsRevealed(true);
+    setScratchProgress(100);
     onReveal();
   };
 
@@ -107,114 +108,122 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
     if(!canvas)return;
     const ctx=canvas.getContext("2d",{willReadFrequently:true});
     if(!ctx)return;
-    const rect=canvas.getBoundingClientRect();
-    const width=Math.max(1,rect.width);
-    const height=Math.max(1,rect.height);
+    const bounds=canvas.getBoundingClientRect();
+    const width=Math.max(1,bounds.width);
+    const height=Math.max(1,bounds.height);
     const dpr=Math.min(window.devicePixelRatio||1,2);
     canvas.width=Math.round(width*dpr);
     canvas.height=Math.round(height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    // Película dourada metálica: textura, borda gravada e chamada central.
-    const gradient=ctx.createLinearGradient(0,0,width,height);
-    gradient.addColorStop(0,"#fae4a9");
-    gradient.addColorStop(.22,"#d1a557");
-    gradient.addColorStop(.49,"#f2cf81");
-    gradient.addColorStop(.73,"#bd8f40");
-    gradient.addColorStop(1,"#f9dfa0");
-    ctx.fillStyle=gradient;
+    // A película é completamente opaca, acima do prêmio.
+    ctx.globalCompositeOperation="source-over";
+    ctx.globalAlpha=1;
+    const gold=ctx.createLinearGradient(0,0,width,height);
+    gold.addColorStop(0,"#f7dda4");
+    gold.addColorStop(.24,"#d6a153");
+    gold.addColorStop(.5,"#f1cd85");
+    gold.addColorStop(.78,"#b78438");
+    gold.addColorStop(1,"#f2ce8b");
+    ctx.fillStyle=gold;
     ctx.fillRect(0,0,width,height);
-    for(let n=0;n<220;n++){
-      const x=(n*171.73)%width,y=(n*83.31)%height;
-      ctx.fillStyle=n%2?"rgba(255,255,255,.17)":"rgba(65,43,13,.10)";
-      ctx.beginPath();ctx.arc(x,y,n%4?0.9:1.4,0,Math.PI*2);ctx.fill();
+    for(let i=0;i<180;i++){
+      const x=(i*171.73)%width;
+      const y=(i*83.31)%height;
+      ctx.fillStyle=i%3===0?"rgba(255,255,255,.19)":"rgba(69,43,17,.10)";
+      ctx.beginPath();ctx.arc(x,y,i%4===0?1.2:.6,0,Math.PI*2);ctx.fill();
     }
-    ctx.strokeStyle="rgba(72,43,6,.38)";ctx.lineWidth=2;
-    ctx.strokeRect(11,11,width-22,height-22);
-    ctx.fillStyle="#342514";
+    ctx.strokeStyle="rgba(75,48,20,.34)";
+    ctx.lineWidth=1.5;
+    ctx.strokeRect(12,12,width-24,height-24);
+    ctx.fillStyle="#312012";
     ctx.textAlign="center";
-    ctx.font="800 11px Arial";
-    ctx.fillText("✦  EIXO  ·  EXCLUSIVO PARA VOCÊ  ✦",width/2,44);
-    ctx.font="900 "+Math.min(34,Math.max(23,width*.079))+"px Arial";
-    ctx.fillText("RASPE AQUI",width/2,height/2+3);
-    ctx.font="700 "+Math.min(12,Math.max(10,width*.028))+"px Arial";
-    ctx.fillText("DESLIZE O DEDO OU O MOUSE",width/2,height/2+31);
-    ctx.font="800 10px Arial";
-    ctx.fillText("DESCUBRA SEU BÔNUS",width/2,height-26);
-    ctx.textAlign="start";
+    ctx.font="900 "+Math.min(12,Math.max(10,width*.021))+"px Arial, sans-serif";
+    ctx.fillText("✦  EIXO · PRESENTE EXCLUSIVO  ✦",width/2,height*.29);
+    ctx.font="900 "+Math.min(42,Math.max(23,width*.082))+"px Arial, sans-serif";
+    ctx.fillText("RASPE AQUI",width/2,height*.51);
+    ctx.font="700 "+Math.min(13,Math.max(10,width*.027))+"px Arial, sans-serif";
+    ctx.fillText("DESLIZE O DEDO OU O MOUSE",width/2,height*.51+32);
   },[]);
 
   const draw=(event:ReactPointerEvent<HTMLCanvasElement>)=>{
-    if(!dragging.current || revealed.current)return;
+    if(!dragging.current||revealed.current)return;
     const canvas=canvasRef.current;
     const ctx=canvas?.getContext("2d",{willReadFrequently:true});
     if(!canvas||!ctx)return;
     const bounds=canvas.getBoundingClientRect();
-    const pos={x:event.clientX-bounds.left,y:event.clientY-bounds.top};
+    const p={x:event.clientX-bounds.left,y:event.clientY-bounds.top};
     ctx.save();
     ctx.globalCompositeOperation="destination-out";
-    ctx.lineCap="round";
-    ctx.lineJoin="round";
-    ctx.lineWidth=48;
+    ctx.lineCap="round";ctx.lineJoin="round";ctx.lineWidth=62;
     ctx.beginPath();
     if(last.current)ctx.moveTo(last.current.x,last.current.y);
-    else ctx.moveTo(pos.x,pos.y);
-    ctx.lineTo(pos.x,pos.y);
-    ctx.stroke();
-    ctx.beginPath();ctx.arc(pos.x,pos.y,24,0,Math.PI*2);ctx.fill();
+    else ctx.moveTo(p.x,p.y);
+    ctx.lineTo(p.x,p.y);ctx.stroke();
+    ctx.beginPath();ctx.arc(p.x,p.y,31,0,Math.PI*2);ctx.fill();
     ctx.restore();
-    last.current=pos;
+    last.current=p;
   };
 
   const inspect=()=>{
     const canvas=canvasRef.current;
     const ctx=canvas?.getContext("2d",{willReadFrequently:true});
     if(!canvas||!ctx||revealed.current)return;
-    const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;
-    let removed=0,count=0;
-    for(let p=3;p<pixels.length;p+=4*24){count++;if(pixels[p]<100)removed++;}
-    if(count){
-      const ratio=removed/count;
-      setScratchProgress(Math.min(100,Math.round(ratio/.32*100)));
-      if(ratio>=.32)finish();
+    const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let cleared=0,samples=0;
+    for(let i=3;i<data.length;i+=4*24){
+      samples++;
+      if(data[i]<90)cleared++;
     }
+    if(samples===0)return;
+    const ratio=cleared/samples;
+    const goal=.20;
+    setScratchProgress(Math.min(100,Math.round(ratio/goal*100)));
+    if(ratio>=goal)finish();
   };
 
   return <div className={"funnel-scratch"+(isRevealed?" funnel-scratch-done":"")}>
     <div className="funnel-scratch-card">
       <div className="funnel-scratch-prize">
-        <div className="funnel-scratch-gift-head"><span>✦ EIXO EXCLUSIVO</span><span>LIBERADO ✓</span></div>
+        <div className="funnel-scratch-gift-head">
+          <span>✦ EIXO EXCLUSIVO</span><span>LIBERADO ✓</span>
+        </div>
         <div className="funnel-scratch-gift-body">
           <div className="funnel-scratch-number">07<span>DIAS</span></div>
           <div className="funnel-scratch-gift-copy">
             <span>SEU BÔNUS</span>
-            <strong>GUIA DE CONFIANÇA NA HORA H</strong>
-            <small>Práticas educativas para lidar com ansiedade, presença e comunicação.</small>
+            <strong>CONFIANÇA NA HORA H</strong>
+            <small>Guia educativo para lidar com o medo de falhar.</small>
           </div>
         </div>
-        <div className="funnel-scratch-gift-footer"><span>✓ ACESSO NA HORA</span><span>✓ SEM CADASTRO</span></div>
+        <div className="funnel-scratch-gift-footer">
+          <span>✓ ACESSO IMEDIATO</span><span>✓ SEM CADASTRO</span>
+        </div>
       </div>
       <canvas
         ref={canvasRef}
         className={"funnel-scratch-canvas"+(isRevealed?" is-open":"")}
-        aria-label="Raspe a cobertura dourada para revelar seu guia de sete dias"
-        onPointerDown={e=>{
+        aria-label="Raspe a película dourada para revelar seu bônus de sete dias"
+        onPointerDown={event=>{
           if(revealed.current)return;
           dragging.current=true;
           last.current=null;
-          e.currentTarget.setPointerCapture(e.pointerId);
-          draw(e);
+          event.currentTarget.setPointerCapture(event.pointerId);
+          draw(event);
         }}
         onPointerMove={draw}
-        onPointerUp={e=>{if(!dragging.current)return;draw(e);dragging.current=false;last.current=null;inspect()}}
-        onPointerCancel={()=>{dragging.current=false;last.current=null;inspect()}}
-        onLostPointerCapture={()=>{dragging.current=false;last.current=null}}
+        onPointerUp={event=>{if(!dragging.current)return;draw(event);dragging.current=false;last.current=null;inspect();}}
+        onPointerCancel={()=>{dragging.current=false;last.current=null;inspect();}}
+        onLostPointerCapture={()=>{dragging.current=false;last.current=null;}}
       />
     </div>
-    {isRevealed?<p className="funnel-scratch-caption">✦ PRESENTE LIBERADO — CLIQUE ABAIXO PARA ABRIR</p>:
+    {isRevealed?
+      <p className="funnel-scratch-caption">✦ BÔNUS LIBERADO — ACESSE SEU GUIA ABAIXO</p>:
       <div className="funnel-scratch-progress">
         <div className="funnel-scratch-progress-track"><i style={{width:scratchProgress+"%"}}/></div>
         <span>{scratchProgress>0?scratchProgress+"% RASPADO":"RASPE O CARTÃO DOURADO"}</span>
-        <button type="button" className="funnel-scratch-alt" onClick={finish}>Não consegue raspar? Revelar por toque</button>
+        <button type="button" className="funnel-scratch-alt" onClick={finish}>
+          Não consegue raspar? Revelar por toque
+        </button>
       </div>}
   </div>;
 }

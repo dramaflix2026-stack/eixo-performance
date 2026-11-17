@@ -41,9 +41,11 @@ const STORIES = [
 // GIFs enviados pelo proprietário: distribuídos após as perguntas 3, 9 e 15.
 // Sem renomear arquivos; os caminhos são servidos pela pasta public/images.
 const STORY_GIFS: Record<number,string> = {
-  0: "/images/8cR2.gif",
-  2: "/images/BnnZ.gif",
-  4: "/images/KAZE.gif"
+  0: "/images/8cR2.gif", // após a pergunta 3
+  1: "/images/7CtO.gif", // após a pergunta 6
+  2: "/images/BnnZ.gif", // após a pergunta 9
+  3: "/images/Fpa.gif", // após a pergunta 12
+  4: "/images/KAZE.gif" // após a pergunta 15
 };
 
 const HINTS = [
@@ -329,7 +331,7 @@ export default function Quiz(){
         <div className={"funnel-story-media"+(STORY_GIFS[step.number]?" has-gif":"")}>
           <img
             src={STORY_GIFS[step.number] ?? STORIES[step.number].photo}
-            alt={STORY_GIFS[step.number] ? "" : STORIES[step.number].alt}
+            alt={STORY_GIFS[step.number] ? "Animação ilustrativa da pausa "+(step.number+1)+" do questionário EIXO" : STORIES[step.number].alt}
             loading="eager"
             onError={event => {
               // Se um arquivo animado falhar, exibe a fotografia local já existente.
@@ -340,7 +342,7 @@ export default function Quiz(){
             }}
           />
           {!STORY_GIFS[step.number] && <div className="funnel-story-overlay"><StoryAnimation variant={STORIES[step.number].visual}/></div>}
-          <span className="funnel-story-media-tag">EIXO / PERFORMANCE MENTAL</span>
+          {!STORY_GIFS[step.number] && <span className="funnel-story-media-tag">EIXO / PERFORMANCE MENTAL</span>}
         </div>
         <p>{STORIES[step.number].body}</p>
         <div className="funnel-story-foot">{STORIES[step.number].tag}</div>

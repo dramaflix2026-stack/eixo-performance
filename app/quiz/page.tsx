@@ -178,6 +178,27 @@ function PersonalizedResult({answers,name}:{answers:(number|null)[];name:string}
   const concern=QUESTIONS[3].options[answers[3]??4];
   const time=QUESTIONS[15].options[answers[15]??4];
   const greeting=name.trim()?name.trim().slice(0,40)+",":"";
+  const insights=[
+    {show:(answers[2]??0)>=2,text:"Você indicou que o medo de falhar aparece com alguma frequência."},
+    {show:(answers[5]??0)>=2,text:"Você percebeu reações de tensão ou pensamentos repetitivos em alguns momentos."},
+    {show:(answers[6]??0)>=2,text:"Experiências anteriores parecem influenciar suas expectativas atuais."},
+    {show:(answers[7]??0)>=2,text:"Você relatou ter evitado situações íntimas por preocupação com o desempenho."},
+    {show:(answers[8]??0)>=2,text:"Conversar sobre essas preocupações pode ser especialmente importante para você."},
+    {show:(answers[9]??0)>=2,text:"O estresse da rotina apareceu como um fator relevante nas suas respostas."},
+    {show:(answers[10]??0)>=2,text:"Seu sono pode ser uma dimensão da rotina que merece atenção."},
+    {show:(answers[13]??0)>=2,text:"A autocobrança parece ocupar bastante espaço antes da intimidade."}
+  ].filter(item=>item.show).map(item=>item.text).slice(0,3);
+  const observations=insights.length?insights:[
+    "Você identificou suas próprias prioridades para lidar com a intimidade com menos cobrança.",
+    "Perceber o que ajuda você a se sentir confortável já é um ponto de partida."
+  ];
+  const situation=QUESTIONS[1].options[answers[1]??4].toLowerCase();
+  const adjustedDays=DAYS.map(([day,title,copy],index)=>{
+    if(index===0)return [day,title,"Observe como você se sente especialmente "+situation+". Registre pensamentos e situações, sem se julgar."];
+    if(index===3 && (answers[8]??0)>=2)return [day,title,"Se houver segurança e abertura, pratique uma conversa pequena e honesta sobre suas preocupações. Você não precisa explicar tudo de uma vez."];
+    if(index===5 && (answers[10]??0)>=2)return [day,title,"Observe seu padrão de sono e cansaço e o impacto que a rotina tem na sua disposição. Não busque perfeição."];
+    return [day,title,copy];
+  });
   return <div className="funnel-result">
     <span className="funnel-tag">SEU RESULTADO · EIXO</span>
     <h1>{greeting&&<span className="funnel-result-name">{greeting} </span>}SEU PONTO DE PARTIDA ESTÁ <em>PRONTO.</em></h1>
@@ -185,10 +206,12 @@ function PersonalizedResult({answers,name}:{answers:(number|null)[];name:string}
     <div className="funnel-summary">
       <span className="funnel-small-label">SUA REFLEXÃO PESSOAL</span>
       <h2>{focus}</h2>
-      <p>Você destacou como preocupação: <strong>{concern.toLowerCase()}</strong>. E indicou esta disponibilidade de tempo: <strong>{time.toLowerCase()}</strong>. Essas respostas ajudam a orientar os temas de reflexão, mas não constituem diagnóstico.</p>
+      <p>Você destacou como preocupação: <strong>{concern.toLowerCase()}</strong>. Disponibilidade informada para práticas educativas: <strong>{time.toLowerCase()}</strong>.</p>
+      <div className="funnel-insights"><span>O QUE SUAS RESPOSTAS DESTACARAM</span>{observations.map((note,index)=><p key={index}><b>✓</b>{note}</p>)}</div>
+      <p className="funnel-profile-note">Essas observações são descritivas e não constituem avaliação clínica, diagnóstico ou previsão de resultados.</p>
     </div>
-    <div className="funnel-plan-heading"><span className="funnel-tag">BÔNUS LIBERADO NA RASPADINHA</span><h2>SEU ROTEIRO INICIAL DE <em>7 DIAS</em></h2><p>São sugestões educativas, não uma prescrição clínica, treinamento comprovado ou promessa de desempenho.</p></div>
-    <div className="funnel-days">{DAYS.map(([day,title,copy])=><details key={day}><summary><span>{day}</span><strong>{title}</strong><b>+</b></summary><p>{copy}</p></details>)}</div>
+    <div className="funnel-plan-heading"><span className="funnel-tag">BÔNUS LIBERADO NA RASPADINHA</span><h2>SEU ROTEIRO INICIAL DE <em>7 DIAS</em></h2><p>São sugestões educativas ajustadas a alguns pontos da sua reflexão, não uma prescrição clínica ou promessa de desempenho.</p></div>
+    <div className="funnel-days">{adjustedDays.map(([day,title,copy])=><details key={day}><summary><span>{day}</span><strong>{title}</strong><b>+</b></summary><p>{copy}</p></details>)}</div>
     <p className="funnel-medical">A ansiedade de desempenho e dificuldades sexuais podem envolver múltiplos fatores. Se a situação incomoda, persiste ou surge de repente, procure atendimento médico ou psicológico apropriado.</p>
   </div>;
 }

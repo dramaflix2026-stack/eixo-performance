@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import Link from "next/link";
 import "./quiz.css";
 
@@ -92,14 +92,16 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
   const dragging=useRef(false);
   const last=useRef<{x:number;y:number}|null>(null);
   const revealed=useRef(false);
+  const drawCount=useRef(0);
   const [isRevealed,setIsRevealed]=useState(false);
   const [scratchProgress,setScratchProgress]=useState(0);
 
   const finish=()=>{
     if(revealed.current)return;
     revealed.current=true;
-    setIsRevealed(true);
+    dragging.current=false;
     setScratchProgress(100);
+    setIsRevealed(true);
     onReveal();
   };
 
@@ -108,61 +110,41 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
     if(!canvas)return;
     const ctx=canvas.getContext("2d",{willReadFrequently:true});
     if(!ctx)return;
-    const bounds=canvas.getBoundingClientRect();
-    const width=Math.max(1,bounds.width);
-    const height=Math.max(1,bounds.height);
+    const rect=canvas.getBoundingClientRect();
+    const width=Math.max(1,rect.width);
+    const height=Math.max(1,rect.height);
     const dpr=Math.min(window.devicePixelRatio||1,2);
     canvas.width=Math.round(width*dpr);
     canvas.height=Math.round(height*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    // A película é completamente opaca, acima do prêmio.
     ctx.globalCompositeOperation="source-over";
     ctx.globalAlpha=1;
     const gold=ctx.createLinearGradient(0,0,width,height);
-    gold.addColorStop(0,"#f7dda4");
-    gold.addColorStop(.24,"#d6a153");
-    gold.addColorStop(.5,"#f1cd85");
-    gold.addColorStop(.78,"#b78438");
-    gold.addColorStop(1,"#f2ce8b");
+    gold.addColorStop(0,"#f9e0a3");
+    gold.addColorStop(.25,"#d4a054");
+    gold.addColorStop(.5,"#f0cb7b");
+    gold.addColorStop(.8,"#bb883d");
+    gold.addColorStop(1,"#f5d58e");
     ctx.fillStyle=gold;
     ctx.fillRect(0,0,width,height);
-    for(let i=0;i<180;i++){
+    for(let i=0;i<165;i++){
       const x=(i*171.73)%width;
       const y=(i*83.31)%height;
-      ctx.fillStyle=i%3===0?"rgba(255,255,255,.19)":"rgba(69,43,17,.10)";
-      ctx.beginPath();ctx.arc(x,y,i%4===0?1.2:.6,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=i%3===0?"rgba(255,255,255,.18)":"rgba(72,43,15,.10)";
+      ctx.beginPath();ctx.arc(x,y,i%4===0?1.3:.6,0,Math.PI*2);ctx.fill();
     }
-    ctx.strokeStyle="rgba(75,48,20,.34)";
+    ctx.strokeStyle="rgba(75,46,17,.32)";
     ctx.lineWidth=1.5;
     ctx.strokeRect(12,12,width-24,height-24);
-    ctx.fillStyle="#312012";
+    ctx.fillStyle="#35210d";
     ctx.textAlign="center";
-    ctx.font="900 "+Math.min(12,Math.max(10,width*.021))+"px Arial, sans-serif";
-    ctx.fillText("✦  EIXO · PRESENTE EXCLUSIVO  ✦",width/2,height*.29);
-    ctx.font="900 "+Math.min(42,Math.max(23,width*.082))+"px Arial, sans-serif";
+    ctx.font="900 "+Math.min(12,Math.max(10,width*.022))+"px Arial, sans-serif";
+    ctx.fillText("🔥 ESQUENTA BLACK FRIDAY 🔥",width/2,height*.28);
+    ctx.font="900 "+Math.min(43,Math.max(24,width*.08))+"px Arial, sans-serif";
     ctx.fillText("RASPE AQUI",width/2,height*.51);
-    ctx.font="700 "+Math.min(13,Math.max(10,width*.027))+"px Arial, sans-serif";
+    ctx.font="700 "+Math.min(13,Math.max(10,width*.026))+"px Arial, sans-serif";
     ctx.fillText("DESLIZE O DEDO OU O MOUSE",width/2,height*.51+32);
   },[]);
-
-  const draw=(event:ReactPointerEvent<HTMLCanvasElement>)=>{
-    if(!dragging.current||revealed.current)return;
-    const canvas=canvasRef.current;
-    const ctx=canvas?.getContext("2d",{willReadFrequently:true});
-    if(!canvas||!ctx)return;
-    const bounds=canvas.getBoundingClientRect();
-    const p={x:event.clientX-bounds.left,y:event.clientY-bounds.top};
-    ctx.save();
-    ctx.globalCompositeOperation="destination-out";
-    ctx.lineCap="round";ctx.lineJoin="round";ctx.lineWidth=62;
-    ctx.beginPath();
-    if(last.current)ctx.moveTo(last.current.x,last.current.y);
-    else ctx.moveTo(p.x,p.y);
-    ctx.lineTo(p.x,p.y);ctx.stroke();
-    ctx.beginPath();ctx.arc(p.x,p.y,31,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-    last.current=p;
-  };
 
   const inspect=()=>{
     const canvas=canvasRef.current;
@@ -174,35 +156,57 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
       samples++;
       if(data[i]<90)cleared++;
     }
-    if(samples===0)return;
+    if(!samples)return;
     const ratio=cleared/samples;
-    const goal=.20;
-    setScratchProgress(Math.min(100,Math.round(ratio/goal*100)));
-    if(ratio>=goal)finish();
+    setScratchProgress(Math.min(100,Math.round(ratio*100)));
+    // 70% da área raspada: revela todo o restante e celebra com confetes.
+    if(ratio>=.70)finish();
+  };
+
+  const draw=(event:ReactPointerEvent<HTMLCanvasElement>)=>{
+    if(!dragging.current||revealed.current)return;
+    const canvas=canvasRef.current;
+    const ctx=canvas?.getContext("2d",{willReadFrequently:true});
+    if(!canvas||!ctx)return;
+    const rect=canvas.getBoundingClientRect();
+    const point={x:event.clientX-rect.left,y:event.clientY-rect.top};
+    ctx.save();
+    ctx.globalCompositeOperation="destination-out";
+    ctx.lineCap="round";
+    ctx.lineJoin="round";
+    ctx.lineWidth=62;
+    ctx.beginPath();
+    if(last.current)ctx.moveTo(last.current.x,last.current.y);
+    else ctx.moveTo(point.x,point.y);
+    ctx.lineTo(point.x,point.y);
+    ctx.stroke();
+    ctx.beginPath();ctx.arc(point.x,point.y,31,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    last.current=point;
+    drawCount.current++;
+    // Checa durante o gesto, sem exigir que o usuário solte o dedo.
+    if(drawCount.current%8===0)inspect();
   };
 
   return <div className={"funnel-scratch"+(isRevealed?" funnel-scratch-done":"")}>
     <div className="funnel-scratch-card">
       <div className="funnel-scratch-prize">
         <div className="funnel-scratch-gift-head">
-          <span>✦ EIXO EXCLUSIVO</span><span>LIBERADO ✓</span>
+          <span>🔥 ESQUENTA BLACK FRIDAY</span><span>EIXO EXCLUSIVO</span>
         </div>
-        <div className="funnel-scratch-gift-body">
-          <div className="funnel-scratch-number">07<span>DIAS</span></div>
-          <div className="funnel-scratch-gift-copy">
-            <span>SEU BÔNUS</span>
-            <strong>CONFIANÇA NA HORA H</strong>
-            <small>Guia educativo para lidar com o medo de falhar.</small>
-          </div>
+        <div className="funnel-bf-body">
+          <span className="funnel-bf-kicker">SEU BÔNUS FOI REVELADO!</span>
+          <div className="funnel-bf-amount"><strong>80%</strong><span>OFF</span></div>
+          <h2>DESCONTO EXCLUSIVO BLACK FRIDAY</h2>
         </div>
         <div className="funnel-scratch-gift-footer">
-          <span>✓ ACESSO IMEDIATO</span><span>✓ SEM CADASTRO</span>
+          <span>✦ BENEFÍCIO BLACK FRIDAY EIXO</span><span>CONDIÇÕES DA OFERTA NO CHECKOUT</span>
         </div>
       </div>
       <canvas
         ref={canvasRef}
         className={"funnel-scratch-canvas"+(isRevealed?" is-open":"")}
-        aria-label="Raspe a película dourada para revelar seu bônus de sete dias"
+        aria-label="Raspe pelo menos 70 por cento do cartão dourado para revelar seu benefício Black Friday"
         onPointerDown={event=>{
           if(revealed.current)return;
           dragging.current=true;
@@ -211,16 +215,35 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
           draw(event);
         }}
         onPointerMove={draw}
-        onPointerUp={event=>{if(!dragging.current)return;draw(event);dragging.current=false;last.current=null;inspect();}}
+        onPointerUp={event=>{
+          if(!dragging.current)return;
+          draw(event);
+          dragging.current=false;
+          last.current=null;
+          inspect();
+        }}
         onPointerCancel={()=>{dragging.current=false;last.current=null;inspect();}}
         onLostPointerCapture={()=>{dragging.current=false;last.current=null;}}
       />
     </div>
+    {isRevealed&&<div className="funnel-scratch-confetti" aria-hidden="true">
+      {Array.from({length:64},(_,i)=><i key={i} style={{
+        left:(3+(i*37.29)%94)+"%",
+        bottom:(12+(i*11)%45)+"px",
+        backgroundColor:["#ffda8f","#e3a94c","#fff4d5","#cc8f39","#f7c86a"][i%5],
+        width:(5+i%5)+"px",
+        height:(9+(i%4)*3)+"px",
+        animationDelay:((i*0.047)%0.52)+"s",
+        animationDuration:(1.4+((i*13)%9)*.13)+"s",
+        "--drift":(((i*79)%280)-140)+"px",
+        "--drift2":(((i*43)%440)-220)+"px"
+      } as CSSProperties}/>)}
+    </div>}
     {isRevealed?
-      <p className="funnel-scratch-caption">✦ BÔNUS LIBERADO — ACESSE SEU GUIA ABAIXO</p>:
+      <p className="funnel-scratch-caption">🎉 80% OFF LIBERADO · BLACK FRIDAY EIXO</p>:
       <div className="funnel-scratch-progress">
         <div className="funnel-scratch-progress-track"><i style={{width:scratchProgress+"%"}}/></div>
-        <span>{scratchProgress>0?scratchProgress+"% RASPADO":"RASPE O CARTÃO DOURADO"}</span>
+        <span>{scratchProgress>0?scratchProgress+"% RASPADO · REVELA AOS 70%":"RASPE ATÉ 70% PARA REVELAR"}</span>
         <button type="button" className="funnel-scratch-alt" onClick={finish}>
           Não consegue raspar? Revelar por toque
         </button>
@@ -373,15 +396,16 @@ export default function Quiz(){
       </section>}
 
       {step.kind==="scratch"&&<section className="funnel-scratch-step">
-        <span className="funnel-tag">ETAPA FINAL · BENEFÍCIO EIXO</span>
-        <h1>{name.trim()?name.trim().slice(0,40)+", ":""}SEU BÔNUS ESTÁ ESCONDIDO NESTA <em>RASPADINHA.</em></h1>
-        <p>Raspe o cartão com o dedo e descubra qual conteúdo você acabou de liberar no EIXO.</p>
+        <span className="funnel-tag">🔥 ESQUENTA BLACK FRIDAY · EIXO</span>
+        <h1>{name.trim()?name.trim().slice(0,40)+", ":""}SEU PRESENTE ESTÁ NESTA <em>RASPADINHA.</em></h1>
+        <p>Raspe o dourado com o dedo ou mouse. Ao chegar a 70%, o restante desaparece e você descobre seu bônus Black Friday.</p>
         <ScratchCard key={restartKey} onReveal={()=>setRevealed(true)}/>
-        {revealed&&<button type="button" className="funnel-main-cta funnel-scratch-next" onClick={()=>setPosition(FINISH_INDEX)}>ACESSAR MEU ROTEIRO <span>↗</span></button>}
-        <small>O bônus é gratuito e igual para todos. Não há sorteio nem desconto anunciado.</small>
+        {revealed&&<button type="button" className="funnel-main-cta funnel-scratch-next" onClick={()=>setPosition(FINISH_INDEX)}>CONTINUAR COM MEU BÔNUS <span>↗</span></button>}
+        <small>Campanha Esquenta Black Friday EIXO. O desconto de 80% precisará ser configurado e validado na etapa de pagamento.</small>
       </section>}
 
       {step.kind==="result"&&<section className="funnel-result-screen">
+        <div className="funnel-bf-result-banner"><strong>🔥 ESQUENTA BLACK FRIDAY · 80% OFF</strong><span>Bônus revelado na raspadinha. O desconto depende da configuração do checkout.</span></div>
         <PersonalizedResult answers={answers} name={name}/>
         <div className="funnel-result-actions"><Link className="funnel-main-cta" href="/">CONHECER O EIXO <span>↗</span></Link><button type="button" onClick={reset}>REFAZER QUESTIONÁRIO</button></div>
       </section>}

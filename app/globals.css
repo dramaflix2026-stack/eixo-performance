@@ -540,3 +540,66 @@
     will-change:auto!important;
   }
 }
+
+
+/* Hero quiz CTA: same continuous gold heartbeat as the manifesto CTA */
+.mx-hero-actions .mx-button-primary{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+  border:2px solid #f6c978;
+  border-radius:7px;
+  background:linear-gradient(120deg,#efaa4b 0%,#ffd17c 50%,#eaa145 100%);
+  color:#171411;
+  transform-origin:center center;
+  will-change:transform;
+  animation:eixoCtaHeartbeat 2.5s ease-in-out infinite !important;
+}
+.mx-hero-actions .mx-button-primary::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-5px;
+  border:2px solid rgba(255,195,95,.82);
+  border-radius:11px;
+  pointer-events:none;
+  animation:eixoCtaRing 2.5s ease-out infinite;
+}
+.mx-hero-actions .mx-button-primary > span{
+  display:grid;
+  place-items:center;
+  min-width:30px;
+  height:30px;
+  border-radius:6px;
+  background:rgba(24,18,13,.08);
+  animation:eixoCtaArrow 2.5s ease-in-out infinite;
+}
+.mx-hero-actions .mx-button-primary:hover{
+  background:linear-gradient(120deg,#ffd078,#ffe4a0,#f4b25a);
+}
+@media(max-width:760px){
+  .mx-hero-actions{width:100%;padding:6px 5px 7px;overflow:visible}
+  .mx-hero-actions .mx-button-primary{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    min-height:62px;
+    gap:9px;
+    padding:15px 12px;
+    font-size:clamp(10px,3.15vw,13px);
+    letter-spacing:0;
+  }
+  .mx-hero-actions .mx-button-primary > span{
+    flex-shrink:0;
+    min-width:28px;
+    height:28px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .mx-hero-actions .mx-button-primary,
+  .mx-hero-actions .mx-button-primary::after,
+  .mx-hero-actions .mx-button-primary > span{
+    animation:none!important;
+    will-change:auto!important;
+  }
+}

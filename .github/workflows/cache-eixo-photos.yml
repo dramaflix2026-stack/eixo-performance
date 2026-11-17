@@ -2,8 +2,9 @@ name: Cache EIXO editorial photos
 on:
   workflow_dispatch:
   push:
-    paths:
-      - ".github/workflows/cache-eixo-photos.yml"
+    branches: [main]
+    paths-ignore:
+      - "public/images/**"
 permissions:
   contents: write
 jobs:

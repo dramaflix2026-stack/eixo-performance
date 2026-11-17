@@ -40,10 +40,56 @@ export default function Home(){
     </div>
     <PhonePreview/>
    </div></section>
-   <section className="eixo-about" id="sobre"><div className="eixo-container eixo-about-grid">
-    <div><span className="eixo-section-label">SOBRE O EIXO</span><h2>O momento íntimo não precisa ser uma prova.</h2></div>
-    <div><p>A pressão pelo desempenho pode fazer com que a atenção se afaste da conexão e se concentre no medo de falhar. O EIXO propõe um ponto de partida educativo para perceber esses padrões.</p><div className="eixo-benefit-list"><div><span>01</span><strong>Discreto</strong><small>Sem exposição pessoal</small></div><div><span>02</span><strong>Rápido</strong><small>7 perguntas objetivas</small></div><div><span>03</span><strong>Sem julgamentos</strong><small>No seu ritmo</small></div></div><Link href="/quiz" className="eixo-inline-link">Começar minha reflexão <span>→</span></Link></div>
-   </div></section>
+   <section className="eixo-bento-section" id="sobre">
+    <div className="eixo-container">
+      <div className="eixo-bento-heading">
+        <span className="eixo-section-label"><span className="eixo-bento-label-dot"/> SOBRE O EIXO</span>
+        <h2>A confiança começa quando<br/><span>a pressão perde espaço.</span></h2>
+        <p>Uma experiência discreta e acolhedora para olhar para o estresse e a ansiedade de desempenho de outra maneira.</p>
+      </div>
+      <div className="eixo-bento-grid">
+        <article className="eixo-bento-card eixo-bento-primary">
+          <div className="eixo-bento-art" aria-hidden="true">
+            <div className="eixo-mind-rings"><i/><i/><i/><i/><span className="eixo-mind-core">✦</span></div>
+            <span className="eixo-art-caption">MENOS RUÍDO · MAIS CLAREZA</span>
+          </div>
+          <div className="eixo-bento-card-content">
+            <span className="eixo-bento-number">01 / CONSCIÊNCIA</span>
+            <h3>Entenda a pressão.<br/>Retome seu centro.</h3>
+            <p>Observe como expectativas e pensamentos antecipatórios podem influenciar sua confiança nos momentos íntimos.</p>
+          </div>
+        </article>
+        <article className="eixo-bento-card eixo-bento-privacy">
+          <div className="eixo-privacy-art" aria-hidden="true">
+            <div className="eixo-privacy-shield"><svg viewBox="0 0 96 110" fill="none"><path d="M48 5 87 20v29c0 27-17 43-39 55C26 92 9 76 9 49V20L48 5Z" stroke="currentColor" strokeWidth="3"/><path d="m29 55 13 13 26-29" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+            <span className="eixo-privacy-stamp">AMBIENTE DISCRETO</span>
+          </div>
+          <div className="eixo-bento-card-content">
+            <span className="eixo-bento-number">02 / PRIVACIDADE</span>
+            <h3>Seu espaço.<br/>No seu ritmo.</h3>
+            <p>Comece sem cadastro e sem compartilhar suas respostas com um servidor.</p>
+          </div>
+        </article>
+        <article className="eixo-bento-card eixo-bento-progress">
+          <div className="eixo-progress-art" aria-hidden="true">
+            <span className="eixo-mini-label">REFLEXÃO GUIADA</span>
+            <strong>07<span> etapas</span></strong>
+            <div className="eixo-progress-bars">{[1,2,3,4,5,6,7].map((n)=><i key={n} className={n<3?"active":""}/>)}</div>
+            <div className="eixo-progress-orbit"><span>01</span><small>07</small></div>
+          </div>
+          <div className="eixo-bento-card-content">
+            <span className="eixo-bento-number">03 / SIMPLICIDADE</span>
+            <h3>Um passo<br/>de cada vez.</h3>
+            <p>Sete perguntas objetivas, sem respostas certas ou erradas e sem diagnósticos automáticos.</p>
+          </div>
+        </article>
+      </div>
+      <div className="eixo-bento-bottom">
+        <span><i className="eixo-bento-check">✓</i> Gratuito para começar. Sem julgamentos.</span>
+        <Link href="/quiz" className="eixo-bento-cta">Começar minha reflexão <span aria-hidden="true">→</span></Link>
+      </div>
+    </div>
+   </section>
    <section className="eixo-faq" id="perguntas"><div className="eixo-container eixo-faq-inner">
     <span className="eixo-section-label">PERGUNTAS FREQUENTES</span><h2>Antes de começar</h2>
     <details><summary>O questionário é gratuito?<span>+</span></summary><p>Sim. Você pode responder às sete perguntas sem cadastro e sem pagamento.</p></details>

@@ -346,3 +346,11 @@
   }
   .funnel-option,.funnel-scratch-canvas{transition:none!important}
 }
+
+
+/* Personalized, descriptive observations */
+.funnel-insights{border-top:1px solid #6c5434;margin-top:22px;padding-top:21px}
+.funnel-insights>span{display:block;color:#e8bf7d;font-weight:900;font-size:10px;letter-spacing:1.4px;margin-bottom:13px}
+.funnel-insights p{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.65;margin:12px 0;color:#e4d6c5}
+.funnel-insights p b{color:#edbe76;font-size:16px;flex-shrink:0}
+.funnel-summary p.funnel-profile-note{font-size:11px;color:#a99c89;border-top:1px solid #51412b;padding-top:15px;margin-top:17px}

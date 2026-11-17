@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Quiz(){return <main className="page"><section className="content"><div className="logo">EIXO</div><p className="eyebrow">QUESTIONÁRIO EDUCATIVO</p><h1>Seu espaço para entender a pressão.</h1><p className="description">Estamos preparando uma experiência breve e discreta sobre estresse e ansiedade de desempenho.</p><Link className="cta" href="/">Voltar à página inicial →</Link></section></main>}

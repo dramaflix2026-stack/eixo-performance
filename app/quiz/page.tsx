@@ -38,6 +38,14 @@ const STORIES = [
   {badge:"05 / O QUE VEM A SEGUIR",heading:"QUER TRANSAR COM MENOS MEDO? COMECE ENTENDENDO A PRESSÃO.",body:"Depois de reconhecer seus gatilhos, o próximo passo é experimentar estratégias possíveis no seu ritmo. O EIXO organiza um roteiro inicial de atenção, diálogo e rotina.",photo:"/images/clareza.jpg",alt:"Retrato editorial de um homem",visual:"steps",button:"QUERO CONCLUIR",tag:"UM PASSO DE CADA VEZ."}
 ] as const;
 
+// GIFs enviados pelo proprietário: distribuídos após as perguntas 3, 9 e 15.
+// Sem renomear arquivos; os caminhos são servidos pela pasta public/images.
+const STORY_GIFS: Record<number,string> = {
+  0: "/images/8cR2.gif",
+  2: "/images/BnnZ.gif",
+  4: "/images/KAZE.gif"
+};
+
 const HINTS = [
   "O ponto de partida é conhecer você. Só leva alguns segundos.",
   "Pense no que acontece de verdade, mesmo que não seja fácil falar disso.",
@@ -318,9 +326,20 @@ export default function Quiz(){
       {step.kind==="story"&&<section className="funnel-story" key={"story"+step.number}>
         <span className="funnel-tag">{STORIES[step.number].badge}</span>
         <h1>{STORIES[step.number].heading}</h1>
-        <div className="funnel-story-media">
-          <img src={STORIES[step.number].photo} alt={STORIES[step.number].alt} />
-          <div className="funnel-story-overlay"><StoryAnimation variant={STORIES[step.number].visual}/></div>
+        <div className={"funnel-story-media"+(STORY_GIFS[step.number]?" has-gif":"")}>
+          <img
+            src={STORY_GIFS[step.number] ?? STORIES[step.number].photo}
+            alt={STORY_GIFS[step.number] ? "" : STORIES[step.number].alt}
+            loading="eager"
+            onError={event => {
+              // Se um arquivo animado falhar, exibe a fotografia local já existente.
+              if(event.currentTarget.src.endsWith(".gif")) {
+                event.currentTarget.src=STORIES[step.number].photo;
+                event.currentTarget.classList.add("funnel-gif-fallback");
+              }
+            }}
+          />
+          {!STORY_GIFS[step.number] && <div className="funnel-story-overlay"><StoryAnimation variant={STORIES[step.number].visual}/></div>}
           <span className="funnel-story-media-tag">EIXO / PERFORMANCE MENTAL</span>
         </div>
         <p>{STORIES[step.number].body}</p>

@@ -104,13 +104,6 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       <div className="eixo-offer-wrap eixo-hero-grid">
         <div className="eixo-hero-copy">
           <span className="eixo-offer-kicker">SEU RESULTADO ESTÁ PRONTO · EIXO</span>
-          <div className="eixo-hero-video-slot" aria-label="Espaço reservado para vídeo vertical de apresentação, proporção nove por dezesseis">
-            <div className="eixo-hero-video-placeholder">
-              <span className="eixo-hero-video-play" aria-hidden="true">▶</span>
-              <strong>VÍDEO DE APRESENTAÇÃO</strong>
-              <span>ESPAÇO RESERVADO · 9:16</span>
-            </div>
-          </div>
           <h1>{cleanName&&<>{cleanName}, </>}<em>SUA VIDA SEXUAL</em> PODE TER MENOS PRESSÃO.</h1>
           <p>Você chegou até aqui para entender o que está atrapalhando sua confiança na hora de transar. Agora tem um ponto de partida baseado no que respondeu — sem promessas milagrosas.</p>
           <div className="eixo-hero-facts"><span>✓ 18 RESPOSTAS CONSIDERADAS</span><span>✓ CONTEÚDO DISCRETO</span><span>✓ SEM DIAGNÓSTICO INVENTADO</span></div>
@@ -118,6 +111,18 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
           <small>O roteiro educativo e os cinco materiais complementares estão disponíveis nesta página.</small>
         </div>
         <div className="eixo-hero-visual"><PhonePreview name={cleanName} focus={focus} time={time}/></div>
+      </div>
+    </section>
+
+    <section className="eixo-presentation-video-section" aria-label="Espaço para vídeo de apresentação do EIXO">
+      <div className="eixo-offer-wrap eixo-presentation-video-layout">
+        <div className="eixo-hero-video-slot" aria-label="Vídeo vertical de apresentação ainda não enviado, proporção nove por dezesseis">
+          <div className="eixo-hero-video-placeholder">
+            <span className="eixo-hero-video-play" aria-hidden="true">▶</span>
+            <strong>VÍDEO DE APRESENTAÇÃO</strong>
+            <span>ESPAÇO RESERVADO · 9:16</span>
+          </div>
+        </div>
       </div>
     </section>
 

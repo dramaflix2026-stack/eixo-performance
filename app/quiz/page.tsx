@@ -11,31 +11,31 @@ type StageImage = { src: string; alt: string };
 
 const QUESTIONS: Question[] = [
   {prompt:"Vamos começar. Qual é sua faixa de idade?",options:["18 a 24 anos","25 a 34 anos","35 a 44 anos","45 anos ou mais","Prefiro não informar"],eyebrow:"01 · SEU PERFIL"},
-  {prompt:"Em qual momento a pressão costuma aparecer?",options:["Antes da intimidade","Durante o momento íntimo","Depois, ao pensar no que aconteceu","Em vários momentos","Não sinto essa pressão"],eyebrow:"01 · SEU PERFIL"},
-  {prompt:"Com que frequência o medo de falhar ocupa seus pensamentos?",options:["Nunca","Raramente","Às vezes","Frequentemente"],eyebrow:"01 · SEU PERFIL"},
-  {prompt:"Qual dessas preocupações mais se aproxima da sua experiência?",options:["Receio de não corresponder às expectativas","Preocupação com o tempo da relação","Medo de perder a ereção","Dificuldade de estar presente","Outra preocupação ou nenhuma"],eyebrow:"02 · EXPECTATIVAS"},
-  {prompt:"Quando pensa na próxima experiência íntima, o que mais gostaria de sentir?",options:["Mais confiança","Menos ansiedade","Mais conexão","Mais tranquilidade","Já me sinto bem"],eyebrow:"02 · EXPECTATIVAS"},
-  {prompt:"A ansiedade já veio acompanhada de tensão, respiração acelerada ou pensamentos repetitivos?",options:["Não percebo isso","Raramente","Algumas vezes","Com frequência"],eyebrow:"02 · EXPECTATIVAS"},
-  {prompt:"Uma experiência anterior desagradável aumenta sua preocupação nas próximas ocasiões?",options:["Nunca","Raramente","Às vezes","Frequentemente"],eyebrow:"03 · O CICLO DA PRESSÃO"},
-  {prompt:"Você já evitou uma situação íntima por receio de não corresponder?",options:["Nunca","Uma vez ou outra","Algumas vezes","Muitas vezes"],eyebrow:"03 · O CICLO DA PRESSÃO"},
-  {prompt:"Como você costuma conversar sobre essas preocupações?",options:["Converso abertamente","Converso com alguma dificuldade","Quase nunca falo sobre isso","Não tenho com quem conversar"],eyebrow:"03 · O CICLO DA PRESSÃO"},
-  {prompt:"O estresse do trabalho ou da rotina influencia a sua confiança íntima?",options:["Não percebo relação","Um pouco","Moderadamente","Bastante"],eyebrow:"04 · SUA ROTINA"},
+  {prompt:"Em que momento o medo de falhar na hora de transar costuma aparecer?",options:["Antes de transar","Durante o sexo","Depois do sexo, pensando no que aconteceu","Em vários momentos","Não costumo ter esse medo"],eyebrow:"01 · SEU PERFIL"},
+  {prompt:"Com que frequência você pensa: “E se eu brochar ou não conseguir na hora H?”",options:["Nunca","Raramente","Às vezes","Frequentemente"],eyebrow:"01 · SEU PERFIL"},
+  {prompt:"O que mais tira sua confiança na hora de transar?",options:["Medo de brochar","Preocupação em terminar antes do que gostaria","Medo de não satisfazer a outra pessoa","Não conseguir relaxar e curtir o sexo","Outra preocupação ou nenhuma"],eyebrow:"02 · EXPECTATIVAS"},
+  {prompt:"Se pudesse melhorar uma coisa na sua vida sexual, o que escolheria?",options:["Mais confiança na cama","Menos ansiedade antes do sexo","Mais conexão com a outra pessoa","Conseguir curtir sem me cobrar","Já me sinto bem"],eyebrow:"02 · EXPECTATIVAS"},
+  {prompt:"Quando você vai transar, já sentiu o corpo tenso ou a cabeça acelerada?",options:["Não percebo isso","Raramente","Algumas vezes","Com frequência"],eyebrow:"02 · EXPECTATIVAS"},
+  {prompt:"Uma vez que algo deu errado na cama, você ficou com medo de acontecer de novo?",options:["Nunca","Raramente","Às vezes","Frequentemente"],eyebrow:"03 · O CICLO DA PRESSÃO"},
+  {prompt:"Você já evitou transar por medo de brochar, falhar ou passar vergonha?",options:["Nunca","Uma vez ou outra","Algumas vezes","Muitas vezes"],eyebrow:"03 · O CICLO DA PRESSÃO"},
+  {prompt:"Você consegue falar sobre suas inseguranças sexuais com quem está ao seu lado?",options:["Sim, falo abertamente","Sim, mas fico desconfortável","Quase nunca consigo falar","Não tenho com quem conversar"],eyebrow:"03 · O CICLO DA PRESSÃO"},
+  {prompt:"Depois de um dia estressante, sua ansiedade costuma aparecer também na hora do sexo?",options:["Não percebo relação","Um pouco","Moderadamente","Bastante"],eyebrow:"04 · SUA ROTINA"},
   {prompt:"Como tem sido seu sono nas últimas semanas?",options:["Tenho dormido bem","Oscila bastante","Durmo menos do que gostaria","Tenho muitas noites ruins"],eyebrow:"04 · SUA ROTINA"},
-  {prompt:"Você já buscou alguma estratégia para lidar com essa pressão?",options:["Ainda não tentei","Já tentei respirar ou relaxar","Já conversei com alguém","Já procurei orientação profissional","Tentei outras alternativas"],eyebrow:"04 · SUA ROTINA"},
-  {prompt:"Qual é sua situação afetiva atualmente?",options:["Em um relacionamento","Conhecendo alguém","Solteiro","Prefiro não informar"],eyebrow:"05 · CONEXÃO"},
-  {prompt:"Antes da intimidade, quanto espaço a autocobrança ocupa na sua atenção?",options:["Quase nenhum","Um pouco","Bastante","É difícil pensar em outra coisa"],eyebrow:"05 · CONEXÃO"},
-  {prompt:"O que costuma ajudar você a ficar mais à vontade?",options:["Conversar e sentir confiança","Respirar e desacelerar","Ter mais tempo e tranquilidade","Ainda não descobri","Não costumo sentir dificuldade"],eyebrow:"05 · CONEXÃO"},
-  {prompt:"Quanto tempo por dia você conseguiria dedicar a estratégias de bem-estar?",options:["Até 5 minutos","5 a 10 minutos","10 a 15 minutos","Mais de 15 minutos","Ainda não sei"],eyebrow:"06 · PRÓXIMOS PASSOS"},
-  {prompt:"Qual mudança faria mais diferença para você neste momento?",options:["Reduzir o medo de falhar","Ficar mais presente na intimidade","Comunicar melhor minhas inseguranças","Lidar melhor com o estresse da rotina","Entender melhor o que estou sentindo"],eyebrow:"06 · PRÓXIMOS PASSOS"},
-  {prompt:"Você gostaria de receber um roteiro educativo inicial baseado nas suas respostas?",options:["Sim, quero começar","Quero conhecer primeiro","Talvez, ainda estou pensando","Prefiro apenas ver minha reflexão"],eyebrow:"06 · PRÓXIMOS PASSOS"}
+  {prompt:"Você já tentou alguma coisa para controlar a ansiedade antes de transar?",options:["Ainda não tentei","Já tentei respirar ou relaxar","Já conversei com alguém","Já procurei orientação profissional","Tentei outras alternativas"],eyebrow:"04 · SUA ROTINA"},
+  {prompt:"Qual é seu status de relacionamento hoje?",options:["Em um relacionamento","Conhecendo alguém","Solteiro","Prefiro não informar"],eyebrow:"05 · CONEXÃO"},
+  {prompt:"Na hora de transar, você fica se avaliando em vez de aproveitar o momento?",options:["Quase nenhum","Um pouco","Bastante","É difícil pensar em outra coisa"],eyebrow:"05 · CONEXÃO"},
+  {prompt:"O que mais ajuda você a se sentir seguro e à vontade na cama?",options:["Conversar e sentir confiança","Respirar e desacelerar","Ter mais tempo e tranquilidade","Ainda não descobri","Não costumo sentir dificuldade"],eyebrow:"05 · CONEXÃO"},
+  {prompt:"Quanto tempo por dia você dedicaria para trabalhar a confiança e controlar a ansiedade?",options:["Até 5 minutos","5 a 10 minutos","10 a 15 minutos","Mais de 15 minutos","Ainda não sei"],eyebrow:"06 · PRÓXIMOS PASSOS"},
+  {prompt:"O que você mais quer recuperar na sua vida sexual?",options:["Parar de sofrer com o medo de falhar","Transar com mais presença e confiança","Falar sobre sexo sem vergonha","Não levar o estresse para a cama","Entender o que está acontecendo comigo"],eyebrow:"06 · PRÓXIMOS PASSOS"},
+  {prompt:"Você toparia começar com um roteiro de 7 dias para lidar melhor com a ansiedade na hora de transar?",options:["Sim, quero começar","Quero conhecer primeiro","Talvez, ainda estou pensando","Prefiro apenas ver minha reflexão"],eyebrow:"06 · PRÓXIMOS PASSOS"}
 ];
 
 const STORIES = [
-  {badge:"01 / ENTENDER A PRESSÃO",heading:"A ANSIEDADE PODE ENTRAR EM CENA ANTES MESMO DA INTIMIDADE.",body:"Quando a mente antecipa o pior cenário, o corpo pode responder com tensão. Reconhecer esse movimento é um primeiro passo — não uma sentença sobre você.",photo:"/images/pressao.jpg",alt:"Retrato masculino em reflexão",visual:"breath",button:"ENTENDI, CONTINUAR",tag:"PRESSÃO NÃO DEFINE QUEM VOCÊ É."},
-  {badge:"02 / CORPO E MENTE",heading:"SEU CORPO E SUA ATENÇÃO NÃO PRECISAM ESTAR EM GUERRA.",body:"O estresse pode influenciar a maneira como você percebe cada momento. Desacelerar, respirar e observar os próprios pensamentos são práticas de atenção, não promessas de resultado.",photo:"/images/clareza.jpg",alt:"Retrato masculino sereno",visual:"wave",button:"CONTINUAR MINHA REFLEXÃO",tag:"MAIS PRESENÇA, MENOS AUTOCONTROLE FORÇADO."},
-  {badge:"03 / UMA NOVA PERSPECTIVA",heading:"DO MEDO DE FALHAR PARA A POSSIBILIDADE DE ESTAR PRESENTE.",body:"Não existe uma medida única de desempenho. Uma experiência íntima envolve conexão, comunicação, contexto e bem-estar — não apenas uma meta de tempo.",photo:"/images/partida.jpg",alt:"Retrato masculino confiante",visual:"split",button:"QUERO AVANÇAR",tag:"O SEU RITMO IMPORTA."},
-  {badge:"04 / ROTINA E CONFIANÇA",heading:"NÃO É SÓ SOBRE AQUELE MOMENTO. A ROTINA TAMBÉM CONTA.",body:"Sono, preocupações, expectativas e disposição podem fazer parte da experiência. Por isso, olhar para o cotidiano pode ser tão importante quanto olhar para a intimidade.",photo:"/images/hero.jpg",alt:"Retrato masculino editorial",visual:"meter",button:"SEGUIR COM O QUESTIONÁRIO",tag:"SEM FÓRMULA MÁGICA. COM MAIS CLAREZA."},
-  {badge:"05 / O QUE VEM A SEGUIR",heading:"VOCÊ JÁ IDENTIFICOU PADRÕES. AGORA VAMOS ORGANIZAR O PRÓXIMO PASSO.",body:"O EIXO reúne reflexões e práticas educativas de atenção, diálogo e organização da rotina. Você decidirá o que faz sentido experimentar e quando procurar apoio especializado.",photo:"/images/clareza.jpg",alt:"Retrato editorial de um homem",visual:"steps",button:"QUERO CONCLUIR",tag:"UM PASSO DE CADA VEZ."}
+  {badge:"01 / ENTENDER A PRESSÃO",heading:"O MEDO DE BROCHAR PODE COMEÇAR MUITO ANTES DO SEXO.",body:"Às vezes, basta pensar “e se eu falhar?” para a tensão aparecer. Esse ciclo de medo e cobrança é algo que você pode começar a observar e compreender.",photo:"/images/pressao.jpg",alt:"Retrato masculino em reflexão",visual:"breath",button:"ENTENDI, CONTINUAR",tag:"PRESSÃO NÃO DEFINE QUEM VOCÊ É."},
+  {badge:"02 / CORPO E MENTE",heading:"QUANDO A CABEÇA NÃO PARA, O SEXO PODE VIRAR UMA PROVA.",body:"O medo de não conseguir pode roubar a atenção do que realmente importa. Respirar, desacelerar e conversar são caminhos possíveis para sair do modo de cobrança.",photo:"/images/clareza.jpg",alt:"Retrato masculino sereno",visual:"wave",button:"CONTINUAR MINHA REFLEXÃO",tag:"MAIS PRESENÇA, MENOS AUTOCONTROLE FORÇADO."},
+  {badge:"03 / UMA NOVA PERSPECTIVA",heading:"NÃO É SÓ SOBRE DURAR MAIS. É SOBRE CONSEGUIR CURTIR O SEXO.",body:"Sexo não é uma competição de minutos. Intimidade também envolve desejo, confiança, comunicação e presença. Sua experiência é maior que uma cobrança por desempenho.",photo:"/images/partida.jpg",alt:"Retrato masculino confiante",visual:"split",button:"QUERO AVANÇAR",tag:"O SEU RITMO IMPORTA."},
+  {badge:"04 / ROTINA E CONFIANÇA",heading:"O ESTRESSE NÃO FICA DO LADO DE FORA DO QUARTO.",body:"Cansaço, noites ruins e preocupação constante podem influenciar o desejo, a ereção e o conforto na hora do sexo. Olhar para a rotina também faz parte da conversa.",photo:"/images/hero.jpg",alt:"Retrato masculino editorial",visual:"meter",button:"SEGUIR COM O QUESTIONÁRIO",tag:"SEM FÓRMULA MÁGICA. COM MAIS CLAREZA."},
+  {badge:"05 / O QUE VEM A SEGUIR",heading:"QUER TRANSAR COM MENOS MEDO? COMECE ENTENDENDO A PRESSÃO.",body:"Depois de reconhecer seus gatilhos, o próximo passo é experimentar estratégias possíveis no seu ritmo. O EIXO organiza um roteiro inicial de atenção, diálogo e rotina.",photo:"/images/clareza.jpg",alt:"Retrato editorial de um homem",visual:"steps",button:"QUERO CONCLUIR",tag:"UM PASSO DE CADA VEZ."}
 ] as const;
 
 const FLOW:Step[] = [];
@@ -201,7 +201,7 @@ function PersonalizedResult({answers,name}:{answers:(number|null)[];name:string}
   });
   return <div className="funnel-result">
     <span className="funnel-tag">SEU RESULTADO · EIXO</span>
-    <h1>{greeting&&<span className="funnel-result-name">{greeting} </span>}SEU PONTO DE PARTIDA ESTÁ <em>PRONTO.</em></h1>
+    <h1>{greeting&&<span className="funnel-result-name">{greeting} </span>}SEU GUIA PARA LIDAR COM A PRESSÃO NA HORA DO SEXO ESTÁ <em>PRONTO.</em></h1>
     <p className="funnel-result-intro">Você concluiu 18 perguntas e desbloqueou um roteiro educativo para começar com mais consciência e menos cobrança.</p>
     <div className="funnel-summary">
       <span className="funnel-small-label">SUA REFLEXÃO PESSOAL</span>
@@ -257,7 +257,7 @@ export default function Quiz(){
       {step.kind==="question"&&<section className="funnel-question" key={"q"+questionNumber}>
         <span className="funnel-tag">{QUESTIONS[questionNumber].eyebrow}</span>
         <h1>{QUESTIONS[questionNumber].prompt}</h1>
-        <p>Responda com sinceridade. Não existem respostas certas ou erradas.</p>
+        <p>Responda sem filtros. Sua vida sexual não precisa ser um tabu.</p>
         <div className="funnel-options">
           {QUESTIONS[questionNumber].options.map((label,index)=><button
             key={label}
@@ -286,7 +286,7 @@ export default function Quiz(){
         <span className="funnel-tag">18 / 18 PERGUNTAS RESPONDIDAS</span>
         <div className="funnel-icon">◈</div>
         <h1>SEU PONTO DE PARTIDA ESTÁ <em>PRONTO.</em></h1>
-        <p>Organizamos uma reflexão a partir das suas respostas. Para liberar seu roteiro inicial, falta apenas uma etapa.</p>
+        <p>Você respondeu sobre medo de falhar, insegurança e estresse. Agora falta só revelar o seu bônus educativo de 7 dias.</p>
         <div className="funnel-private-panel"><span>◈ PRIVACIDADE EM PRIMEIRO LUGAR</span>
           <p>Sem cadastro, sem envio das respostas para um servidor. Você pode informar um nome para personalizar a tela final, se quiser.</p>
           <label htmlFor="eixo-display-name">COMO PODEMOS TE CHAMAR? <small>(OPCIONAL)</small></label>
@@ -298,8 +298,8 @@ export default function Quiz(){
 
       {step.kind==="scratch"&&<section className="funnel-scratch-step">
         <span className="funnel-tag">ETAPA FINAL · BENEFÍCIO EIXO</span>
-        <h1>{name.trim()?name.trim().slice(0,40)+", ":""}VOCÊ DESBLOQUEOU UMA <em>RASPADINHA!</em></h1>
-        <p>Raspe o cartão dourado para revelar o bônus educativo que preparamos para esta experiência.</p>
+        <h1>{name.trim()?name.trim().slice(0,40)+", ":""}SEU BÔNUS ESTÁ ESCONDIDO NESTA <em>RASPADINHA.</em></h1>
+        <p>Raspe o cartão com o dedo e descubra qual conteúdo você acabou de liberar no EIXO.</p>
         <ScratchCard key={restartKey} onReveal={()=>setRevealed(true)}/>
         {revealed&&<button type="button" className="funnel-main-cta funnel-scratch-next" onClick={()=>setPosition(FINISH_INDEX)}>ACESSAR MEU ROTEIRO <span>↗</span></button>}
         <small>O bônus é gratuito e igual para todos. Não há sorteio nem desconto anunciado.</small>

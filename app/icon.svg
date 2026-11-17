@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>EIXO</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5d496"/>
+      <stop offset=".5" stop-color="#dda853"/>
+      <stop offset="1" stop-color="#a56b2b"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="#0d0e11"/>
+  <rect x="3.5" y="3.5" width="57" height="57" rx="11.5" fill="none" stroke="#b28748" stroke-opacity=".55" stroke-width="1.5"/>
+  <path d="M14 15h15v6h-8v9h8v5h-8v9h8v6H14z" fill="url(#gold)"/>
+  <path d="M34 15h7l4.5 10 4.5-10h7L49 32l8 18h-7l-4.5-10L41 50h-7l8-18z" fill="url(#gold)"/>
+  <path d="M13 54h44" stroke="#e3b76d" stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
+</svg>

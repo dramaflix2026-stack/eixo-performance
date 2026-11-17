@@ -1,3 +1,75 @@
 :root{color-scheme:dark;--bg:#101820;--teal:#176b78;--ivory:#f5f1e8}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif}body{background:var(--bg);color:var(--ivory)}.page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:64px 24px;background:radial-gradient(ellipse at 90% 90%,#12515d,transparent 55%),#101820}.content{max-width:790px;width:100%}.logo{font-size:31px;font-weight:800;letter-spacing:8px}.mark{color:#2b9eae}.eyebrow{color:#7cc7cb;font-size:12px;letter-spacing:3px;font-weight:800;margin-top:64px}h1{font-size:clamp(36px,5vw,68px);line-height:1.08;letter-spacing:-2px;margin:22px 0 25px}.description{max-width:640px;font-size:19px;line-height:1.7;color:#cad9d9;margin-bottom:34px}.cta{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;padding:20px 28px;border-radius:12px;font-weight:700}.cta:hover{background:#218594}.note{font-size:12px;color:#9caeb1;margin-top:24px}@media(max-width:600px){.page{padding:32px 22px}h1{letter-spacing:-1px}.description{font-size:16px}.cta{font-size:14px;width:100%;text-align:center}}
 /* EIXO quiz */
 .quiz-shell{min-height:100vh;background:radial-gradient(ellipse at 85% 10%,#19444b 0%,transparent 42%),#101820;color:#f5f1e8;display:flex;flex-direction:column;padding:30px clamp(20px,5vw,80px)}.quiz-header{display:flex;align-items:center;justify-content:space-between;gap:16px}.quiz-brand{text-decoration:none;font-weight:800;color:#f5f1e8;font-size:27px;letter-spacing:6px}.quiz-brand span{color:#5db2bb}.quiz-discreet,.quiz-footer{color:#91a6a9;font-size:12px}.quiz-panel{width:min(100%,690px);margin:auto;padding:45px 0 55px}.quiz-meta{display:flex;justify-content:space-between;color:#8fbec0;font-size:12px;font-weight:700;letter-spacing:1px}.quiz-track{height:5px;background:#33484d;border-radius:10px;margin-top:14px;overflow:hidden}.quiz-track div{height:100%;background:#5eb7be;transition:width .25s}.quiz-kicker{font-size:12px;letter-spacing:2px;font-weight:700;color:#7cc7cb;margin-top:45px;text-transform:uppercase}.quiz-title{font-size:clamp(30px,4vw,48px);line-height:1.17;letter-spacing:-1px;margin:16px 0 18px}.quiz-hint{font-size:16px;line-height:1.7;color:#b9c9cc}.quiz-options{display:grid;gap:12px;margin-top:32px}.quiz-option{background:#1b2a31;border:1px solid #385056;border-radius:14px;padding:20px 22px;text-align:left;display:flex;align-items:center;gap:16px;color:#f5f1e8;font-size:16px;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.quiz-option:hover,.quiz-option:focus-visible{background:#213e45;border-color:#69bbc4;transform:translateY(-1px)}.quiz-option-ring{width:19px;height:19px;border:2px solid #6a9ca3;border-radius:50%;flex-shrink:0}.quiz-option-arrow{margin-left:auto;color:#77b5bc}.quiz-bottom{margin-top:28px;display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;color:#879da0}.quiz-back{background:transparent;color:#b7dce0;border:0;cursor:pointer;font:inherit;padding:12px 0}.quiz-back:hover{text-decoration:underline}.quiz-result{border-left:3px solid #5eb7be;padding:12px 18px;background:#1a3036;color:#ecf8f8;font-size:18px;line-height:1.6}.quiz-result-actions{display:flex;align-items:center;gap:24px;margin-top:28px}.quiz-footer{text-align:center;margin-top:auto;padding:20px 0}@media(max-width:600px){.quiz-shell{padding:22px 20px}.quiz-discreet{font-size:10px;text-align:right}.quiz-panel{padding:24px 0 40px}.quiz-kicker{margin-top:35px}.quiz-option{padding:18px 16px;font-size:15px}.quiz-result-actions{align-items:flex-start;flex-direction:column;gap:8px}}
+
+
+/* EIXO landing — composed from the approved minimal split-hero reference */
+.eixo-site{background:#101614;color:#f5f1e8;min-height:100vh;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
+.eixo-container{width:min(1160px,calc(100% - 64px));margin:0 auto}
+.eixo-site-header{height:82px;border-bottom:1px solid rgba(240,247,236,.065);background:#101614;position:relative;z-index:3}
+.eixo-nav{height:100%;display:flex;align-items:center;gap:40px}
+.eixo-wordmark{display:inline-flex;align-items:center;gap:12px;color:#f5f1e8;text-decoration:none;font-size:19px;font-weight:800;letter-spacing:5px;white-space:nowrap}
+.eixo-symbol{width:28px;height:28px;border:2px solid #84ad99;display:inline-grid;place-items:center;border-radius:50%;position:relative}
+.eixo-symbol:before{content:"";width:6px;height:6px;border-radius:50%;background:#84ad99}
+.eixo-symbol i{position:absolute;width:2px;height:36px;background:#84ad99;top:-6px;left:11px;opacity:.9}
+.eixo-nav nav{display:flex;gap:32px;margin-left:auto}
+.eixo-nav nav a{color:#aebbb3;text-decoration:none;font-size:13px;transition:color .2s}.eixo-nav nav a:hover{color:#fff}
+.eixo-nav-cta{color:#dbede0;text-decoration:none;border:1px solid #39483e;border-radius:9px;padding:12px 20px;font-size:13px;font-weight:700;display:inline-flex;gap:14px;align-items:center}.eixo-nav-cta:hover{border-color:#719984;background:#1b2922}
+.eixo-hero{min-height:690px;display:flex;align-items:center;background:radial-gradient(ellipse at 80% 55%,rgba(40,75,59,.22),transparent 56%),#101614}
+.eixo-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:center;padding:72px 0 88px}
+.eixo-copy{position:relative;z-index:2}
+.eixo-eyebrow{display:inline-flex;gap:10px;align-items:center;color:#99bca6;font-size:10px;letter-spacing:1.8px;font-weight:800}
+.eixo-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#89ad96;box-shadow:0 0 0 5px rgba(137,173,150,.1)}
+.eixo-copy h1{font-size:clamp(46px,5.1vw,73px);line-height:1.065;letter-spacing:-3.6px;font-weight:780;margin:28px 0 26px;max-width:620px}
+.eixo-copy h1 em{font-style:normal;color:#91ba9d}
+.eixo-copy>p{font-size:17px;line-height:1.75;color:#a9b8af;max-width:540px;margin:0 0 30px}
+.eixo-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.eixo-primary{background:#648e75;color:#f9fff9;font-size:14px;font-weight:800;text-decoration:none;border-radius:11px;padding:18px 22px;display:inline-flex;gap:25px;align-items:center;justify-content:center;box-shadow:0 10px 32px rgba(80,136,103,.17);transition:background .2s,transform .2s}
+.eixo-primary:hover{background:#78a488;transform:translateY(-2px)}
+.eixo-secondary{border:1px solid #33443a;border-radius:11px;padding:17px 21px;color:#e1ece4;font-size:14px;text-decoration:none;display:inline-flex;gap:16px;align-items:center}
+.eixo-secondary:hover{background:#1c2c23}
+.eixo-trust{display:flex;gap:10px;align-items:center;margin-top:26px;color:#899e90;font-size:12px}
+.eixo-trust-icon{display:grid;place-items:center;border:1px solid #729580;border-radius:50%;height:18px;width:18px;color:#9fc8a8;font-size:11px}
+.eixo-visual{height:570px;position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate}
+.eixo-halo{position:absolute;width:520px;height:520px;max-width:110%;border-radius:50%;background:radial-gradient(circle,rgba(104,151,116,.19) 0%,rgba(59,104,76,.07) 43%,transparent 68%);filter:blur(4px)}
+.eixo-phone{width:290px;height:555px;border-radius:42px;border:7px solid #2b3431;box-shadow:0 0 0 2px #52645c,24px 28px 85px rgba(0,0,0,.62),0 0 80px rgba(84,151,104,.11);background:#121b17;position:relative;overflow:hidden;transform:rotate(6deg);z-index:1}
+.eixo-phone:after{content:"";position:absolute;inset:0;border-radius:34px;pointer-events:none;box-shadow:inset -22px 0 35px rgba(0,0,0,.18)}
+.eixo-phone-top{height:39px;display:flex;align-items:center;justify-content:space-between;padding:0 19px;color:#d7e5db;font-size:10px;font-weight:700}
+.eixo-island{width:85px;height:22px;background:#040a07;border-radius:16px}
+.eixo-phone-screen{padding:26px 18px 20px}
+.eixo-phone-mark{font-weight:850;font-size:20px;letter-spacing:3px;display:flex;align-items:center;gap:8px}
+.eixo-phone-mark span{color:#8ebca0}
+.eixo-phone-mark small{font-size:6px;letter-spacing:1px;color:#88a393;margin-left:auto}
+.eixo-phone-progress{display:flex;justify-content:space-between;color:#91b9a0;font-size:8px;letter-spacing:1px;font-weight:700;margin-top:50px}
+.eixo-phone-track{height:3px;border-radius:10px;background:#314b3d;margin-top:9px}
+.eixo-phone-track i{display:block;width:14%;height:100%;background:#a3c8aa;border-radius:10px}
+.eixo-phone-question{font-size:25px;font-weight:800;letter-spacing:-1px;line-height:1.15;margin-top:27px}
+.eixo-phone-screen p{font-size:11px;line-height:1.5;color:#a7b7ab;margin:14px 0 20px}
+.eixo-phone-choice{padding:13px;border:1px solid #34483d;background:#1b2921;border-radius:10px;color:#cbdad0;font-size:11px;display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.eixo-phone-choice b{font-size:14px;color:#789783}
+.eixo-phone-choice.active{border-color:#8fb69c;background:#2c4938;color:#effaf0}
+.eixo-phone-foot{display:block;color:#779482;font-size:7px;letter-spacing:1px;text-align:center;margin-top:18px}
+.eixo-home-bar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:#9aa9a0;height:4px;width:100px;border-radius:10px}
+.eixo-floating-pill{position:absolute;left:0;bottom:72px;padding:13px 18px;background:#20362a;color:#b9e1bd;border:1px solid #496d52;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 14px 50px #0007;z-index:2}
+.eixo-about{border-top:1px solid #26352b;background:#151e19;padding:82px 0}
+.eixo-about-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:start}
+.eixo-section-label{color:#94b89d;font-weight:800;font-size:11px;letter-spacing:2px}
+.eixo-about h2,.eixo-faq h2{font-size:clamp(32px,3.4vw,47px);line-height:1.16;letter-spacing:-1.5px;margin:18px 0 0}
+.eixo-about-grid p{color:#adbbb1;font-size:17px;line-height:1.8;margin:30px 0}
+.eixo-inline-link{color:#9fc5a7;font-weight:700;text-decoration:none;font-size:15px}
+.eixo-inline-link span{margin-left:8px}
+.eixo-faq{padding:85px 0 100px;background:#101614}
+.eixo-faq-inner{max-width:800px}
+.eixo-faq h2{margin-bottom:30px}
+.eixo-faq details{border-bottom:1px solid #304037}
+.eixo-faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;padding:24px 0;color:#edf6ed;font-size:16px;font-weight:700;gap:16px}
+.eixo-faq summary::-webkit-details-marker{display:none}
+.eixo-faq summary span{color:#9bc7a5;font-size:22px;font-weight:400}
+.eixo-faq details[open] summary span{transform:rotate(45deg)}
+.eixo-faq details p{color:#abbbaf;line-height:1.7;padding-bottom:22px;margin:0;max-width:700px}
+.eixo-site-footer{background:#111a14;border-top:1px solid #2b3b30;padding:32px 0}
+.eixo-footer-content{display:flex;align-items:center;gap:24px;justify-content:space-between}
+.eixo-footer-content>span{color:#90a296;font-size:12px}
+@media(max-width:940px){.eixo-hero-grid{gap:20px}.eixo-copy h1{font-size:clamp(39px,5.5vw,58px)}.eixo-visual{transform:scale(.85)}.eixo-about-grid{gap:35px}}
+@media(max-width:700px){.eixo-container{width:calc(100% - 40px)}.eixo-site-header{height:72px}.eixo-nav{gap:14px}.eixo-nav nav{display:none}.eixo-nav-cta{margin-left:auto;padding:11px 14px}.eixo-hero-grid{grid-template-columns:1fr;padding:62px 0 34px;gap:10px}.eixo-copy h1{font-size:clamp(43px,10vw,63px);letter-spacing:-2.3px}.eixo-copy>p{font-size:16px}.eixo-eyebrow{font-size:9px;letter-spacing:1px}.eixo-actions{gap:10px}.eixo-primary{width:100%;justify-content:space-between}.eixo-secondary{width:100%;justify-content:space-between}.eixo-visual{height:475px;transform:scale(.8);margin:-15px 0 -38px}.eixo-about{padding:57px 0}.eixo-about-grid{grid-template-columns:1fr;gap:0}.eixo-about-grid p{margin-top:16px}.eixo-faq{padding:60px 0}.eixo-footer-content{flex-wrap:wrap;justify-content:flex-start}.eixo-footer-content>span:last-child{width:100%}}
+@media(prefers-reduced-motion:reduce){.eixo-site *{transition:none!important}}

@@ -31,22 +31,6 @@ export default function LoginPage(){
         <h1 id="eixo-login-presentation">Seu próximo passo começa <em>aqui.</em></h1>
         <p className="eixo-login-lead">Um espaço reservado para você explorar o Método EIXO, acompanhar sua jornada e acessar seus materiais com privacidade.</p>
 
-        <div className="eixo-login-journey" aria-label="Jornada do Método EIXO">
-          <div className="eixo-login-journey-top">
-            <div className="eixo-login-journey-icon" aria-hidden="true">◈</div>
-            <div><span>SEU ESPAÇO</span><strong>Método EIXO</strong></div>
-            <span className="eixo-login-journey-status">PRIVADO</span>
-          </div>
-          <div className="eixo-login-journey-rule"/>
-          <div className="eixo-login-journey-steps">
-            <div><span className="eixo-login-step-dot">01</span><strong>Reconhecer</strong><small>Entenda seus padrões</small></div>
-            <span className="eixo-login-step-line" aria-hidden="true"/>
-            <div><span className="eixo-login-step-dot">02</span><strong>Praticar</strong><small>Construa presença</small></div>
-            <span className="eixo-login-step-line" aria-hidden="true"/>
-            <div><span className="eixo-login-step-dot">03</span><strong>Revisar</strong><small>Siga no seu ritmo</small></div>
-          </div>
-          <div className="eixo-login-journey-footer"><span>7 DIAS DE ROTEIRO</span><span>05 MATERIAIS DE APOIO</span></div>
-        </div>
         <div className="eixo-login-editorial-footnote"><span className="eixo-login-footnote-icon" aria-hidden="true">✧</span> Confiança começa na mente. O ritmo é seu.</div>
       </section>
 

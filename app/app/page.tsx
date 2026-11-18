@@ -6,7 +6,7 @@ import "./app.css";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
-type Dashboard={email:string;completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
+type Dashboard={email:string;memberRole?:"student"|"admin_master";completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
 type Tab="inicio"|"roteiro"|"bonus"|"progresso";
 const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["roteiro","Meu roteiro","◈"],["bonus","Meus bônus","✦"],["progresso","Progresso","◷"]];
 
@@ -72,7 +72,7 @@ export default function EixoMembersPage(){
 
   return <main className="eixo-member-page">
     <header className="eixo-member-header">
-      <div className="eixo-member-header-inner"><Logo/><div className="eixo-member-header-right"><span className="eixo-member-member-chip"><span/> ACESSO AUTORIZADO</span><button onClick={logout} className="eixo-member-exit">Sair <span aria-hidden="true">↗</span></button></div></div>
+      <div className="eixo-member-header-inner"><Logo/><div className="eixo-member-header-right"><span className="eixo-member-member-chip"><span/> {data?.memberRole==="admin_master"?"ADMIN MESTRE":"ACESSO AUTORIZADO"}</span><button onClick={logout} className="eixo-member-exit">Sair <span aria-hidden="true">↗</span></button></div></div>
     </header>
     {loading?<div className="eixo-member-loading" role="status"><span className="eixo-member-loader"/> Preparando seu espaço EIXO...</div>:
       error||!data?<div className="eixo-member-failure"><h1>Não foi possível entrar na área.</h1><p>{error||"Tente novamente."}</p><button onClick={()=>void load()}>Tentar novamente →</button></div>:

@@ -19,7 +19,7 @@
   z-index: 2;
   width: min(100%, 1260px);
   margin: 0 auto;
-  padding: 24px clamp(16px, 4vw, 56px) 42px;
+  padding: 14px clamp(16px, 4vw, 56px) 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,11 +29,11 @@
   color: #f8f7f3;
   text-align: center;
   font-weight: 950;
-  font-size: clamp(41px, 5vw, 63px);
+  font-size: clamp(37px, 3.6vw, 49px);
   letter-spacing: -3px;
   line-height: 1.08;
   text-shadow: 0 2px 24px #000;
-  margin: 0 auto 20px;
+  margin: 0 auto 9px;
   white-space: nowrap;
 }
 .eixo-hero-logo > span {
@@ -45,14 +45,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 9px;
-  width: min(100%, 715px);
-  min-height: 76px;
+  gap: 4px;
+  width: min(100%, 690px);
+  min-height: 51px;
   border: 1.5px solid #d3a447;
   border-radius: 22px;
   background: linear-gradient(100deg, #10100f, #1b160f 50%, #0a0909);
   color: #edc778;
-  padding: 14px 20px;
+  padding: 9px 18px;
   box-shadow: 0 1px 35px #aa742019;
 }
 .eixo-hero-trust-top strong {
@@ -69,13 +69,13 @@
 }
 .eixo-hero-trust-top i { font-style: normal; color: #d1a453; padding: 0 5px; }
 .eixo-hero-heading {
-  margin: clamp(22px, 4vw, 38px) auto 0;
-  max-width: 1110px;
+  margin: 14px auto 0;
+  max-width: 980px;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: clamp(33px, 6vw, 82px);
+  font-size: clamp(38px, 3.7vw, 59px);
   font-weight: 950;
-  line-height: 1.02;
-  letter-spacing: -2.5px;
+  line-height: 1.025;
+  letter-spacing: -1.7px;
   color: #f8f7f5;
   text-wrap: balance;
 }
@@ -93,10 +93,10 @@
 }
 .eixo-hero-description {
   width: min(100%, 1040px);
-  margin: clamp(19px, 2.4vw, 28px) auto 0;
-  font-size: clamp(16px, 2.1vw, 26px);
+  margin: 10px auto 0;
+  font-size: clamp(15px, 1.35vw, 19px);
   font-weight: 400;
-  line-height: 1.48;
+  line-height: 1.4;
   color: #f6f2ec;
   text-wrap: balance;
 }
@@ -106,8 +106,8 @@
 }
 .eixo-hero-compare {
   position: relative;
-  width: min(100%, 1110px);
-  margin: clamp(18px, 2.7vw, 29px) auto 0;
+  width: min(100%, 740px);
+  margin: 13px auto 0;
   aspect-ratio: 920/399;
   overflow: hidden;
   background: radial-gradient(ellipse at center, #6b4424 0%, #16100c 60%, #070707);
@@ -143,20 +143,20 @@
   mix-blend-mode: normal;
 }
 .eixo-hero-button {
-  width: min(100%, 850px);
-  min-height: clamp(72px, 9vw, 111px);
+  width: min(100%, 735px);
+  min-height: 69px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: clamp(8px, 2vw, 25px);
-  padding: 19px 23px;
+  padding: 12px 18px;
   margin: -2px auto 0;
-  border-radius: 24px;
+  border-radius: 15px;
   border: 2px solid #fff0ab;
   background: linear-gradient(180deg, #ffe99d 0%, #f0c867 42%, #e3ab34 87%, #b57b21 100%);
   box-shadow: 0 0 0 3px #e5b45b1f, 0 0 34px #e6ac49a0, 0 15px 44px #b9812482;
   color: #100d08;
-  font-size: clamp(20px, 3.5vw, 39px);
+  font-size: clamp(20px, 2.2vw, 26px);
   font-weight: 950;
   line-height: 1.12;
   letter-spacing: -1.3px;
@@ -175,15 +175,15 @@
 .eixo-hero-button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 .eixo-hero-trust-row {
   width: 100%;
-  max-width: 1100px;
-  margin: clamp(31px, 4.2vw, 44px) auto 0;
+  max-width: 780px;
+  margin: 21px auto 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-evenly;
   align-items: center;
 }
 .eixo-hero-trust-item {
-  min-height: 56px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,7 +207,7 @@
   line-height: 1.3;
 }
 .eixo-hero-disclaimer {
-  margin: 29px auto 0;
+  margin: 16px auto 0;
   color: #a2937d;
   font-size: 11px;
   line-height: 1.6;
@@ -235,6 +235,18 @@
   border-top-color: #bc8333;
   transform: rotate(-26deg);
 }
+/* Keep the core promise, comparison and CTA visible early on common desktop heights. */
+@media (min-width: 851px) and (max-height: 850px) {
+  .eixo-hero-inner { padding-top: 8px; padding-bottom: 14px; }
+  .eixo-hero-logo { font-size: 40px; margin-bottom: 5px; }
+  .eixo-hero-trust-top { min-height: 44px; padding: 7px 15px; }
+  .eixo-hero-heading { font-size: clamp(36px, 3.35vw, 52px); margin-top: 10px; line-height: 1.02; }
+  .eixo-hero-description { margin-top: 8px; font-size: clamp(14px, 1.25vw, 17px); }
+  .eixo-hero-compare { width: min(100%, 660px); margin-top: 8px; }
+  .eixo-hero-button { width: min(100%, 655px); min-height: 60px; padding: 9px 14px; font-size: clamp(19px, 1.8vw, 23px); }
+  .eixo-hero-trust-row { max-width: 710px; margin-top: 16px; }
+  .eixo-hero-disclaimer { margin-top: 9px; }
+}
 @media(max-width: 850px) {
   .eixo-hero-inner { padding: 22px 15px 32px; }
   .eixo-hero-heading { font-size: clamp(33px, 7.1vw, 60px); letter-spacing: -1.8px; }
@@ -242,12 +254,12 @@
   .eixo-hero-trust-item { padding: 0 9px; }
 }
 @media(max-width: 600px) {
-  .eixo-hero-inner { padding: 22px 10px 28px; }
-  .eixo-hero-logo { font-size: 44px; margin-bottom: 16px; letter-spacing: -2px; }
+  .eixo-hero-inner { padding: 16px 10px 22px; }
+  .eixo-hero-logo { font-size: 39px; margin-bottom: 9px; letter-spacing: -2px; }
   .eixo-hero-trust-top {
     width: min(100%, 430px);
-    min-height: 65px;
-    padding: 12px 8px;
+    min-height: 54px;
+    padding: 8px 8px;
     border-radius: 16px;
   }
   .eixo-hero-trust-top strong { font-size: 11px; letter-spacing: 0; }
@@ -257,7 +269,7 @@
     font-size: clamp(30px, 8.4vw, 50px);
     line-height: 1.08;
     letter-spacing: -1.35px;
-    margin-top: 26px;
+    margin-top: 15px;
     padding: 0 3px;
   }
   .eixo-hero-desktop-break { display: none; }
@@ -266,19 +278,19 @@
     font-size: clamp(15px, 4.35vw, 19px);
     line-height: 1.5;
     padding: 0 8px;
-    margin-top: 18px;
+    margin-top: 12px;
   }
   .eixo-hero-compare {
     width: calc(100% + 20px);
-    margin: 19px -10px 0;
-    aspect-ratio: 920/520;
+    margin: 12px -10px 0;
+    aspect-ratio: 920/399;
     border-radius: 0;
   }
-  .eixo-hero-compare img { object-fit: cover; }
+  .eixo-hero-compare img { object-fit: contain; }
   .eixo-hero-button {
     margin-top: -6px;
     width: calc(100% - 13px);
-    min-height: 72px;
+    min-height: 66px;
     border-radius: 15px;
     font-size: clamp(17px, 5vw, 22px);
     letter-spacing: -.5px;
@@ -286,7 +298,7 @@
     gap: 7px;
   }
   .eixo-hero-trust-row {
-    margin-top: 29px;
+    margin-top: 18px;
     grid-template-columns: repeat(2, 1fr);
     row-gap: 12px;
   }

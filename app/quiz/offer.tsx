@@ -269,22 +269,29 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <section className="eixo-reference-section eixo-reference-routine">
+    <section className="eixo-reference-section eixo-reference-routine" id="eixo-jornada">
       <div className="eixo-offer-wrap eixo-reference-narrow">
-        <div className="eixo-reference-subheading"><span>ESTRUTURA EDUCATIVA</span><h2>SUA JORNADA DE <em>PRÁTICA.</em></h2><p>Veja como as etapas se encaixam em uma rotina simples de sete dias.</p></div>
-        <div className="eixo-reference-roadmap-card">
-          <div className="eixo-reference-roadmap-top"><div><small>ESTRUTURA EDUCATIVA</small><h3>Seu plano em etapas</h3></div><span>◉ 7 dias</span></div>
-          <div className="eixo-reference-roadmap-dates"><div><small>INÍCIO</small><strong>Dia 1</strong><span>Reconhecer</span></div><div><small>CONCLUSÃO</small><strong>Dia 7</strong><span>Revisar</span></div></div>
-          <div className="eixo-reference-roadmap-timeline">
-            {[
-              {n:"1",title:"Começar",date:"DIA 1",desc:"Perceber a autocobrança e iniciar sua reflexão."},
-              {n:"2",title:"Praticar",date:"DIAS 2 A 5",desc:"Explorar presença, expectativas e comunicação."},
-              {n:"3",title:"Revisar",date:"DIAS 6 E 7",desc:"Olhar para sua rotina e definir o próximo passo."}
-            ].map((m,i)=><div key={m.n} className="eixo-reference-timeline-row"><b className={i===2?"is-finished":""}>{m.n}</b><div><strong>{m.title}</strong><span>{m.desc}</span></div><small>{m.date}</small></div>)}
-          </div>
-          <div className="eixo-reference-roadmap-metrics"><div><b>◷</b><small>TEMPO</small><strong>{time}</strong></div><div><b>▣</b><small>ACESSO</small><strong>Navegador</strong></div><div><b>✦</b><small>ROTEIRO</small><strong>7 dias</strong></div></div>
-          <p className="eixo-reference-roadmap-discreet">◉ Total discrição: as respostas ficam nesta sessão do navegador, sem exposição pública.</p>
+        <div className="eixo-reference-subheading eixo-journey-heading">
+          <h2>Mais presença na intimidade, <em>um dia de cada vez.</em></h2>
+          <p>Uma atividade educativa por dia para explorar suas preocupações e o que faz sentido para você.</p>
         </div>
+        <div className="eixo-journey-steps" aria-label="As três etapas do roteiro EIXO">
+          {[
+            {n:"1",days:"DIAS 1–2 · RECONHECER",title:"Identifique a autocobrança",desc:"Perceba os pensamentos e situações que aumentam a pressão."},
+            {n:"2",days:"DIAS 3–5 · PRATICAR",title:"Experimente mais presença",desc:"Explore diálogo, atenção ao momento e expectativas realistas."},
+            {n:"3",days:"DIAS 6–7 · REVISAR",title:"Escolha o próximo passo",desc:"Reflita sobre a experiência e o que deseja continuar praticando."}
+          ].map(item=><div className="eixo-journey-step" key={item.n}>
+            <span className="eixo-journey-number">{item.n}</span>
+            <div className="eixo-journey-step-card">
+              <span>{item.days}</span>
+              <strong>{item.title}</strong>
+              <p>{item.desc}</p>
+            </div>
+          </div>)}
+        </div>
+        <div className="eixo-journey-goal">Seu objetivo: <strong>{focus}</strong></div>
+        <InPageCta label="QUERO COMEÇAR MEU PLANO ↓" href="#eixo-plano"/>
+        <p className="eixo-journey-caveat">Roteiro de 7 dias, sem garantia de resultados físicos ou prazo de melhora.</p>
       </div>
     </section>
 
@@ -296,16 +303,32 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <section className="eixo-reference-section eixo-reference-contrast">
+    <section className="eixo-reference-section eixo-reference-contrast" id="eixo-exemplos-praticos">
       <div className="eixo-offer-wrap eixo-reference-narrow">
-        <div className="eixo-reference-subheading"><span>ANTES E DEPOIS DA REFLEXÃO</span><h2>NÃO É UMA DISPUTA DE MINUTOS. <em>É UMA MUDANÇA DE FOCO.</em></h2><p>Comparação ilustrativa do modo de pensar, não resultado clínico nem depoimento real.</p></div>
-        <div className="eixo-reference-contrast-visual">
-          <img src="/images/eixo-antes-depois.avif" alt="Comparação ilustrativa de um homem preocupado e de um casal sorrindo" width={920} height={399} loading="lazy"/>
+        <div className="eixo-reference-subheading eixo-contrast-heading">
+          <h2>Uma nova maneira de lidar com a <em>pressão na hora H.</em></h2>
+          <p>Três exemplos educativos de mudança de perspectiva. Não são depoimentos reais ou resultados de tratamentos.</p>
         </div>
-        <div className="eixo-reference-contrast-cards">
-          <article><span>ANTES · AUTOCOBRANÇA</span><strong>“E se eu falhar?”</strong><p>Foco excessivo no desempenho e no medo de decepcionar.</p></article>
-          <article><span>DEPOIS · PRESENÇA</span><strong>“Posso ir no meu ritmo.”</strong><p>Mais atenção ao conforto, ao diálogo e às próprias necessidades.</p></article>
+        <div className="eixo-contrast-stories">
+          {[
+            {before:"Eu preciso durar mais.",after:"Posso respeitar meu ritmo.",phrase:"Não preciso transformar cada encontro em um teste.",topic:"INTIMIDADE"},
+            {before:"Se eu falhar, acabou tudo.",after:"Posso conversar e pausar.",phrase:"Um momento difícil não define quem eu sou.",topic:"CONFIANÇA"},
+            {before:"Preciso controlar cada reação.",after:"Posso prestar atenção ao presente.",phrase:"O que importa também é o conforto de nós dois.",topic:"PRESENÇA"}
+          ].map((example,i)=><article key={example.topic} className="eixo-contrast-story">
+            <div className="eixo-contrast-story-values">
+              <div className="eixo-contrast-story-before"><small>ANTES</small><strong>{example.before}</strong></div>
+              <span className="eixo-contrast-arrow" aria-hidden="true">→</span>
+              <div className="eixo-contrast-story-after"><small>DEPOIS</small><strong>{example.after}</strong></div>
+            </div>
+            <p className="eixo-contrast-story-quote">“{example.phrase}”</p>
+            <div className="eixo-contrast-story-meta">
+              <span className="eixo-contrast-story-avatar" aria-hidden="true">◈</span>
+              <span>EIXO · EXEMPLO EDUCATIVO {i+1}</span>
+              <strong>{example.topic}</strong>
+            </div>
+          </article>)}
         </div>
+        <InPageCta label="QUERO DAR MEU PRÓXIMO PASSO ↓" href="#eixo-plano"/>
       </div>
     </section>
 
@@ -330,41 +353,36 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <section className="eixo-offer-section eixo-bonus-section" id="eixo-bonus">
+    <section className="eixo-offer-section eixo-bonus-section eixo-bonus-compact-section" id="eixo-bonus">
       <div className="eixo-offer-wrap eixo-column">
-        <div className="eixo-section-head">
-          <span className="eixo-offer-kicker">05 / CONTEÚDO EXCLUSIVO EIXO</span>
-          <h2>MAIS DO QUE BÔNUS. <em>FERRAMENTAS PARA A HORA H.</em></h2>
-          <p>Cinco materiais complementares, práticos e com linguagem direta. O conteúdo escrito já está disponível para leitura nesta página, sem cadastro ou pagamento.</p>
+        <div className="eixo-section-head eixo-bonus-compact-heading">
+          <h2>Seu acesso inclui <em>5 bônus gratuitos.</em></h2>
+          <p>Materiais educativos que você já pode abrir nesta página, sem pagamento.</p>
         </div>
-        <div className="eixo-bonus-grid">
-          {BONUSES.map(b=><details key={b.num} className="eixo-bonus-item">
-            <summary>
-              <div className={"eixo-bonus-cover eixo-bonus-cover-"+b.num} aria-hidden="true">
-                <div className="eixo-bonus-cover-top"><span>EIXO</span><span>{b.num}/05</span></div>
-                <div className="eixo-bonus-cover-center"><span>{b.icon}</span><strong>{b.eyebrow}</strong></div>
-                <div className="eixo-bonus-cover-bottom">{b.format}</div>
-              </div>
-              <div className="eixo-bonus-head">
-                <span>BÔNUS {b.num} · CONTEÚDO DISPONÍVEL</span>
-                <h3>{b.title}</h3>
-                <p>{b.subtitle}</p>
-                <div className="eixo-bonus-meta"><span>{b.format}</span><span>{b.duration}</span></div>
-                <span className="eixo-bonus-open">ACESSAR MEU BÔNUS <b>↗</b></span>
-              </div>
-              <span className="eixo-bonus-free">INCLUÍDO</span>
-              <b className="eixo-bonus-plus" aria-hidden="true">+</b>
+        <div className="eixo-bonus-grid eixo-bonus-compact-grid">
+          {BONUSES.map(b=><details key={b.num} className="eixo-bonus-item eixo-bonus-compact">
+            <summary aria-label={"Abrir bônus "+b.num+": "+b.title}>
+              <span className="eixo-bonus-gift" aria-hidden="true">🎁</span>
+              <span className="eixo-bonus-compact-body">
+                <small>BÔNUS {Number(b.num)}</small>
+                <strong>{b.title}</strong>
+                <span>{b.subtitle}</span>
+              </span>
+              <span className="eixo-bonus-compact-price">
+                <span>R$ 0,00</span>
+                <b>GRÁTIS</b>
+                <small>VER MATERIAL</small>
+              </span>
             </summary>
             <div className="eixo-bonus-content">
-              <div className="eixo-bonus-content-header"><span>CONTEÚDO EXCLUSIVO EIXO · {b.num}/05</span><h4>{b.title}</h4><p>{b.subtitle}</p></div>
+              <div className="eixo-bonus-content-header"><span>MATERIAL EDUCATIVO EIXO · {b.num}/05</span><h4>{b.title}</h4><p>{b.subtitle}</p></div>
               <div className="eixo-bonus-chapters">{b.chapters.map((chapter,i)=><div className="eixo-bonus-chapter" key={chapter.heading}><span>{String(i+1).padStart(2,"0")}</span><div><h5>{chapter.heading}</h5><p>{chapter.copy}</p></div></div>)}</div>
               <p className="eixo-bonus-caution">{b.action}</p>
-              <div className="eixo-bonus-end">✦ MATERIAL CONCLUÍDO · EIXO</div>
+              <div className="eixo-bonus-end">✦ MATERIAL EIXO · ACESSO GRATUITO</div>
             </div>
           </details>)}
         </div>
-        <div className="eixo-all-unlocked">✦ TODOS OS CINCO MATERIAIS ESTÃO DISPONÍVEIS · ABRA OS CARDS PARA ACESSAR</div>
-        <p className="eixo-bonus-footnote">Nesta versão, os bônus são materiais digitais escritos. Não anunciamos vídeos, áudios ou aplicativo instalável antes de produzi-los.</p>
+        <p className="eixo-bonus-footnote">Os cinco bônus são materiais em texto, disponíveis gratuitamente. Toque em um card para ler.</p>
       </div>
     </section>
 

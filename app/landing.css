@@ -539,3 +539,14 @@
   .eixoh-floating-right strong{font-size:10px}
   .eixoh-primary{min-height:72px;font-size:15px}
 }
+
+/* Preserve readable, unclipped phone content on 320–405 px devices. */
+@media(max-width:405px){
+  .eixoh-device-screen{padding:25px 9px 10px}
+  .eixoh-device-badge{font-size:6px;padding:4px 5px;margin-top:-14px}
+  .eixoh-device-ring{width:67%;margin:14px 0 12px}
+  .eixoh-device-ring strong{font-size:clamp(52px,15.5vw,68px)}
+  .eixoh-device-statement{font-size:clamp(16px,4.75vw,19px);line-height:1.06}
+  .eixoh-device-text{font-size:6px;margin:7px 0 8px}
+  .eixoh-device-button{min-height:30px;font-size:7px;margin-bottom:9px}
+}

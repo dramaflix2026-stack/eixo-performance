@@ -58,12 +58,12 @@ export default function LoginForm(){
     event.preventDefault();
     if(busy)return;
     setBusy(true);setStatus("");setSuccess(false);
-    const endpoint=mode==="login"?"/api/eixo/auth/login":mode==="first"?"/api/eixo/auth/register":"/api/eixo/auth/recover";
+    const endpoint=mode==="login"?"/api/eixo/auth/login":"/api/eixo/auth/send-link";
     try{
       const response=await fetch(endpoint,{
         method:"POST",credentials:"same-origin",cache:"no-store",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(mode==="recover"?{email:email.trim()}:{email:email.trim(),password})
+        body:JSON.stringify(mode==="login"?{email:email.trim(),password}:{email:email.trim()})
       });
       const result=await response.json() as {ok?:boolean;message?:string;redirect?:string};
       if(mode==="login"&&response.ok&&result.ok){
@@ -83,25 +83,25 @@ export default function LoginForm(){
     </div>
     <form onSubmit={submit} className="eixo-login-form">
       {mode!=="login"&&<div className="eixo-login-mode-heading">
-        <span>✦ {mode==="first"?"PRIMEIRO ACESSO":"SEGURANÇA DA CONTA"}</span>
-        <h3>{mode==="first"?"Ativar minha conta":"Recuperar minha senha"}</h3>
-        <p>{mode==="first"?"Utilize o e-mail da compra. Depois de confirmá-lo, a entrada depende de uma compra aprovada. O cadastro está protegido enquanto separamos os usuários do EIXO e do Toledo.":"Informe seu e-mail. Por segurança, o envio da recuperação será habilitado após isolarmos as contas do EIXO."}</p>
+        <span>✦ {mode==="first"?"ACESSO POR E-MAIL":"ENTRAR SEM SENHA"}</span>
+        <h3>{mode==="first"?"Receber meu link de acesso":"Acessar com link por e-mail"}</h3>
+        <p>{mode==="first"?"Se você já tem uma conta confirmada, enviaremos um link de acesso ao e-mail cadastrado. Para compradores novos, o cadastro ainda está sendo separado do sistema Toledo.":"Use o endereço já cadastrado para receber um link de entrada sem precisar digitar sua senha. O link não altera a senha existente."}</p>
       </div>}
       <div className="eixo-login-field"><label htmlFor={emailId}>Seu e-mail</label>
         <div className="eixo-login-input-wrap"><MailIcon/><input type="email" id={emailId} autoComplete="email" placeholder="voce@exemplo.com" value={email} maxLength={254} onChange={e=>{setEmail(e.target.value);setStatus("");}} required/></div>
       </div>
-      {mode!=="recover"&&<div className="eixo-login-field">
-        <div className="eixo-login-label-row"><label htmlFor={passId}>{mode==="first"?"Crie uma senha":"Sua senha"}</label>
-          {mode==="login"&&<button type="button" onClick={()=>navigate("recover")} className="eixo-login-text-link">Esqueci minha senha</button>}
+      {mode==="login"&&<div className="eixo-login-field">
+        <div className="eixo-login-label-row"><label htmlFor={passId}>{"Sua senha"}</label>
+          {mode==="login"&&<button type="button" onClick={()=>navigate("recover")} className="eixo-login-text-link">Entrar por e-mail</button>}
         </div>
-        <div className="eixo-login-input-wrap"><LockIcon/><input id={passId} type={showPassword?"text":"password"} autoComplete={mode==="first"?"new-password":"current-password"} placeholder={mode==="first"?"Mínimo de 10 caracteres":"Digite sua senha"} value={password} minLength={mode==="first"?10:6} maxLength={128} onChange={e=>{setPassword(e.target.value);setStatus("");}} required/>
+        <div className="eixo-login-input-wrap"><LockIcon/><input id={passId} type={showPassword?"text":"password"} autoComplete="current-password" placeholder={"Digite sua senha"} value={password} minLength={6} maxLength={128} onChange={e=>{setPassword(e.target.value);setStatus("");}} required/>
         <button type="button" className="eixo-login-visibility" onClick={()=>setShowPassword(v=>!v)} aria-label={showPassword?"Ocultar senha":"Mostrar senha"} aria-pressed={showPassword}><EyeIcon visible={showPassword}/></button></div>
       </div>}
       {status&&<div className="eixo-login-inline-notice" role="status" style={success?{borderColor:"#558463",background:"#192d23",color:"#c1f0ce"}:{}}>{status}</div>}
-      <button className="eixo-login-submit" disabled={busy} type="submit"><span>{busy?"PROCESSANDO...":mode==="login"?"ENTRAR NA MINHA ÁREA":mode==="first"?"SOLICITAR ATIVAÇÃO":"ENVIAR LINK POR E-MAIL"}</span><span className="eixo-login-submit-arrow" aria-hidden="true">→</span></button>
+      <button className="eixo-login-submit" disabled={busy} type="submit"><span>{busy?"PROCESSANDO...":mode==="login"?"ENTRAR NA MINHA ÁREA":mode==="first"?"RECEBER MEU LINK DE ACESSO":"ENVIAR LINK POR E-MAIL"}</span><span className="eixo-login-submit-arrow" aria-hidden="true">→</span></button>
     </form>
-    {mode==="login"?<div className="eixo-login-signup"><span>Primeira vez por aqui?</span><button type="button" onClick={()=>navigate("first")}>Ativar meu acesso ↗</button></div>:
+    {mode==="login"?<div className="eixo-login-signup"><span>Já possui conta?</span><button type="button" onClick={()=>navigate("first")}>Receber link de acesso ↗</button></div>:
     <div className="eixo-login-signup"><button type="button" onClick={()=>navigate("login")}>← Voltar ao login</button></div>}
-    <div className="eixo-login-form-bottom"><span aria-hidden="true">◈</span><p>Somente compras autorizadas liberam os conteúdos. O cadastro público e o envio de e-mails serão ativados depois do isolamento seguro do banco de autenticação.</p></div>
+    <div className="eixo-login-form-bottom"><span aria-hidden="true">◈</span><p>O link de e-mail é válido para contas já existentes. A área privada exige uma compra aprovada ou autorização individual de teste. Novos cadastros seguem protegidos até isolarmos o EIXO do Toledo.</p></div>
   </div>;
 }

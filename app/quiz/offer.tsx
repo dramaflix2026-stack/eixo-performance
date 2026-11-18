@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import FeedbackCarousel from "./feedback-carousel";
 import "./offer.css";
 
 type OfferProps={answers:(number|null)[];name:string;onReset:()=>void};
@@ -189,23 +190,7 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <section className="eixo-reference-section eixo-reference-examples" id="eixo-exemplos">
-      <div className="eixo-offer-wrap eixo-reference-narrow">
-        <div className="eixo-reference-subheading"><span>ENTENDA O QUE VOCÊ PODE ENCONTRAR</span><h2>CONFIANÇA COMEÇA COM <em>CLAREZA.</em></h2><p>Exemplos das reflexões do próprio EIXO. São demonstrações de conteúdo, não depoimentos de clientes.</p></div>
-        <div className="eixo-reference-messages">
-          {[
-            {question:"O QUE A PRESSÃO FAZ COM O MOMENTO?",reply:"Quando fico preocupado em falhar, percebo que paro de prestar atenção ao que sinto.",lesson:"Perceber o pensamento pode ser o primeiro passo para desacelerar."},
-            {question:"COMO CONVERSAR SOBRE A INSEGURANÇA?",reply:"Quero falar sobre uma coisa íntima sem precisar fingir que está tudo bem.",lesson:"A comunicação pode ajudar a reduzir o peso de expectativas irreais."},
-            {question:"E SE EU NÃO ESTIVER À VONTADE?",reply:"Posso fazer uma pausa, respirar no meu ritmo ou decidir não continuar.",lesson:"Conforto e consentimento importam mais do que cumprir uma meta de tempo."}
-          ].map((c,i)=><article className="eixo-reference-message" key={c.question}>
-             <div className="eixo-reference-message-head"><span>◉ EIXO</span><small>EXEMPLO EDUCATIVO {String(i+1).padStart(2,"0")}</small></div>
-             <div className="eixo-reference-message-question">{c.question}</div>
-             <div className="eixo-reference-message-reply">{c.reply}</div>
-             <p>{c.lesson}</p>
-          </article>)}
-        </div>
-      </div>
-    </section>
+    <FeedbackCarousel />
 
     <section className="eixo-offer-section eixo-profile-section" id="eixo-perfil">
       <div className="eixo-offer-wrap eixo-column">

@@ -1,1 +1,157 @@
-.eixo-member-page{min-height:100vh;min-height:100svh;padding:0 22px;background:radial-gradient(ellipse 600px 400px at 50% 35%,#2d2116 0,#111112 70%);color:#f5f0e8;font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column;align-items:center}.eixo-member-header{display:flex;align-items:center;justify-content:space-between;width:min(950px,100%);padding:27px 0;border-bottom:1px solid #463824;gap:10px}.eixo-member-logo{color:#faf8f5;font-size:28px;font-weight:950;letter-spacing:3px;text-decoration:none}.eixo-member-logo span{color:#e2bb75}.eixo-member-header>span{font-size:10px;letter-spacing:1.4px;color:#d6bb89;font-weight:850}.eixo-member-card{width:min(550px,100%);margin:auto 0;padding:38px 30px;text-align:center;border:1px solid #755a37;background:#1a1918;border-radius:19px;box-shadow:0 25px 60px #0005}.eixo-member-icon{font-size:34px;color:#eac782}.eixo-member-eyebrow{font-size:10px;letter-spacing:2px;color:#e6c27b;font-weight:900}.eixo-member-card h1{font-size:clamp(27px,5vw,36px);letter-spacing:-.7px;line-height:1.15;margin:18px 0;color:#f9f6ef}.eixo-member-card p{color:#c7bdb0;font-size:14px;line-height:1.8;overflow-wrap:anywhere}.eixo-member-card p strong{color:#eacb8a}.eixo-member-notice{border:1px solid #625039;border-radius:9px;background:#262018;padding:15px;margin:22px auto;color:#e4c892;font-size:12px;line-height:1.6}.eixo-member-card button{border:1px solid #dfb675;background:linear-gradient(115deg,#f3d58c,#c69b58);color:#1c1710;border-radius:10px;font-size:12px;font-weight:900;padding:16px 24px;cursor:pointer;margin-top:15px}.eixo-member-card button:focus-visible{outline:3px solid #e6bd6b;outline-offset:3px}.eixo-member-page footer{padding:26px 0;color:#928272;font-size:10px;letter-spacing:1.1px}@media(max-width:650px){.eixo-member-card{padding:32px 20px}.eixo-member-header{padding:19px 0}}
+
+.eixo-member-page{
+ --em-gold:#d8af6b;--em-cream:#f3eadf;--em-muted:#b1a89b;--em-border:#453625;
+ min-height:100vh;min-height:100svh;background:radial-gradient(ellipse 950px 600px at 85% -180px,rgba(133,90,42,.17),transparent 70%),#0c0d0e;
+ color:var(--em-cream);font-family:Arial,Helvetica,sans-serif
+}
+.eixo-member-page *,.eixo-member-page *:before,.eixo-member-page *:after{box-sizing:border-box}
+.eixo-member-page button{font:inherit;cursor:pointer}.eixo-member-page button:focus-visible,.eixo-member-page a:focus-visible{outline:3px solid var(--em-gold);outline-offset:4px}
+.eixo-member-header{height:84px;border-bottom:1px solid #302a23;background:#0b0c0dfa}
+.eixo-member-header-inner{width:min(1180px,calc(100% - 44px));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.eixo-member-logo{color:#f9f7f4;font-size:31px;font-weight:950;letter-spacing:4px;text-decoration:none}
+.eixo-member-logo span:first-child,.eixo-member-logo-dot{color:#e7bf78}
+.eixo-member-header-right{display:flex;align-items:center;gap:24px}
+.eixo-member-member-chip{display:flex;align-items:center;gap:8px;color:#dac499;font-size:10px;font-weight:850;letter-spacing:1.5px}
+.eixo-member-member-chip span{height:8px;width:8px;border-radius:50%;background:#30af76;box-shadow:0 0 0 4px #30af7625}
+.eixo-member-exit{padding:10px 14px;border:1px solid #5c4930;background:#191716;color:#e7c186;border-radius:8px;font-size:12px!important;font-weight:800!important}
+.eixo-member-exit span{margin-left:8px}
+.eixo-member-overline{display:flex;justify-content:space-between;gap:15px;width:min(1180px,calc(100% - 44px));margin:43px auto 0;color:#aa8a5f;letter-spacing:1.8px;font-size:10px;font-weight:850}
+.eixo-member-heading{display:flex;align-items:center;justify-content:space-between;gap:50px;width:min(1180px,calc(100% - 44px));margin:25px auto 47px}
+.eixo-member-kicker{font-size:10px;font-weight:900;letter-spacing:1.8px;color:var(--em-gold)}
+.eixo-member-heading h1{font-size:clamp(45px,5.4vw,74px);font-weight:900;letter-spacing:-3px;line-height:1.02;margin:17px 0 18px}
+.eixo-member-heading h1 em,.eixo-member-section-heading em{font-style:normal;color:var(--em-gold)}
+.eixo-member-heading>div:first-child>p{max-width:610px;color:#b5aca1;line-height:1.75;margin:0;font-size:15px}
+.eixo-member-profile-stat{flex-shrink:0;width:230px;min-height:220px;padding:19px;border:1px solid #59442d;border-radius:20px;background:linear-gradient(142deg,#27211b,#171718);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;box-shadow:0 20px 45px #0004}
+.eixo-member-progress-ring{--p:0%;height:115px;width:115px;border-radius:50%;background:conic-gradient(#e4bd76 var(--p),#40372e var(--p));display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative}
+.eixo-member-progress-ring:before{content:"";position:absolute;inset:9px;border-radius:50%;background:#211c19}
+.eixo-member-progress-ring strong,.eixo-member-progress-ring small{z-index:1}
+.eixo-member-progress-ring strong{font-size:28px;color:#f0d394}
+.eixo-member-progress-ring small{font-size:8px;letter-spacing:1px;color:#9d907c;font-weight:900}
+.eixo-member-profile-stat>strong{font-size:14px;margin-top:3px}
+.eixo-member-profile-stat>span{font-size:11px;color:#ada18e}
+.eixo-member-tabs{position:sticky;top:0;z-index:6;width:100%;min-height:73px;border-bottom:1px solid #352d24;border-top:1px solid #352d24;background:#121212f4;display:flex;justify-content:center;gap:8px;align-items:center;padding:10px 15px;backdrop-filter:blur(14px)}
+.eixo-member-tabs button{padding:13px 24px;background:transparent;border:1px solid transparent;color:#aaa296;border-radius:10px;font-size:13px;font-weight:800;white-space:nowrap}
+.eixo-member-tabs button span{font-size:18px;vertical-align:-1px;margin-right:8px}
+.eixo-member-tabs button:hover{color:#fae9c4;background:#24201a}
+.eixo-member-tabs button.active{color:#18140f;background:linear-gradient(115deg,#d7b06b,#f2d799);border-color:#dabb7a}
+.eixo-member-content{width:min(1100px,calc(100% - 44px));margin:55px auto 80px;min-height:520px}
+.eixo-member-section-heading{max-width:830px;margin-bottom:34px}
+.eixo-member-section-heading>span{font-size:11px;font-weight:900;color:var(--em-gold);letter-spacing:1.8px}
+.eixo-member-section-heading h2{font-size:clamp(31px,4vw,49px);letter-spacing:-1.8px;font-weight:900;line-height:1.1;margin:15px 0}
+.eixo-member-section-heading p{color:#b7ad9f;font-size:15px;line-height:1.7;max-width:700px;margin:0}
+.eixo-member-next-card{display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:23px;background:linear-gradient(125deg,#292117,#1c1a17 65%,#151617);border:1px solid #735937;border-radius:19px;padding:30px;box-shadow:0 17px 35px #0004}
+.eixo-member-next-icon{width:57px;height:57px;border-radius:15px;border:1px solid #947140;background:#382b1b;display:grid;place-items:center;color:#f4d493;font-size:28px}
+.eixo-member-next-text>span:first-child{color:#caa468;font-size:10px;font-weight:900;letter-spacing:1.6px}
+.eixo-member-next-text h3{margin:9px 0;font-size:23px;letter-spacing:-.6px}
+.eixo-member-next-text p{color:#b4a89a;max-width:500px;line-height:1.65;font-size:13px;margin:0}
+.eixo-member-next-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.eixo-member-next-tags span{display:inline-flex;padding:7px 9px;border:1px solid #625137;border-radius:7px;color:#d6c29d;font-size:10px}
+.eixo-member-primary{display:flex;align-items:center;justify-content:space-between;gap:20px;border:1px solid #f2d18c;border-radius:10px;padding:15px 19px;background:linear-gradient(115deg,#d4a760,#f3d38c);color:#181510;font-size:11px!important;font-weight:950!important;letter-spacing:.4px;min-height:53px;transition:filter .15s,transform .15s}
+.eixo-member-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.eixo-member-primary:disabled{opacity:.65;cursor:wait}
+.eixo-member-primary span{font-size:19px;font-weight:400}
+.eixo-member-home-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.eixo-member-tile{display:flex;align-items:flex-start;flex-direction:column;text-align:left;gap:10px;min-height:230px;padding:27px;background:#1b1b1c;border:1px solid #42372b;border-radius:16px;color:#f8f2e9;position:relative}
+.eixo-member-tile:hover{border-color:#b18d59;transform:translateY(-2px)}
+.eixo-member-tile-icon{font-size:29px;color:#dfb778}
+.eixo-member-tile-count{font-size:10px;font-weight:900;letter-spacing:1.4px;color:#c3a06b}
+.eixo-member-tile strong{font-size:18px}
+.eixo-member-tile small{font-size:12px;line-height:1.6;color:#a89f93;max-width:240px}
+.eixo-member-tile-arrow{position:absolute;right:24px;bottom:25px;font-size:23px;color:#d2ad6e}
+.eixo-member-learn-layout{display:grid;grid-template-columns:315px minmax(0,1fr);align-items:start;gap:24px}
+.eixo-member-day-list{display:flex;flex-direction:column;gap:10px}
+.eixo-member-day-list button{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #40382e;border-radius:12px;background:#19191a;color:#f0e8db;padding:13px 11px;min-height:77px}
+.eixo-member-day-list button:hover{border-color:#ae8953}
+.eixo-member-day-list button.selected{border-color:#dbb26d;background:#32271a}
+.eixo-member-day-index{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:10px;border:1px solid #856c43;background:#28241d;color:#e6c17e;font-size:16px;font-weight:900}
+.eixo-member-day-label{display:flex;flex-direction:column;gap:5px;min-width:0}
+.eixo-member-day-label small{font-size:9px;font-weight:900;color:#c1a16a;letter-spacing:1px}
+.eixo-member-day-label strong{font-size:12px;line-height:1.4}
+.eixo-member-day-chevron{margin-left:auto;color:#d1a96b}
+.eixo-member-day-check{margin-left:auto;border-radius:50%;display:grid;place-items:center;flex-shrink:0;width:22px;height:22px;color:#102216;background:#58bf78;font-weight:900}
+.eixo-member-lesson,.eixo-member-bonus-detail{background:#1d1c1b;border:1px solid #5d4831;border-radius:17px;padding:35px 37px;box-shadow:0 18px 36px #0004}
+.eixo-member-lesson-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#d3ad6e;font-size:10px;letter-spacing:1.4px;font-weight:900}
+.eixo-member-lesson h3,.eixo-member-bonus-detail h3{font-size:clamp(26px,3vw,39px);letter-spacing:-1px;line-height:1.12;margin:19px 0 14px}
+.eixo-member-lesson-intro,.eixo-member-bonus-intro{color:#bcb2a4;font-size:14px;line-height:1.8;margin:0 0 25px}
+.eixo-member-lesson-items{display:flex;flex-direction:column;gap:0;border-top:1px solid #42392f;border-bottom:1px solid #42392f}
+.eixo-member-lesson-items>div{display:flex;gap:17px;padding:21px 0}
+.eixo-member-lesson-items>div+div{border-top:1px solid #35302b}
+.eixo-member-lesson-step-index{flex-shrink:0;display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#31291f;border:1px solid #745938;color:#e1bd7c;font-size:12px;font-weight:900}
+.eixo-member-lesson-items h4{font-size:15px;margin:2px 0 7px;color:#fff4e1}
+.eixo-member-lesson-items p{color:#b9ad9e;line-height:1.7;font-size:13px;margin:0}
+.eixo-member-lesson-closing{padding:17px 18px;margin:22px 0;background:#2b241a;border:1px solid #5a482e;color:#e4c68a;border-radius:10px;font-size:12px;line-height:1.6}
+.eixo-member-complete{width:100%}
+.eixo-member-save-error{font-size:13px;color:#ffc0b6}
+.eixo-member-bonus-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.eixo-member-bonus-card{display:flex;align-items:flex-start;text-align:left;gap:20px;padding:24px;background:#1b1b1b;border:1px solid #58452b;color:var(--em-cream);border-radius:15px;min-height:203px}
+.eixo-member-bonus-card:hover{border-color:#dfb576;background:#262019}
+.eixo-member-bonus-numeral{display:grid;place-items:center;flex-shrink:0;width:53px;height:69px;background:linear-gradient(145deg,#4d3821,#231e19);border:1px solid #97713d;border-radius:8px;color:#f3cc8a;font-size:23px;font-weight:900}
+.eixo-member-bonus-card-text{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.eixo-member-bonus-card-text small{color:#d1a767;font-size:10px;font-weight:900;letter-spacing:1px}
+.eixo-member-bonus-card-text strong{font-size:19px;line-height:1.25}
+.eixo-member-bonus-card-text>span{color:#ac9e90;font-size:13px;line-height:1.6}
+.eixo-member-bonus-card-text em{font-style:normal;color:#f1c987;font-size:10px;font-weight:900;letter-spacing:.9px;margin-top:6px}
+.eixo-member-bonus-card-text em span{font-size:16px;margin-left:8px}
+.eixo-member-back{border:0;background:transparent;color:#e2ba74;padding:0;font-size:12px!important;font-weight:850!important;margin-bottom:23px}
+.eixo-member-bonus-part{padding:20px 0;border-top:1px solid #42372b}
+.eixo-member-bonus-part h4{color:#f4d291;font-size:17px;margin:0 0 9px}
+.eixo-member-bonus-part p{color:#bdb0a2;line-height:1.8;font-size:14px;margin:8px 0}
+.eixo-member-bonus-detail .eixo-member-primary{margin-top:20px;width:100%;max-width:370px}
+.eixo-member-track-card{background:#1e1d1b;border:1px solid #5c472d;border-radius:20px;padding:34px;max-width:760px}
+.eixo-member-track-top{display:flex;justify-content:space-between;gap:15px;font-size:18px}
+.eixo-member-track-top span{color:#d4ac6b;font-weight:900}
+.eixo-member-track-bar{height:12px;border-radius:100px;background:#3b342a;margin:23px 0;overflow:hidden}
+.eixo-member-track-bar span{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,#b58c4d,#efd18e);transition:width .35s}
+.eixo-member-track-days{display:grid;grid-template-columns:repeat(7,1fr);gap:11px}
+.eixo-member-track-days button{aspect-ratio:1;border-radius:12px;border:1px solid #675032;background:#332b22;color:#eac586;font-weight:900}
+.eixo-member-track-days button.done{background:#1c5436;color:#b7f5c9;border-color:#3fa86a}
+.eixo-member-track-card>p{font-size:12px;color:#b7ac9d;line-height:1.7;margin:21px 0}
+.eixo-member-track-card .eixo-member-primary{width:100%;max-width:370px}
+.eixo-member-privacy{width:min(1100px,calc(100% - 44px));margin:0 auto 54px;border:1px solid #453b2b;background:#201c16;border-radius:12px;padding:17px 23px;display:flex;gap:14px;align-items:flex-start;color:#c7b69c}
+.eixo-member-privacy>span{font-size:24px;color:#e1ba77}
+.eixo-member-privacy p{font-size:12px;line-height:1.75;margin:0}
+.eixo-member-privacy strong{color:#f6dfb0}
+.eixo-member-footer{border-top:1px solid #302a23;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:25px max(22px,calc((100% - 1180px)/2));font-size:10px;color:#8e8477;letter-spacing:.5px;overflow-wrap:anywhere}
+.eixo-member-loading,.eixo-member-failure{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;text-align:center;padding:40px}
+.eixo-member-loader{height:38px;width:38px;border-radius:50%;border:3px solid #493b2a;border-top-color:#e6bc74;animation:em-spin 1s linear infinite}
+@keyframes em-spin{to{transform:rotate(360deg)}}
+.eixo-member-failure h1{font-size:30px;margin:0}
+.eixo-member-failure p{color:#b9aea0}
+.eixo-member-failure button{background:#d9b36d;color:#15120e;padding:15px 28px;border:0;border-radius:9px;font-weight:900}
+@media(max-width:900px){
+ .eixo-member-next-card{grid-template-columns:50px 1fr}.eixo-member-next-card .eixo-member-primary{grid-column:1/-1;width:100%}
+ .eixo-member-home-grid{gap:10px}.eixo-member-tile{padding:19px;min-height:235px}
+ .eixo-member-learn-layout{grid-template-columns:250px minmax(0,1fr);gap:14px}.eixo-member-lesson{padding:25px}
+}
+@media(max-width:700px){
+ .eixo-member-header{height:70px}.eixo-member-logo{font-size:25px}.eixo-member-header-right{gap:9px}.eixo-member-member-chip{font-size:8px;letter-spacing:.3px}.eixo-member-exit{padding:9px 11px;font-size:11px!important}
+ .eixo-member-overline{margin:30px auto 0}.eixo-member-overline span:last-child{display:none}
+ .eixo-member-heading{margin:18px auto 25px;gap:15px;align-items:stretch}
+ .eixo-member-heading h1{font-size:42px;letter-spacing:-1.8px}.eixo-member-heading>div:first-child>p{font-size:13px}
+ .eixo-member-profile-stat{width:135px;min-height:auto;padding:11px;justify-content:center;gap:7px}
+ .eixo-member-progress-ring{height:85px;width:85px}.eixo-member-progress-ring strong{font-size:23px}
+ .eixo-member-profile-stat>strong{font-size:11px}.eixo-member-profile-stat>span{font-size:9px;text-align:center}
+ .eixo-member-tabs{min-height:64px;justify-content:space-around;gap:3px;padding:8px}
+ .eixo-member-tabs button{font-size:10px;padding:10px 8px}.eixo-member-tabs button span{font-size:14px;margin-right:3px}
+ .eixo-member-content{margin:35px auto 60px}.eixo-member-section-heading h2{font-size:34px}
+ .eixo-member-next-card{gap:13px;padding:21px}.eixo-member-next-icon{width:45px;height:45px}.eixo-member-next-text h3{font-size:20px}
+ .eixo-member-home-grid{grid-template-columns:1fr}.eixo-member-tile{min-height:153px}
+ .eixo-member-learn-layout{grid-template-columns:1fr}
+ .eixo-member-day-list{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+ .eixo-member-day-list button{justify-content:center;padding:8px 3px;min-height:48px}
+ .eixo-member-day-index{width:32px;height:32px;font-size:11px}
+ .eixo-member-day-list .eixo-member-day-label,.eixo-member-day-chevron,.eixo-member-day-check{display:none}
+ .eixo-member-day-list button.selected{background:#624525}
+ .eixo-member-bonus-grid{grid-template-columns:1fr}
+ .eixo-member-footer{justify-content:center;text-align:center}
+}
+@media(max-width:420px){
+ .eixo-member-heading h1{font-size:35px}.eixo-member-profile-stat{width:115px}
+ .eixo-member-progress-ring{width:73px;height:73px}.eixo-member-progress-ring strong{font-size:19px}.eixo-member-progress-ring small{font-size:7px}
+ .eixo-member-profile-stat>strong{font-size:10px}.eixo-member-profile-stat>span{font-size:8px}
+ .eixo-member-lesson,.eixo-member-bonus-detail,.eixo-member-track-card{padding:21px}
+ .eixo-member-track-days{gap:4px}.eixo-member-track-days button{font-size:12px}
+ .eixo-member-bonus-card{padding:17px;gap:12px}.eixo-member-bonus-numeral{width:39px;height:60px;font-size:19px}
+ .eixo-member-bonus-card-text strong{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){.eixo-member-page *, .eixo-member-page *:before{transition:none!important;animation:none!important}}

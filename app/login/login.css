@@ -1,0 +1,610 @@
+/* EIXO — página de login. Visual standalone, sem interferir na LP e no quiz. */
+.eixo-login-page {
+  --eixo-login-bg:#0c0d0e;
+  --eixo-login-gold:#d9b369;
+  --eixo-login-gold-light:#f1d99c;
+  --eixo-login-border:#41382c;
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  background:#0c0d0e;
+  color:#f4f0e8;
+  font-family:Arial,Helvetica,sans-serif;
+}
+.eixo-login-page *, .eixo-login-page *::before, .eixo-login-page *::after {box-sizing:border-box}
+.eixo-login-page::before {
+  position:absolute;
+  z-index:-2;
+  inset:0;
+  content:"";
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 640px 520px at 18% 60%,rgba(131,86,37,.13),transparent 75%),
+    radial-gradient(ellipse 680px 420px at 96% 14%,rgba(127,95,50,.11),transparent 70%),
+    linear-gradient(145deg,#101111 0%,#0a0b0c 70%,#0f0e0c);
+}
+.eixo-login-page::after {
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  content:"";
+  opacity:.25;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(199,170,119,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(199,170,119,.045) 1px,transparent 1px);
+  background-size:62px 62px;
+  mask-image:linear-gradient(90deg,#000,transparent 86%);
+}
+.eixo-login-glow{
+  position:absolute;
+  z-index:-1;
+  width:420px;
+  height:420px;
+  border:1px solid rgba(191,148,80,.07);
+  border-radius:50%;
+  box-shadow:0 0 0 60px rgba(192,148,78,.015),0 0 0 135px rgba(197,147,64,.014);
+  pointer-events:none;
+}
+.eixo-login-glow-a{left:-250px;bottom:3%}
+.eixo-login-glow-b{top:-300px;right:-210px}
+.eixo-login-header,
+.eixo-login-site-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  width:min(1200px,calc(100% - 84px));
+  margin-inline:auto;
+}
+.eixo-login-header{height:100px;flex-shrink:0}
+.eixo-login-logo{
+  display:inline-block;
+  color:#f8f7f4;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:34px;
+  font-weight:950;
+  letter-spacing:5px;
+  line-height:1;
+  text-decoration:none;
+}
+.eixo-login-logo>span:first-child{color:#d4ae62}
+.eixo-login-logo-dot{color:#d5a751;font-size:37px;letter-spacing:0}
+.eixo-login-header-caption{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#b2a48e;
+  font-size:10px;
+  letter-spacing:1.75px;
+  font-weight:900;
+}
+.eixo-login-header-caption svg{color:#d6b66e}
+.eixo-login-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr);
+  align-items:center;
+  gap:clamp(35px,6vw,105px);
+  width:min(1140px,calc(100% - 84px));
+  margin:auto;
+  padding:38px 0 56px;
+}
+.eixo-login-editorial{position:relative;min-width:0;padding:18px 0 0}
+.eixo-login-eyebrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#d8b773;
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:1.9px;
+  line-height:1.5;
+}
+.eixo-login-sparkle{font-size:21px;letter-spacing:0;color:#efcf81}
+.eixo-login-editorial h1{
+  max-width:660px;
+  margin:23px 0 22px;
+  color:#f5f3f0;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(45px,5.3vw,69px);
+  font-weight:900;
+  letter-spacing:-2.7px;
+  line-height:1.045;
+  text-wrap:balance;
+}
+.eixo-login-editorial h1 em{
+  display:block;
+  color:#e1ba70;
+  font-style:normal;
+}
+.eixo-login-lead{
+  max-width:480px;
+  color:#aaa49d;
+  font-size:16px;
+  line-height:1.78;
+  margin:0 0 42px;
+}
+.eixo-login-journey{
+  position:relative;
+  width:min(100%,495px);
+  border:1px solid rgba(198,159,94,.32);
+  border-radius:19px;
+  background:linear-gradient(135deg,rgba(41,34,27,.8),rgba(21,22,22,.91));
+  padding:24px 27px 21px;
+  box-shadow:0 22px 56px rgba(0,0,0,.23),inset 0 1px rgba(238,195,113,.08);
+}
+.eixo-login-journey::before{
+  position:absolute;
+  content:"";
+  inset:0;
+  border-radius:19px;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 94% -20%,rgba(230,188,108,.11),transparent 55%);
+}
+.eixo-login-journey-top{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.eixo-login-journey-icon{
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  width:47px;
+  height:47px;
+  border:1px solid #8c703e;
+  border-radius:13px;
+  background:#3a2d1d;
+  color:#eac680;
+  font-size:26px;
+}
+.eixo-login-journey-top>div:nth-child(2){display:flex;flex-direction:column;gap:3px}
+.eixo-login-journey-top>div:nth-child(2)>span{color:#a69a8a;font-size:10px;letter-spacing:1.3px;font-weight:850}
+.eixo-login-journey-top>div:nth-child(2)>strong{color:#fbf4e6;font-size:17px}
+.eixo-login-journey-status{
+  margin-left:auto;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+  border:1px solid #635238;
+  color:#dfc087;
+  border-radius:99px;
+  padding:7px 10px;
+}
+.eixo-login-journey-rule{
+  margin:23px 0 20px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#65543a,transparent);
+}
+.eixo-login-journey-steps{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:7px;
+  position:relative;
+}
+.eixo-login-journey-steps>div{
+  display:flex;
+  flex:1 1 0;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  text-align:center;
+  min-width:0;
+}
+.eixo-login-step-dot{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1px solid #916f3b;
+  background:#382b1d;
+  color:#eccd91;
+  font-size:12px;
+  font-weight:850;
+}
+.eixo-login-journey-steps strong{margin-top:11px;color:#f3ead6;font-size:12px}
+.eixo-login-journey-steps small{color:#a79a87;font-size:10px;line-height:1.5;margin-top:4px}
+.eixo-login-step-line{
+  width:36px;
+  height:1px;
+  flex:0 1 36px;
+  background:linear-gradient(90deg,#70592f,#af8b4c);
+  margin-top:19px;
+}
+.eixo-login-journey-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+  padding-top:16px;
+  border-top:1px solid rgba(177,143,91,.19);
+  color:#b8a98c;
+  font-size:9px;
+  font-weight:850;
+  letter-spacing:1px;
+}
+.eixo-login-editorial-footnote{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:25px;
+  color:#a59a8b;
+  font-size:12px;
+  letter-spacing:.1px;
+}
+.eixo-login-footnote-icon{font-size:20px;color:#d3ac65}
+.eixo-login-auth-column{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-width:0;
+}
+.eixo-login-auth-card{
+  width:100%;
+  max-width:495px;
+  padding:clamp(25px,3.6vw,45px);
+  border-radius:23px;
+  border:1px solid #51412b;
+  background:linear-gradient(146deg,rgba(30,29,27,.985),rgba(20,20,21,.985));
+  box-shadow:0 35px 90px rgba(0,0,0,.42),0 0 0 1px rgba(218,166,81,.02),inset 0 1px rgba(241,204,137,.07);
+  position:relative;
+}
+.eixo-login-auth-card::before{
+  content:"";
+  position:absolute;
+  left:44px;right:44px;top:0;
+  height:2px;
+  border-radius:0 0 5px 5px;
+  background:linear-gradient(90deg,transparent,#d7b675,transparent);
+}
+.eixo-login-auth-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  color:#d0b27a;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.8px;
+}
+.eixo-login-auth-eyebrow>span{color:#e9bd70;font-size:16px}
+.eixo-login-auth-card h2{
+  color:#f6f1e8;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(30px,3vw,39px);
+  line-height:1.1;
+  letter-spacing:-1.3px;
+  font-weight:900;
+  margin:19px 0 12px;
+}
+.eixo-login-auth-card h2 em{
+  display:block;
+  font-style:normal;
+  color:#e1ba72;
+}
+.eixo-login-auth-description{
+  margin:0 0 23px;
+  color:#a9a29a;
+  font-size:14px;
+  line-height:1.65;
+}
+.eixo-login-form-root{width:100%}
+.eixo-login-connection-note{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  background:#2b251a;
+  border:1px solid #635232;
+  border-radius:9px;
+  padding:10px 11px;
+  color:#e4ce9a;
+  font-size:11px;
+  font-weight:650;
+  line-height:1.4;
+  margin-bottom:21px;
+}
+.eixo-login-connection-dot{
+  display:block;
+  flex-shrink:0;
+  height:8px;width:8px;border-radius:50%;
+  background:#deb466;
+  box-shadow:0 0 0 4px rgba(217,179,105,.11);
+}
+.eixo-login-form{display:flex;flex-direction:column;gap:19px}
+.eixo-login-field{display:flex;flex-direction:column;gap:10px}
+.eixo-login-field label,
+.eixo-login-label-row label{
+  font-size:12px;
+  font-weight:800;
+  color:#e9e4dc;
+  letter-spacing:.15px;
+}
+.eixo-login-label-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.eixo-login-text-link,
+.eixo-login-signup button,
+.eixo-login-back-mode{
+  cursor:pointer;
+  color:#dfbb79;
+  padding:0;
+  border:0;
+  background:transparent;
+  font:750 11px/1.4 Arial,Helvetica,sans-serif;
+}
+.eixo-login-text-link:hover,
+.eixo-login-signup button:hover,
+.eixo-login-back-mode:hover{
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+.eixo-login-input-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+  width:100%;
+  min-height:56px;
+  background:#101112;
+  border:1px solid #3c3935;
+  border-radius:11px;
+  transition:border-color .2s,box-shadow .2s;
+  color:#998a74;
+}
+.eixo-login-input-wrap:focus-within{
+  border-color:#caa364;
+  box-shadow:0 0 0 3px rgba(211,172,105,.13);
+}
+.eixo-login-input-wrap>svg{
+  margin:0 0 0 17px;
+  flex-shrink:0;
+  color:#bba57d;
+}
+.eixo-login-input-wrap input{
+  width:100%;
+  min-width:0;
+  min-height:54px;
+  padding:15px 14px;
+  background:transparent!important;
+  box-shadow:none;
+  border:0;
+  outline:none;
+  color:#fff9f0;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:14px;
+  font-weight:500;
+}
+.eixo-login-input-wrap input::placeholder{color:#726e69}
+.eixo-login-input-wrap input:-webkit-autofill{
+  -webkit-text-fill-color:#fff3d9;
+  transition:background-color 99999s ease-out;
+}
+.eixo-login-visibility{
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  width:47px;
+  height:48px;
+  border:0;
+  background:transparent;
+  border-radius:9px;
+  color:#a99d8b;
+  cursor:pointer;
+}
+.eixo-login-visibility:hover{color:#ebca8b}
+.eixo-login-visibility:focus-visible,
+.eixo-login-text-link:focus-visible,
+.eixo-login-signup button:focus-visible,
+.eixo-login-submit:focus-visible,
+.eixo-login-back-mode:focus-visible,
+.eixo-login-logo:focus-visible,
+.eixo-login-back-home:focus-visible{
+  outline:3px solid #d4ab64;
+  outline-offset:4px;
+}
+.eixo-login-inline-notice{
+  padding:13px 14px;
+  border:1px solid #80643e;
+  border-radius:11px;
+  background:#302718;
+  color:#f3d6a6;
+  font-size:12px;
+  line-height:1.6;
+}
+.eixo-login-submit{
+  display:flex;
+  width:100%;
+  min-height:59px;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  padding:13px 19px;
+  border:1px solid #f1cf84;
+  border-radius:11px;
+  background:linear-gradient(130deg,#e4b762 0%,#f7d992 54%,#c69a50 100%);
+  color:#19150c;
+  box-shadow:0 11px 28px rgba(199,141,56,.17),inset 0 1px rgba(255,255,255,.4);
+  font:900 12px/1.25 Arial,Helvetica,sans-serif;
+  letter-spacing:.75px;
+  cursor:pointer;
+  transition:filter .2s,transform .2s;
+  margin-top:6px;
+}
+.eixo-login-submit:hover{filter:brightness(1.09);transform:translateY(-1px)}
+.eixo-login-submit-arrow{
+  display:grid;
+  place-items:center;
+  width:29px;
+  height:29px;
+  border-radius:8px;
+  background:#1c1b14;
+  color:#f4d18a;
+  font-size:19px;
+  font-weight:400;
+}
+.eixo-login-signup{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:23px 0 0;
+  color:#b4aa9d;
+  font-size:12px;
+}
+.eixo-login-signup button{font-size:12px}
+.eixo-login-mode-panel{
+  border:1px solid #625235;
+  border-radius:13px;
+  background:rgba(42,34,22,.47);
+  padding:23px;
+}
+.eixo-login-mode-icon{
+  display:grid;
+  place-items:center;
+  width:40px;height:40px;
+  border-radius:11px;
+  border:1px solid #897046;
+  background:#392c1c;
+  color:#f4c875;
+  font-size:24px;
+}
+.eixo-login-mode-panel h3{
+  margin:17px 0 10px;
+  color:#fff2dd;
+  font:850 20px/1.2 Arial,Helvetica,sans-serif;
+}
+.eixo-login-mode-panel p{
+  margin:0 0 20px;
+  color:#b9ab93;
+  font-size:13px;
+  line-height:1.75;
+}
+.eixo-login-back-mode{font-size:13px}
+.eixo-login-form-bottom{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  margin-top:23px;
+  padding-top:18px;
+  border-top:1px solid #363128;
+}
+.eixo-login-form-bottom>span{color:#d7b36e;font-size:19px;line-height:1}
+.eixo-login-form-bottom p{
+  margin:0;
+  color:#888177;
+  font-size:11px;
+  line-height:1.6;
+}
+.eixo-login-help-footer{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  margin:19px 0 11px;
+  color:#8d857a;
+  font-size:11px;
+  line-height:1.5;
+}
+.eixo-login-help-footer svg{color:#a48b62}
+.eixo-login-back-home{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:0;
+  padding:8px;
+  font-size:12px;
+  color:#d5b471;
+  text-decoration:none;
+}
+.eixo-login-back-home:hover{text-decoration:underline;text-underline-offset:4px}
+.eixo-login-site-footer{
+  min-height:70px;
+  flex-shrink:0;
+  padding:20px 0;
+  border-top:1px solid rgba(209,167,96,.14);
+  color:#706e69;
+  font-size:10px;
+  letter-spacing:1.25px;
+  font-weight:700;
+}
+@media(max-width:1080px){
+  .eixo-login-layout{
+    width:calc(100% - 66px);
+    grid-template-columns:minmax(0,1fr) minmax(370px,.95fr);
+    gap:35px;
+  }
+  .eixo-login-header,.eixo-login-site-footer{width:calc(100% - 66px)}
+  .eixo-login-editorial h1{font-size:clamp(41px,5.7vw,58px)}
+  .eixo-login-journey{padding:21px}
+  .eixo-login-auth-card{padding:28px}
+}
+@media(max-width:760px){
+  .eixo-login-header,.eixo-login-site-footer{width:calc(100% - 38px)}
+  .eixo-login-header{height:79px}
+  .eixo-login-logo{font-size:29px}
+  .eixo-login-header-caption{font-size:9px;letter-spacing:1px}
+  .eixo-login-layout{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+    width:calc(100% - 38px);
+    padding:25px 0 28px;
+    margin:0 auto;
+    align-items:stretch;
+  }
+  .eixo-login-editorial{text-align:center;padding:0}
+  .eixo-login-eyebrow{justify-content:center;font-size:9px;letter-spacing:1.3px}
+  .eixo-login-editorial h1{
+    max-width:550px;
+    font-size:clamp(33px,8vw,44px);
+    line-height:1.08;
+    letter-spacing:-1.5px;
+    margin:15px auto 11px;
+  }
+  .eixo-login-editorial h1 em{display:inline}
+  .eixo-login-lead{
+    margin:0 auto;
+    font-size:13px;
+    line-height:1.65;
+    max-width:420px;
+  }
+  .eixo-login-journey,.eixo-login-editorial-footnote{display:none}
+  .eixo-login-auth-column{width:100%}
+  .eixo-login-auth-card{
+    width:100%;
+    max-width:535px;
+    border-radius:19px;
+    padding:26px 23px;
+  }
+  .eixo-login-auth-card h2{
+    font-size:clamp(29px,7vw,35px);
+    line-height:1.12;
+    margin:15px 0 10px;
+  }
+  .eixo-login-auth-card h2 em{display:inline}
+  .eixo-login-auth-description{font-size:13px;margin-bottom:19px}
+  .eixo-login-site-footer{
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:5px 18px;
+    padding:16px 0;
+    font-size:9px;
+    text-align:center;
+  }
+}
+@media(max-width:390px){
+  .eixo-login-header,.eixo-login-site-footer,.eixo-login-layout{width:calc(100% - 26px)}
+  .eixo-login-auth-card{padding:22px 17px}
+  .eixo-login-header-caption{font-size:8px}
+  .eixo-login-editorial h1{font-size:32px}
+  .eixo-login-input-wrap{min-height:53px}
+  .eixo-login-submit{min-height:56px;font-size:11px}
+  .eixo-login-signup{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .eixo-login-page *{transition:none!important;animation:none!important}
+}

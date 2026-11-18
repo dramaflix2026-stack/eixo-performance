@@ -192,25 +192,42 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
 
     <FeedbackCarousel />
 
-    <section className="eixo-offer-section eixo-profile-section" id="eixo-perfil">
-      <div className="eixo-offer-wrap eixo-column">
-        <div className="eixo-section-head"><span className="eixo-offer-kicker">DIAGNÓSTICO DO SEU PERFIL</span><h2>{cleanName?cleanName+", ":""}VEJA O QUE SUAS <em>RESPOSTAS MOSTRAM.</em></h2><p>Usamos somente as respostas que você forneceu. Não criamos um diagnóstico nem atribuímos automaticamente uma causa física.</p></div>
-        <div className="eixo-profile-grid">
-          <div className="eixo-profile-table">
-            {[
-              ["FAIXA ETÁRIA",age],
-              ["PRINCIPAL PREOCUPAÇÃO",concern],
-              ["QUANDO APARECE",moment],
-              ["FREQUÊNCIA DO MEDO",pressure],
-              ["ESTRESSE DA ROTINA",stress],
-              ["COMUNICAÇÃO",talk],
-              ["SITUAÇÃO AFETIVA",status],
-              ["TEMPO DISPONÍVEL",time],
-              ["O QUE VOCÊ BUSCA",focus]
-            ].map(([label,value])=><div className="eixo-profile-row" key={label}><span>{label}</span><strong>{value}</strong></div>)}
+
+    <section className="eixo-offer-section eixo-profile-section" id="eixo-perfil" aria-labelledby="eixo-profile-title">
+      <div className="eixo-offer-wrap eixo-profile-reference-wrap">
+        <h2 className="eixo-profile-reference-title" id="eixo-profile-title">
+          {cleanName && <><em>{cleanName},</em>{" "}</>}seu plano para voltar
+          <br/>a ter <em>presença e controle</em>
+        </h2>
+        <div className="eixo-profile-progress-card">
+          <div className="eixo-profile-progress-head">
+            <strong>Seu questionário está concluído</strong>
+            <b>100%</b>
           </div>
-          <div className="eixo-profile-side"><span>LEITURA DAS SUAS RESPOSTAS</span><h3>O PROBLEMA NÃO PRECISA SER RESUMIDO A UM NÚMERO.</h3>{observations.map(item=><div className="eixo-observation" key={item.title}><b>✦</b><div><strong>{item.title}</strong><p>{item.text}</p></div></div>)}<small>Leitura descritiva, não clínica. Dificuldades sexuais podem ter causas diferentes.</small></div>
+          <div className="eixo-profile-progress-track" role="progressbar" aria-label="Questionário concluído" aria-valuenow={100} aria-valuemin={0} aria-valuemax={100}>
+            <div className="eixo-profile-progress-fill" />
+          </div>
+          <div className="eixo-profile-progress-labels">
+            <span>18 respostas consideradas</span>
+            <strong>Roteiro de 7 dias liberado</strong>
+          </div>
         </div>
+        <div className="eixo-profile-summary-card">
+          {[
+            ["Sua preocupação",concern],
+            ["Sua meta",focus],
+            ["Tempo disponível",time],
+            ["Prazo do roteiro","7 dias"]
+          ].map(([label,value]) => <div className="eixo-profile-summary-row" key={label}>
+            <span>{label}</span><strong>{value}</strong>
+          </div>)}
+        </div>
+        <div className="eixo-profile-conclusion">
+          <strong>Conclusão:</strong>{" "}
+          <span>Você relatou {concern.toLowerCase()}. O EIXO propõe refletir sobre essa preocupação, presença, diálogo e autocobrança.</span>
+        </div>
+        <p className="eixo-profile-source"><span aria-hidden="true">●</span> Plano educativo montado com base nas suas respostas</p>
+        <p className="eixo-profile-disclaimer">Este resumo não mede desempenho sexual, não identifica causas clínicas e não promete melhora em sete dias.</p>
         <InPageCta label="ENTENDER O MÉTODO EIXO" href="#eixo-metodo"/>
       </div>
     </section>

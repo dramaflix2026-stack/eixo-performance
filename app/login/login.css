@@ -608,3 +608,10 @@
 @media(prefers-reduced-motion:reduce){
   .eixo-login-page *{transition:none!important;animation:none!important}
 }
+
+
+.eixo-login-mode-heading{margin:1px 0 3px;padding:17px;border:1px solid #5a462c;border-radius:12px;background:linear-gradient(120deg,#31271b,#231f19)}
+.eixo-login-mode-heading>span{font-size:10px;font-weight:900;letter-spacing:1.5px;color:#e1ba77}
+.eixo-login-mode-heading h3{font-size:20px;line-height:1.2;margin:9px 0;color:#f5e7cb;letter-spacing:-.4px}
+.eixo-login-mode-heading p{font-size:12px;line-height:1.7;margin:0;color:#c1ac91}
+.eixo-login-submit:disabled{opacity:.7;cursor:wait;transform:none}

@@ -2275,3 +2275,37 @@
     border-radius: 15px;
   }
 }
+
+
+/* Autoplay control stays compact and clickable on mobile. */
+.eixo-reference-offer .eixo-feedback-pause {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:34px;
+  padding:0 12px;
+  border:1px solid #534227;
+  border-radius:20px;
+  background:#1a1713;
+  color:#d7b56b;
+  font:700 11px/1 Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.eixo-reference-offer .eixo-feedback-pause:hover {
+  background:#2c2418;
+  border-color:#c9a055;
+}
+.eixo-reference-offer .eixo-feedback-pause:focus-visible{
+  outline:2px solid #f2d08a;
+  outline-offset:3px;
+}
+.eixo-reference-offer .eixo-feedback-controls{
+  gap:12px;
+  flex-wrap:wrap;
+}
+@media(max-width:385px){
+  .eixo-reference-offer .eixo-feedback-controls{gap:8px}
+  .eixo-reference-offer .eixo-feedback-pause{padding:0 10px;font-size:10px}
+  .eixo-reference-offer .eixo-feedback-dots{gap:5px}
+}

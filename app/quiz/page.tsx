@@ -252,6 +252,30 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
   </div>;
 }
 
+const QUESTION_ICONS: string[][] = [
+  ["👨‍🦱","👨","🧔","👨‍🦳","◎"],
+  ["🌅","✦","🌙","↻","✓"],
+  ["🧠","☁️","💭","⚡"],
+  ["⚡","⏱️","♥️","🌿","◎"],
+  ["✦","🌿","♥️","☀️","✓"],
+  ["◎","🌤️","⚡","🌪️"],
+  ["✓","💭","↻","⚡"],
+  ["✓","🌙","💭","↻"],
+  ["💬","🗣️","🤐","◎"],
+  ["🌿","☁️","⚡","🌪️"],
+  ["🌙","☁️","⏳","💤"],
+  ["◎","🌬️","💬","✦","✓"],
+  ["♥️","✦","◎","—"],
+  ["◎","💭","⚡","🧠"],
+  ["💬","🌿","⏳","◎","✓"],
+  ["⚡","⏱️","⌛","☀️","◎"],
+  ["✦","♥️","💬","🌿","🧠"],
+  ["✓","✦","◎","◌"]
+];
+function questionOptionIcon(question:number,index:number):string {
+  return QUESTION_ICONS[question]?.[index] ?? "✦";
+}
+
 export default function Quiz(){
   const [position,setPosition]=useState(0);
   const [answers,setAnswers]=useState<(number|null)[]>(Array(QUESTIONS.length).fill(null));
@@ -279,28 +303,47 @@ export default function Quiz(){
     step.kind==="prep"?"SEU ROTEIRO":"RASPADINHA EIXO";
   const profileAge=ageOptions[answers[0]??4];
 
-  return <main className="funnel-page">
-    <header className="funnel-header"><div className="funnel-header-inner">
-      <Link href="/" className="funnel-brand" aria-label="EIXO, página inicial"><span>◈</span>EIXO</Link>
-      <div className="funnel-private">◉ &nbsp; CONTEÚDO DISCRETO E EDUCATIVO</div>
-    </div></header>
+  return <main className={"funnel-page"+(step.kind==="question"?" is-question":"")}>
+    {step.kind==="question"?
+      <header className="funnel-header funnel-quiz-header">
+        <div className="funnel-quiz-top">
+          {position===0?
+            <Link href="/" className="funnel-quiz-back" aria-label="Voltar à página inicial">←</Link>:
+            <button type="button" className="funnel-quiz-back" onClick={goBack} aria-label="Voltar para a etapa anterior">←</button>}
+          <Link href="/" className="funnel-quiz-logo" aria-label="EIXO, página inicial">E<span>I</span>XO</Link>
+          <span className="funnel-quiz-phase">{questionNumber<3?"Perfil":questionNumber<6?"Expectativas":questionNumber<9?"Pressão":questionNumber<12?"Rotina":questionNumber<15?"Conexão":"Seu plano"}</span>
+        </div>
+        <div className="funnel-quiz-header-progress" role="progressbar" aria-label="Progresso do questionário" aria-valuemin={0} aria-valuemax={18} aria-valuenow={questionNumber+1}>
+          {Array.from({length:4},(_,i)=><i key={i}><span style={{width:(Math.max(0,Math.min(1,((questionNumber+1)/18)*4-i))*100)+"%"}}/></i>)}
+        </div>
+      </header>
+      :
+      <header className="funnel-header"><div className="funnel-header-inner">
+        <Link href="/" className="funnel-brand" aria-label="EIXO, página inicial"><span>◈</span>EIXO</Link>
+        <div className="funnel-private">◉ &nbsp; CONTEÚDO DISCRETO E EDUCATIVO</div>
+      </div></header>}
     <div className={"funnel-content"+(step.kind==="result"?" funnel-content-offer":"")}>
-      {showProgress&&<div className="funnel-progress">
+      {showProgress&&step.kind!=="question"&&<div className="funnel-progress">
         <div className="funnel-progress-line"><span>{currentLabel}</span><span>{progress}% CONCLUÍDO</span></div>
         <div className="funnel-progress-segments">{Array.from({length:6},(_,i)=><i key={i} style={{background:answered>=((i+1)*3)?"#d9a95f":"#35302a"}}/>)}</div>
       </div>}
 
       {step.kind==="question"&&<section className="funnel-question" key={"q"+questionNumber}>
-        <span className="funnel-tag">{QUESTIONS[questionNumber].eyebrow}</span>
+        {questionNumber===0?
+          <div className="funnel-quiz-intro">Vamos começar!</div>:
+          <span className="funnel-quiz-step-label">PERGUNTA {questionNumber+1} DE 18 · {QUESTIONS[questionNumber].eyebrow?.replace(/^\\d+\\s*·\\s*/, "")}</span>}
         <h1>{QUESTIONS[questionNumber].prompt}</h1>
-        <p>{HINTS[questionNumber]}</p>
-        <div className="funnel-options">
+        <p className="funnel-quiz-hint">{HINTS[questionNumber]}</p>
+        <div className="funnel-options" role="group" aria-label={"Respostas da pergunta "+(questionNumber+1)}>
           {QUESTIONS[questionNumber].options.map((label,index)=><button
             key={label}
             type="button"
+            aria-pressed={answers[questionNumber]===index}
             className={"funnel-option"+(answers[questionNumber]===index?" is-selected":"")}
             onClick={()=>select(index)}>
-              <span className="funnel-radio"/><span>{label}</span><b>↗</b>
+              <span className="funnel-option-icon" aria-hidden="true">{questionOptionIcon(questionNumber,index)}</span>
+              <span className="funnel-option-label">{label}</span>
+              <span className="funnel-radio" aria-hidden="true"/>
           </button>)}
         </div>
       </section>}
@@ -354,8 +397,8 @@ export default function Quiz(){
 
       {step.kind==="result"&&<OfferPage answers={answers} name={name} onReset={reset}/>} 
 
-      {position>0&&step.kind!=="result"&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
+      {position>0&&step.kind!=="result"&&step.kind!=="question"&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
     </div>
-    <footer className="funnel-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE</span><span>Conteúdo educativo. As respostas permanecem apenas nesta página.</span></footer>
+    {step.kind!=="question"&&<footer className="funnel-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE</span><span>Conteúdo educativo. As respostas permanecem apenas nesta página.</span></footer>}
   </main>;
 }

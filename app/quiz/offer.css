@@ -1453,3 +1453,506 @@
 @media(prefers-reduced-motion:reduce){
   .eixo-reference-offer *{scroll-behavior:auto!important}
 }
+
+
+/* ============================================================
+   EIXO — TRÊS SEÇÕES NA COMPOSIÇÃO EXATA DAS REFERÊNCIAS
+   1) Linha do tempo simples   2) Três cards antes/depois
+   3) Lista compacta de cinco bônus
+   ============================================================ */
+
+/* 1. Jornada: três passos conectados por fio dourado */
+.eixo-reference-offer .eixo-reference-routine{
+  background:#121212;
+  border-top:1px solid #242323;
+  padding:44px 0 50px;
+}
+.eixo-reference-offer .eixo-reference-routine .eixo-offer-wrap{
+  width:min(600px,calc(100% - 36px));
+  max-width:600px;
+}
+.eixo-reference-offer .eixo-journey-heading{
+  margin:0 auto 34px;
+}
+.eixo-reference-offer .eixo-journey-heading h2{
+  margin:0 0 8px;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(27px,3.5vw,32px);
+  font-weight:800;
+  letter-spacing:-.7px;
+  line-height:1.2;
+  text-transform:none;
+  color:#fff;
+}
+.eixo-reference-offer .eixo-journey-heading h2 em{color:#d6af58;font-style:normal}
+.eixo-reference-offer .eixo-journey-heading p{
+  font-size:15px;
+  line-height:1.55;
+  color:#d0c7be;
+  margin:0;
+}
+.eixo-journey-steps{
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  gap:14px;
+  margin:0 0 23px;
+}
+.eixo-journey-steps::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:27px;
+  bottom:27px;
+  left:20px;
+  width:2px;
+  background:#d5b65d;
+}
+.eixo-journey-step{
+  position:relative;
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  column-gap:15px;
+  align-items:center;
+  gap:15px;
+}
+.eixo-journey-number{
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:linear-gradient(145deg,#f2d98a,#b89637);
+  color:#15110b;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:17px;
+  font-weight:900;
+  box-shadow:0 0 0 5px #121212;
+}
+.eixo-journey-step-card{
+  min-height:85px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  border-radius:15px;
+  border:1px solid #2c2b2c;
+  background:#1a1a1b;
+  padding:16px 18px;
+  color:#fff;
+  text-align:left;
+}
+.eixo-journey-step-card>span{
+  color:#d0a343;
+  font-size:12px;
+  font-weight:850;
+  letter-spacing:.45px;
+  margin-bottom:6px;
+  line-height:1.3;
+}
+.eixo-journey-step-card>strong{
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:16px;
+  font-weight:800;
+  line-height:1.3;
+  letter-spacing:-.2px;
+}
+.eixo-journey-step-card p{
+  margin:7px 0 0;
+  color:#bfb4a7;
+  font-size:13px;
+  line-height:1.5;
+}
+.eixo-journey-goal{
+  padding:15px 18px;
+  background:#1d1b15;
+  border:1px dashed #ad8636;
+  border-radius:12px;
+  text-align:center;
+  color:#dfb858;
+  font-size:14px;
+  font-weight:750;
+  line-height:1.45;
+}
+.eixo-journey-goal strong{font-weight:900}
+.eixo-reference-offer .eixo-reference-routine .eixo-offer-cta{
+  max-width:100%;
+  margin:23px auto 0;
+  width:100%;
+  min-height:58px;
+  background:linear-gradient(180deg,#f0d991,#b9973e);
+  border-radius:12px;
+  color:#18130b;
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:850;
+  font-size:15px;
+  text-transform:none;
+  box-shadow:0 10px 22px rgba(181,142,56,.2);
+}
+.eixo-journey-caveat{
+  margin:12px auto 0;
+  text-align:center;
+  color:#948b7b;
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* 2. Comparison: three dense 1-to-1 reference cards, not an image mosaic */
+.eixo-reference-offer .eixo-reference-contrast{
+  background:#0a0a0b;
+  color:#f8f8f8;
+  padding:49px 0 50px;
+}
+.eixo-reference-offer .eixo-reference-contrast .eixo-offer-wrap{
+  width:min(600px,calc(100% - 36px));
+  max-width:600px;
+}
+.eixo-reference-offer .eixo-contrast-heading{margin:0 auto 26px}
+.eixo-reference-offer .eixo-contrast-heading h2{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(26px,3.45vw,31px);
+  line-height:1.2;
+  font-weight:850;
+  letter-spacing:-.65px;
+  text-transform:none;
+  margin:0 0 10px;
+}
+.eixo-reference-offer .eixo-contrast-heading p{
+  font-size:13px;
+  line-height:1.6;
+}
+.eixo-contrast-stories{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+.eixo-contrast-story{
+  border:1px solid #303032;
+  background:#1b1b1c;
+  border-radius:17px;
+  padding:20px;
+  min-height:175px;
+  text-align:left;
+  color:#f4f3ef;
+}
+.eixo-contrast-story-values{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+}
+.eixo-contrast-story-before,
+.eixo-contrast-story-after{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+  min-width:0;
+}
+.eixo-contrast-story-after{text-align:right;align-items:flex-end}
+.eixo-contrast-story-values small{
+  color:#b3aaa2;
+  font-size:10px;
+  letter-spacing:.7px;
+  line-height:1.2;
+  font-weight:800;
+}
+.eixo-contrast-story-values strong{
+  color:#8c8783;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(14px,2.2vw,19px);
+  line-height:1.3;
+  font-weight:850;
+}
+.eixo-contrast-story-after strong{color:#f1ce7c}
+.eixo-contrast-arrow{
+  color:#dbb85e;
+  font-size:24px;
+  font-weight:500;
+  text-align:center;
+}
+.eixo-contrast-story-quote{
+  font-size:15px;
+  color:#fff;
+  font-weight:650;
+  line-height:1.5;
+  margin:17px 0 16px;
+}
+.eixo-contrast-story-meta{
+  border-top:1px solid #303032;
+  padding-top:13px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  align-items:center;
+  color:#aeadab;
+  font-size:11px;
+  line-height:1.5;
+}
+.eixo-contrast-story-avatar{
+  flex:0 0 28px;
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  color:#ddb65e;
+  background:#29241a;
+  border:1px solid #a37e38;
+  border-radius:50%;
+  font-size:15px;
+}
+.eixo-contrast-story-meta>strong{
+  margin-left:auto;
+  color:#d3a64b;
+  font-size:11px;
+  font-weight:850;
+}
+.eixo-reference-offer .eixo-reference-contrast .eixo-offer-cta{
+  width:100%;
+  max-width:100%;
+  min-height:58px;
+  margin:24px auto 0;
+  border-radius:12px;
+  background:linear-gradient(180deg,#f1d88d,#b8973f);
+  color:#1f1809;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:14px;
+  font-weight:900;
+  box-shadow:0 11px 25px #d9aa5133;
+}
+
+/* 3. Bonuses: five horizontal cards with gift, text and green free badge */
+.eixo-reference-offer .eixo-bonus-compact-section{
+  background:#111112;
+  padding:43px 0 47px;
+}
+.eixo-reference-offer .eixo-bonus-compact-section>.eixo-offer-wrap{
+  width:min(600px,calc(100% - 36px));
+  max-width:600px;
+}
+.eixo-reference-offer .eixo-bonus-compact-heading{
+  text-align:left;
+  margin-bottom:26px;
+}
+.eixo-reference-offer .eixo-bonus-compact-heading h2{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(26px,3.5vw,32px);
+  font-weight:850;
+  line-height:1.2;
+  text-transform:none;
+  color:#fff;
+  letter-spacing:-.6px;
+  margin:0 0 9px;
+}
+.eixo-reference-offer .eixo-bonus-compact-heading h2 em{
+  font-style:normal;
+  color:#d0aa55;
+}
+.eixo-reference-offer .eixo-bonus-compact-heading p{
+  color:#aaa69f;
+  font-size:13px;
+  line-height:1.5;
+  margin:0;
+}
+.eixo-reference-offer .eixo-bonus-compact-grid{
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+  width:100%;
+  max-width:100%;
+}
+.eixo-reference-offer .eixo-bonus-compact{
+  display:block;
+  width:100%;
+  margin:0;
+  border:1px solid #303031;
+  border-left:3px solid #d6ac4f;
+  border-radius:17px;
+  background:#1c1c1d;
+  overflow:hidden;
+  box-shadow:none;
+}
+.eixo-reference-offer .eixo-bonus-compact>summary{
+  display:grid;
+  grid-template-columns:49px minmax(0,1fr) auto;
+  gap:13px;
+  align-items:start;
+  min-height:120px;
+  padding:21px 18px;
+  margin:0;
+  list-style:none;
+  cursor:pointer;
+  color:#f7f7f6;
+  border:0;
+  background:transparent;
+}
+.eixo-reference-offer .eixo-bonus-compact>summary::-webkit-details-marker{display:none}
+.eixo-reference-offer .eixo-bonus-compact>summary::marker{content:""}
+.eixo-reference-offer .eixo-bonus-compact>summary:hover{background:#232222}
+.eixo-reference-offer .eixo-bonus-compact>summary:focus-visible{
+  outline:2px solid #ddb966;
+  outline-offset:-4px;
+}
+.eixo-bonus-gift{
+  display:grid;
+  place-items:center;
+  width:49px;
+  height:49px;
+  min-width:0;
+  border-radius:12px;
+  border:1px solid #80652d;
+  background:#181717;
+  font-size:23px;
+  line-height:1;
+}
+.eixo-bonus-compact-body{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+  min-width:0;
+  text-align:left;
+}
+.eixo-bonus-compact-body small{
+  color:#d4aa50;
+  font-size:11px;
+  font-weight:850;
+  line-height:1.2;
+}
+.eixo-bonus-compact-body>strong{
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:17px;
+  font-weight:800;
+  line-height:1.22;
+  overflow-wrap:break-word;
+}
+.eixo-bonus-compact-body>span{
+  font-size:13px;
+  line-height:1.55;
+  color:#bbb7b3;
+  font-weight:400;
+}
+.eixo-bonus-compact-price{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:5px;
+  min-width:0;
+}
+.eixo-bonus-compact-price>span{
+  color:#989590;
+  font-size:11px;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.eixo-bonus-compact-price>b{
+  background:#102c1e;
+  color:#44e38a;
+  border:1px solid #26774a;
+  padding:4px 7px;
+  font-size:11px;
+  line-height:1.2;
+  border-radius:4px;
+  font-weight:900;
+}
+.eixo-bonus-compact-price>small{
+  color:#8e887c;
+  font-size:9px;
+  line-height:1.3;
+  white-space:nowrap;
+}
+.eixo-reference-offer .eixo-bonus-compact[open]{
+  border-color:#c6a157;
+}
+.eixo-reference-offer .eixo-bonus-compact[open]>summary{
+  border-bottom:1px solid #453c2e;
+}
+.eixo-reference-offer .eixo-bonus-compact .eixo-bonus-content{
+  padding:23px;
+  background:#171718;
+}
+.eixo-reference-offer .eixo-bonus-compact .eixo-bonus-content-header h4{
+  font-family:Arial,Helvetica,sans-serif;
+  text-transform:none;
+  font-size:20px;
+  font-weight:850;
+}
+.eixo-reference-offer .eixo-bonus-compact .eixo-bonus-chapters{
+  gap:8px;
+}
+.eixo-reference-offer .eixo-bonus-compact .eixo-bonus-chapter{
+  padding:14px;
+  border-color:#453726;
+}
+.eixo-reference-offer .eixo-bonus-compact-section .eixo-bonus-footnote{
+  max-width:600px;
+  margin:17px auto 0;
+  font-size:11px;
+  color:#8b8275;
+  line-height:1.5;
+}
+@media(max-width:700px){
+  .eixo-reference-offer .eixo-reference-routine,
+  .eixo-reference-offer .eixo-reference-contrast,
+  .eixo-reference-offer .eixo-bonus-compact-section{
+    padding-top:35px;
+    padding-bottom:39px;
+  }
+  .eixo-reference-offer .eixo-reference-routine .eixo-offer-wrap,
+  .eixo-reference-offer .eixo-reference-contrast .eixo-offer-wrap,
+  .eixo-reference-offer .eixo-bonus-compact-section>.eixo-offer-wrap{
+    width:calc(100% - 28px);
+    max-width:600px;
+  }
+  .eixo-reference-offer .eixo-journey-heading h2,
+  .eixo-reference-offer .eixo-contrast-heading h2,
+  .eixo-reference-offer .eixo-bonus-compact-heading h2{
+    font-size:clamp(24px,6vw,31px);
+  }
+  .eixo-journey-steps{gap:12px}
+  .eixo-journey-step{grid-template-columns:38px minmax(0,1fr);column-gap:11px;gap:11px}
+  .eixo-journey-number{width:38px;height:38px;font-size:16px}
+  .eixo-journey-steps::before{left:18px}
+  .eixo-journey-step-card{min-height:82px;padding:14px}
+  .eixo-journey-step-card>span{font-size:10px}
+  .eixo-journey-step-card>strong{font-size:15px}
+  .eixo-journey-step-card p{font-size:12px}
+  .eixo-journey-goal{font-size:13px;padding:13px}
+  .eixo-contrast-story{padding:16px;min-height:170px}
+  .eixo-contrast-story-values{gap:8px;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr)}
+  .eixo-contrast-story-values strong{font-size:clamp(13px,3.55vw,17px)}
+  .eixo-contrast-story-quote{font-size:14px}
+  .eixo-contrast-story-meta{font-size:10px;gap:6px}
+  .eixo-reference-offer .eixo-bonus-compact>summary{
+    grid-template-columns:46px minmax(0,1fr) auto;
+    min-height:111px;
+    padding:17px 13px;
+    gap:10px;
+  }
+  .eixo-bonus-gift{width:46px;height:46px;font-size:21px}
+  .eixo-bonus-compact-body small{font-size:10px}
+  .eixo-bonus-compact-body>strong{font-size:15px}
+  .eixo-bonus-compact-body>span{font-size:12px;line-height:1.5}
+  .eixo-bonus-compact-price>span{font-size:10px}
+  .eixo-bonus-compact-price>b{font-size:10px;padding:3px 5px}
+  .eixo-bonus-compact-price>small{font-size:8px}
+  .eixo-reference-offer .eixo-bonus-compact .eixo-bonus-content{padding:16px 12px}
+}
+@media(max-width:375px){
+  .eixo-reference-offer .eixo-bonus-compact>summary{
+    grid-template-columns:39px minmax(0,1fr) auto;
+    gap:8px;padding:15px 10px;
+  }
+  .eixo-bonus-gift{width:39px;height:39px;font-size:19px}
+  .eixo-bonus-compact-body>strong{font-size:14px}
+  .eixo-bonus-compact-body>span{font-size:11px}
+  .eixo-bonus-compact-price>span{font-size:9px}
+  .eixo-bonus-compact-price>b{font-size:9px}
+  .eixo-bonus-compact-price>small{display:none}
+}

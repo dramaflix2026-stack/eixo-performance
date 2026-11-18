@@ -5,7 +5,8 @@ export const dynamic="force-dynamic";
 const headers={"Cache-Control":"no-store"};
 export async function POST(request:NextRequest){
  if(!sameOrigin(request))return NextResponse.json({message:"Origem inválida."},{status:403,headers});
- if(process.env.EIXO_REGISTRATION_ENABLED!=="true")return NextResponse.json({message:"Confirmação ainda em preparação."},{status:503,headers});
+ // An already verified, entitled member may redeem a one-time email link.
+ // New user sign-up remains blocked while Toledo Auth is shared.
  if(Number(request.headers.get("content-length")||0)>9000)return NextResponse.json({message:"Dados inválidos."},{status:413,headers});
  try{
    const body=await request.json() as {access_token?:unknown;refresh_token?:unknown;expires_in?:unknown;type?:unknown};

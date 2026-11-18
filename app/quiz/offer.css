@@ -2569,3 +2569,122 @@
     margin-top:19px;
   }
 }
+
+
+/* EIXO — preço e selos da hero, conforme referência de 18/11.
+   Mantém apenas as classes existentes e não modifica outras seções. */
+.eixo-reference-offer .eixo-reference-price-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:nowrap;
+  width:auto;
+  max-width:calc(100% - 16px);
+  gap:8px;
+  margin:0 auto 19px;
+  padding:5px 16px;
+  background:rgba(15,31,19,.93);
+  border:1px solid #25974b;
+  border-radius:999px;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:13px;
+  font-weight:750;
+  letter-spacing:0;
+  line-height:1.2;
+  box-sizing:border-box;
+}
+.eixo-reference-offer .eixo-reference-price-pill>strong{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:4px 10px;
+  border-radius:999px;
+  color:#061809;
+  background:#32ca69;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.eixo-reference-offer .eixo-reference-price-pill>span{
+  display:inline;
+  white-space:nowrap;
+  font-size:13px;
+  font-weight:750;
+  color:#f7f7f7;
+}
+.eixo-reference-offer .eixo-reference-price-pill s{
+  color:#8d9290;
+  text-decoration-line:line-through;
+  text-decoration-color:#bfbfbf;
+  font-weight:700;
+}
+.eixo-reference-offer .eixo-reference-price-pill b{
+  color:#36d16e;
+  font-size:14px;
+  font-weight:950;
+}
+.eixo-reference-offer .eixo-reference-tags{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 auto;
+  width:auto;
+  max-width:580px;
+}
+.eixo-reference-offer .eixo-reference-tags>span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:29px;
+  padding:6px 12px;
+  box-sizing:border-box;
+  border:1px solid #292a2b;
+  border-radius:50px;
+  background:#1a1b1b;
+  color:#f6f6f3;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.15;
+  white-space:nowrap;
+}
+.eixo-reference-offer .eixo-reference-tags>span:first-letter{
+  color:#d7b15f;
+}
+@media(max-width:600px){
+  .eixo-reference-offer .eixo-reference-price-pill{
+    gap:7px;
+    padding:5px 11px;
+    margin-bottom:18px;
+    max-width:calc(100% - 14px);
+  }
+  .eixo-reference-offer .eixo-reference-price-pill>strong{
+    padding:4px 9px;
+    font-size:11px;
+  }
+  .eixo-reference-offer .eixo-reference-price-pill>span{
+    font-size:12px;
+  }
+  .eixo-reference-offer .eixo-reference-price-pill b{
+    font-size:13px;
+  }
+  .eixo-reference-offer .eixo-reference-tags{
+    gap:6px;
+  }
+  .eixo-reference-offer .eixo-reference-tags>span{
+    min-height:27px;
+    padding:6px 9px;
+    font-size:10px;
+  }
+}
+@media(max-width:340px){
+  .eixo-reference-offer .eixo-reference-price-pill{
+    padding:5px 8px;
+    gap:6px;
+  }
+  .eixo-reference-offer .eixo-reference-price-pill>span{font-size:11px}
+  .eixo-reference-offer .eixo-reference-price-pill b{font-size:12px}
+}

@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 const ACCESS_COOKIE="eixo_member_access";
 const REFRESH_COOKIE="eixo_member_refresh";
 
-type SupabaseUser={id:string;email?:string};
+type SupabaseUser={id:string;email?:string;memberRole?:"student"|"admin_master"};
 type SupabaseTokens={access_token:string;refresh_token:string;expires_in:number};
 export type EixoSession={user:SupabaseUser;tokens:SupabaseTokens|null};
 
@@ -66,13 +66,13 @@ export async function verifyEixoMember(accessToken:string):Promise<SupabaseUser|
     console.warn("EIXO purchase claim transiently unavailable");
   }
 
-  const path="/rest/v1/eixo_memberships?select=user_id&user_id=eq."+
+  const path="/rest/v1/eixo_memberships?select=user_id,member_role&user_id=eq."+
     encodeURIComponent(user.id)+"&status=eq.active&limit=1";
   const memberResponse=await api(path,{method:"GET"},accessToken);
   if(!memberResponse.ok)return null;
-  const memberships=await memberResponse.json() as Array<{user_id:string}>;
+  const memberships=await memberResponse.json() as Array<{user_id:string;member_role:string}>;
   if(!Array.isArray(memberships)||memberships.length!==1||memberships[0].user_id!==user.id)return null;
-  return {id:user.id,email:typeof user.email==="string"?user.email:undefined};
+  return {id:user.id,email:typeof user.email==="string"?user.email:undefined,memberRole:memberships[0].member_role==="admin_master"?"admin_master":"student"};
 }
 
 export async function currentEixoSession():Promise<EixoSession|null>{

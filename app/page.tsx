@@ -7,16 +7,15 @@ export default function Home() {
       <div className="eixoh-canvas">
         <section className="eixoh-intro" aria-labelledby="eixoh-title">
           <div className="eixoh-trust">
-            <strong>✦ EIXO · CONFIANÇA COMEÇA NA MENTE</strong>
-            <span>🔒 18 perguntas · Gratuito · Discreto</span>
+            <strong>✦ CRIADO PARA HOMENS QUE QUEREM MAIS CONFIANÇA</strong>
+            <span>🔒 Questionário gratuito · Sem cadastro</span>
           </div>
 
           <h1 id="eixoh-title" className="eixoh-heading">
-            Aumente sua confiança sexual, entenda o medo de brochar
-            e viva com menos pressão na cama{" "}<em>COMECE COM O EIXO.</em>
+            Aumente sua confiança sexual, entenda a ejaculação precoce e aprenda a lidar com a pressão na cama{" "}<em>COM O EIXO.</em>
           </h1>
           <p className="eixoh-description">
-            Vamos personalizar uma reflexão exclusiva para você!
+            Iremos personalizar um plano exclusivo para você!
           </p>
         </section>
 
@@ -46,7 +45,7 @@ export default function Home() {
               <strong className="eixoh-device-statement">
                 AUMENTE SUA <em>CONFIANÇA</em> SEXUAL
               </strong>
-              <span className="eixoh-device-text">Plano educativo · Sem exposição · Comece gratuitamente</span>
+              <span className="eixoh-device-text">Plano personalizado · Sem pílulas · Comece gratuitamente</span>
               <div className="eixoh-device-button">CRIAR MEU PLANO →</div>
               <span className="eixoh-device-home"/>
             </div>

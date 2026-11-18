@@ -28,6 +28,7 @@ export default function LoginForm(){
   const [password,setPassword]=useState("");
   const [showPassword,setShowPassword]=useState(false);
   const [status,setStatus]=useState("");
+  const [busy,setBusy]=useState(false);
 
   const openMode=(next:AccessMode)=>{
     setMode(next);
@@ -36,19 +37,41 @@ export default function LoginForm(){
     setStatus("");
   };
 
-  const handleSubmit=(event:FormEvent<HTMLFormElement>)=>{
+  const handleSubmit=async(event:FormEvent<HTMLFormElement>)=>{
     event.preventDefault();
-    // Frontend-only phase: no API request, session, token, or fake redirect.
-    // The real Supabase Auth integration will replace this handler.
-    setPassword("");
-    setShowPassword(false);
-    setStatus("A área de membros ainda está em configuração. O login será habilitado após a integração com o Supabase e a validação da compra.");
+    if(busy)return;
+    setStatus("");
+    setBusy(true);
+    try{
+      const response=await fetch("/api/eixo/auth/login",{
+        method:"POST",
+        credentials:"same-origin",
+        cache:"no-store",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email:email.trim(),password})
+      });
+      const result=await response.json() as {ok?:boolean;message?:string;redirect?:string};
+      if(response.ok&&result.ok){
+        setPassword("");
+        window.location.assign("/app");
+        return;
+      }
+      setStatus(result.message||"Não foi possível entrar. Tente novamente.");
+      setPassword("");
+      setShowPassword(false);
+    }catch{
+      setStatus("Conexão indisponível. Verifique sua internet e tente novamente.");
+      setPassword("");
+      setShowPassword(false);
+    }finally{
+      setBusy(false);
+    }
   };
 
   return <div className="eixo-login-form-root">
     <div className="eixo-login-connection-note" role="note">
       <span className="eixo-login-connection-dot" aria-hidden="true"/>
-      <span>Prévia do portal · Autenticação em preparação</span>
+      <span>Conectado ao Supabase · Acesso reservado a compradores</span>
     </div>
     {mode==="login"?<>
       <form className="eixo-login-form" onSubmit={handleSubmit} noValidate={false}>
@@ -70,7 +93,7 @@ export default function LoginForm(){
           </div>
         </div>
         {status&&<div className="eixo-login-inline-notice" role="status">{status}</div>}
-        <button className="eixo-login-submit" type="submit"><span>ENTRAR NA MINHA ÁREA</span><span className="eixo-login-submit-arrow" aria-hidden="true">→</span></button>
+        <button className="eixo-login-submit" type="submit" disabled={busy}><span>{busy?"VERIFICANDO ACESSO...":"ENTRAR NA MINHA ÁREA"}</span><span className="eixo-login-submit-arrow" aria-hidden="true">→</span></button>
       </form>
       <div className="eixo-login-signup"><span>Primeira vez por aqui?</span><button type="button" onClick={()=>openMode("first")}>Ativar meu acesso <span aria-hidden="true">↗</span></button></div>
     </>:<>
@@ -78,11 +101,11 @@ export default function LoginForm(){
         <div className="eixo-login-mode-icon" aria-hidden="true">{mode==="first"?"✦":"↺"}</div>
         <h3 id="eixo-login-mode-title">{mode==="first"?"Seu primeiro acesso":"Recuperar sua senha"}</h3>
         <p>{mode==="first"
-          ?"Após a confirmação da compra, você poderá ativar sua conta com o e-mail utilizado no checkout. A ativação será disponibilizada quando conectarmos a autenticação."
-          :"O envio de um link seguro de recuperação será ativado com o Supabase. Nenhuma mensagem é enviada nesta prévia."}</p>
+          ?"Após a confirmação da compra, você poderá ativar sua conta com o e-mail utilizado no checkout. A ativação será disponibilizada quando confirmarmos as compras pela Kiwify."
+          :"A recuperação de senha por e-mail será habilitada junto com a ativação de contas dos compradores. Por enquanto, esse envio permanece indisponível."}</p>
         <button className="eixo-login-back-mode" type="button" onClick={()=>openMode("login")}>← Voltar ao login</button>
       </div>
     </>}
-    <div className="eixo-login-form-bottom"><span aria-hidden="true">◈</span><p>Sem cadastro adicional nesta etapa. O acesso real dependerá da confirmação da compra e da autenticação segura.</p></div>
+    <div className="eixo-login-form-bottom"><span aria-hidden="true">◈</span><p>O login utiliza Supabase Auth. Somente usuários com acesso autorizado ao EIXO podem entrar.</p></div>
   </div>;
 }

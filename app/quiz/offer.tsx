@@ -157,37 +157,59 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
   const primaryText=ready?"CONFERIR OFERTA NO CHECKOUT":"DESBLOQUEAR MEUS 5 BÔNUS";
   const bottomText=ready?currency(discounted)+" · CONFERIR OFERTA":"80% OFF · OFERTA EM PREPARAÇÃO";
 
-  return <div className="eixo-offer" id="eixo-oferta-topo">
-    <div className="eixo-offer-ribbon"><span>✦</span> ESQUENTA BLACK FRIDAY <b>80% OFF REVELADO</b><span className="eixo-offer-ribbon-note">{ready?"Confira o preço no checkout":"Pagamento ainda não habilitado"}</span></div>
-    <section className="eixo-offer-hero">
-      <div className="eixo-offer-wrap eixo-hero-grid">
-        <div className="eixo-hero-copy">
-          <span className="eixo-offer-kicker">SEU RESULTADO ESTÁ PRONTO · EIXO</span>
-          <h1>{cleanName&&<>{cleanName}, </>}<em>SUA VIDA SEXUAL</em> PODE TER MENOS PRESSÃO.</h1>
-          <p>Você chegou até aqui para entender o que está atrapalhando sua confiança na hora de transar. Agora tem um ponto de partida baseado no que respondeu — sem promessas milagrosas.</p>
-          <div className="eixo-hero-facts"><span>✓ 18 RESPOSTAS CONSIDERADAS</span><span>✓ CONTEÚDO DISCRETO</span><span>✓ SEM DIAGNÓSTICO INVENTADO</span></div>
-          <InPageCta label="VER MEU PONTO DE PARTIDA" href="#eixo-perfil"/>
-          <small>O roteiro educativo e os cinco materiais complementares estão disponíveis nesta página.</small>
+  const videoSrc=(process.env.NEXT_PUBLIC_EIXO_VIDEO_URL||"").trim();
+  return <div className="eixo-offer eixo-reference-offer" id="eixo-oferta-topo">
+    <div className="eixo-offer-ribbon"><span>✦</span> ESQUENTA BLACK FRIDAY <b>80% OFF REVELADO</b><span className="eixo-offer-ribbon-note">{ready?"Confira o valor no checkout":"Checkout ainda não configurado"}</span></div>
+    <section className="eixo-offer-hero eixo-reference-hero">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <span className="eixo-offer-kicker">SEU PLANO PERSONALIZADO ESTÁ PRONTO</span>
+        <h1>{cleanName&&<><em>{cleanName},</em> </>}VOCÊ PODE TER <em>MAIS PRESENÇA E CONFIANÇA</em> NA SUA VIDA SEXUAL.</h1>
+        <p>Um plano educativo para homens que desejam compreender a pressão, conversar com mais tranquilidade e cuidar da intimidade — com discrição e no seu ritmo.</p>
+        <div className="eixo-reference-price-pill">
+          {ready?<><strong>80% OFF</strong><span>De {currency(basePrice)} por <b>{currency(discounted)}</b> no checkout</span></>:<><strong>PLANO LIBERADO</strong><span>7 dias de orientação educativa + 5 materiais para abrir agora</span></>}
         </div>
-        <div className="eixo-hero-visual"><PhonePreview name={cleanName} focus={focus} time={time}/></div>
+        <div className="eixo-reference-tags"><span>● Plano pronto</span><span>● 7 dias</span><span>● Sem cadastro</span><span>● Discreto</span></div>
       </div>
     </section>
 
-    <section className="eixo-presentation-video-section" aria-label="Espaço para vídeo de apresentação do EIXO">
-      <div className="eixo-offer-wrap eixo-presentation-video-layout">
-        <div className="eixo-hero-video-slot" aria-label="Vídeo vertical de apresentação ainda não enviado, proporção nove por dezesseis">
-          <div className="eixo-hero-video-placeholder">
-            <span className="eixo-hero-video-play" aria-hidden="true">▶</span>
-            <strong>VÍDEO DE APRESENTAÇÃO</strong>
-            <span>ESPAÇO RESERVADO · 9:16</span>
-          </div>
+    <section className="eixo-presentation-video-section eixo-reference-video" aria-label="Apresentação do EIXO">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-hero-video-slot">
+          {videoSrc?
+            <video src={videoSrc} controls playsInline preload="metadata" aria-label="Vídeo de apresentação do EIXO"/>:
+            <div className="eixo-hero-video-placeholder">
+              <span className="eixo-reference-scan">EIXO · PRESENÇA E CONFIANÇA</span>
+              <div className="eixo-reference-video-ring" aria-hidden="true"><span>7</span><small>DIAS</small></div>
+              <strong>ASSISTA À APRESENTAÇÃO</strong>
+              <span>VÍDEO VERTICAL 9:16 EM PREPARAÇÃO</span>
+            </div>}
+        </div>
+        <div className="eixo-reference-video-controls"><span aria-hidden="true">▶</span><div className="eixo-reference-video-track"><i/></div><span aria-hidden="true">◖))</span></div>
+        <a href="#eixo-perfil" className="eixo-reference-cta">VER MINHA ANÁLISE PERSONALIZADA <span>→</span></a>
+      </div>
+    </section>
+
+    <section className="eixo-reference-section eixo-reference-examples" id="eixo-exemplos">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-reference-subheading"><span>ENTENDA O QUE VOCÊ PODE ENCONTRAR</span><h2>CONFIANÇA COMEÇA COM <em>CLAREZA.</em></h2><p>Exemplos das reflexões do próprio EIXO. São demonstrações de conteúdo, não depoimentos de clientes.</p></div>
+        <div className="eixo-reference-messages">
+          {[
+            {question:"O QUE A PRESSÃO FAZ COM O MOMENTO?",reply:"Quando fico preocupado em falhar, percebo que paro de prestar atenção ao que sinto.",lesson:"Perceber o pensamento pode ser o primeiro passo para desacelerar."},
+            {question:"COMO CONVERSAR SOBRE A INSEGURANÇA?",reply:"Quero falar sobre uma coisa íntima sem precisar fingir que está tudo bem.",lesson:"A comunicação pode ajudar a reduzir o peso de expectativas irreais."},
+            {question:"E SE EU NÃO ESTIVER À VONTADE?",reply:"Posso fazer uma pausa, respirar no meu ritmo ou decidir não continuar.",lesson:"Conforto e consentimento importam mais do que cumprir uma meta de tempo."}
+          ].map((c,i)=><article className="eixo-reference-message" key={c.question}>
+             <div className="eixo-reference-message-head"><span>◉ EIXO</span><small>EXEMPLO EDUCATIVO {String(i+1).padStart(2,"0")}</small></div>
+             <div className="eixo-reference-message-question">{c.question}</div>
+             <div className="eixo-reference-message-reply">{c.reply}</div>
+             <p>{c.lesson}</p>
+          </article>)}
         </div>
       </div>
     </section>
 
     <section className="eixo-offer-section eixo-profile-section" id="eixo-perfil">
       <div className="eixo-offer-wrap eixo-column">
-        <div className="eixo-section-head"><span className="eixo-offer-kicker">01 / SEU PERFIL</span><h2>ANTES DE MUDAR ALGUMA COISA, <em>ENTENDA O QUE VOCÊ SENTE.</em></h2><p>Usamos somente as respostas que você forneceu. Não criamos um diagnóstico nem atribuímos automaticamente uma causa física.</p></div>
+        <div className="eixo-section-head"><span className="eixo-offer-kicker">DIAGNÓSTICO DO SEU PERFIL</span><h2>{cleanName?cleanName+", ":""}VEJA O QUE SUAS <em>RESPOSTAS MOSTRAM.</em></h2><p>Usamos somente as respostas que você forneceu. Não criamos um diagnóstico nem atribuímos automaticamente uma causa física.</p></div>
         <div className="eixo-profile-grid">
           <div className="eixo-profile-table">
             {[
@@ -208,6 +230,28 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
+    <section className="eixo-reference-section eixo-reference-understand">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-reference-subheading"><span>O SEU PONTO DE PARTIDA</span><h2>O QUE VOCÊ <em>PODE OBSERVAR.</em></h2><p>As respostas não identificam uma causa física nem determinam o que vai acontecer. Elas mostram temas que vale explorar.</p></div>
+        <div className="eixo-reference-understand-grid">
+          <div className="eixo-reference-concern-card"><span>O QUE VOCÊ RELATOU</span><strong>{concern}</strong><p>Principal preocupação informada no questionário.</p></div>
+          <div className="eixo-reference-concern-card"><span>O QUE VOCÊ BUSCA</span><strong>{focus}</strong><p>Uma intenção pessoal, sem prazo de resultado físico.</p></div>
+        </div>
+        <div className="eixo-reference-path-card">
+          <strong>O PROGRESSO DO ROTEIRO EDUCATIVO</strong>
+          <svg viewBox="0 0 460 178" role="img" aria-label="Linha ilustrativa das três etapas do roteiro de sete dias: reconhecer, praticar e revisar">
+            <defs><linearGradient id="eixo-path-color" x1="0" x2="1"><stop offset="0" stopColor="#c5a458"/><stop offset="1" stopColor="#38b966"/></linearGradient></defs>
+            <path d="M35 130H426M35 91H426M35 52H426" stroke="#ffffff18" strokeWidth="1" strokeDasharray="3 5"/>
+            <path d="M35 143C104 143 139 111 204 99S335 58 422 43" stroke="url(#eixo-path-color)" strokeWidth="4" fill="none" strokeLinecap="round"/>
+            {[{x:35,y:143,t:"1"},{x:204,y:99,t:"2"},{x:422,y:43,t:"3"}].map(p=><g key={p.t}><circle cx={p.x} cy={p.y} r="10" fill="#171717" stroke="#d5b36e" strokeWidth="2"/><text x={p.x} y={p.y+3.5} textAnchor="middle" fill="#f9dfa5" fontSize="10">{p.t}</text></g>)}
+            <text x="35" y="169" fill="#c8c0b3" fontSize="12">Dia 1</text><text x="192" y="169" fill="#c8c0b3" fontSize="12">Dia 4</text><text x="396" y="169" fill="#56c986" fontSize="12">Dia 7</text>
+          </svg>
+          <div className="eixo-reference-path-legend"><span>01 Reconhecer</span><span>02 Praticar</span><span>03 Revisar</span></div>
+          <small>Sequência de atividades, não previsão de cura ou desempenho.</small>
+        </div>
+      </div>
+    </section>
+
     <section className="eixo-offer-section eixo-cream" id="eixo-metodo">
       <div className="eixo-offer-wrap eixo-column">
         <div className="eixo-section-head"><span className="eixo-offer-kicker">02 / COMO FUNCIONA</span><h2>SAIA DO MODO <em>“E SE EU FALHAR?”</em></h2><p>O roteiro EIXO não mede potência sexual. Ele organiza reflexões possíveis sobre ansiedade, presença, diálogo e rotina.</p></div>
@@ -225,15 +269,43 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <section className="eixo-offer-section" id="eixo-preview">
-      <div className="eixo-offer-wrap eixo-column">
-        <div className="eixo-section-head"><span className="eixo-offer-kicker">03 / POR DENTRO DO EIXO</span><h2>NADA DE PROMESSA VAZIA. <em>VEJA O QUE VOCÊ ACESSA.</em></h2><p>Uma prévia navegável foi apresentada acima. Aqui está o material real que você pode abrir hoje, sem pagamento e sem instalar aplicativo.</p></div>
-        <div className="eixo-preview-cards">
-          <article><span>01 / SEU PERFIL</span><strong>O QUE SUAS RESPOSTAS REVELARAM</strong><p>Um resumo descritivo do que você indicou sobre pressão e rotina.</p></article>
-          <article><span>02 / SEU ROTEIRO</span><strong>SETE DIAS PARA OBSERVAR E PRATICAR</strong><p>Atividades curtas de atenção, comunicação e reflexão.</p></article>
-          <article><span>03 / SEUS BÔNUS</span><strong>CINCO MATERIAIS COMPLEMENTARES</strong><p>Guias e checklists com conteúdo disponível nesta página.</p></article>
+    <section className="eixo-reference-section eixo-reference-routine">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-reference-subheading"><span>ESTRUTURA EDUCATIVA</span><h2>SUA JORNADA DE <em>PRÁTICA.</em></h2><p>Veja como as etapas se encaixam em uma rotina simples de sete dias.</p></div>
+        <div className="eixo-reference-roadmap-card">
+          <div className="eixo-reference-roadmap-top"><div><small>ESTRUTURA EDUCATIVA</small><h3>Seu plano em etapas</h3></div><span>◉ 7 dias</span></div>
+          <div className="eixo-reference-roadmap-dates"><div><small>INÍCIO</small><strong>Dia 1</strong><span>Reconhecer</span></div><div><small>CONCLUSÃO</small><strong>Dia 7</strong><span>Revisar</span></div></div>
+          <div className="eixo-reference-roadmap-timeline">
+            {[
+              {n:"1",title:"Começar",date:"DIA 1",desc:"Perceber a autocobrança e iniciar sua reflexão."},
+              {n:"2",title:"Praticar",date:"DIAS 2 A 5",desc:"Explorar presença, expectativas e comunicação."},
+              {n:"3",title:"Revisar",date:"DIAS 6 E 7",desc:"Olhar para sua rotina e definir o próximo passo."}
+            ].map((m,i)=><div key={m.n} className="eixo-reference-timeline-row"><b className={i===2?"is-finished":""}>{m.n}</b><div><strong>{m.title}</strong><span>{m.desc}</span></div><small>{m.date}</small></div>)}
+          </div>
+          <div className="eixo-reference-roadmap-metrics"><div><b>◷</b><small>TEMPO</small><strong>{time}</strong></div><div><b>▣</b><small>ACESSO</small><strong>Navegador</strong></div><div><b>✦</b><small>ROTEIRO</small><strong>7 dias</strong></div></div>
+          <p className="eixo-reference-roadmap-discreet">◉ Total discrição: as respostas ficam nesta sessão do navegador, sem exposição pública.</p>
         </div>
-        <InPageCta label="ABRIR MEU ROTEIRO DE 7 DIAS" href="#eixo-plano"/>
+      </div>
+    </section>
+
+    <section className="eixo-reference-section eixo-reference-app">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-reference-subheading"><span>SEU ESPAÇO EIXO</span><h2>ACOMPANHE SEU ROTEIRO <em>PELO CELULAR.</em></h2><p>Prévia interativa dos materiais disponíveis aqui no navegador. Não exige instalar um aplicativo.</p></div>
+        <PhonePreview name={cleanName} focus={focus} time={time}/>
+        <InPageCta label="ABRIR OS 7 DIAS" href="#eixo-plano"/>
+      </div>
+    </section>
+
+    <section className="eixo-reference-section eixo-reference-contrast">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-reference-subheading"><span>ANTES E DEPOIS DA REFLEXÃO</span><h2>NÃO É UMA DISPUTA DE MINUTOS. <em>É UMA MUDANÇA DE FOCO.</em></h2><p>Comparação ilustrativa do modo de pensar, não resultado clínico nem depoimento real.</p></div>
+        <div className="eixo-reference-contrast-visual">
+          <img src="/images/eixo-antes-depois.avif" alt="Comparação ilustrativa de um homem preocupado e de um casal sorrindo" width={920} height={399} loading="lazy"/>
+        </div>
+        <div className="eixo-reference-contrast-cards">
+          <article><span>ANTES · AUTOCOBRANÇA</span><strong>“E se eu falhar?”</strong><p>Foco excessivo no desempenho e no medo de decepcionar.</p></article>
+          <article><span>DEPOIS · PRESENÇA</span><strong>“Posso ir no meu ritmo.”</strong><p>Mais atenção ao conforto, ao diálogo e às próprias necessidades.</p></article>
+        </div>
       </div>
     </section>
 
@@ -243,6 +315,18 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
         <div className="eixo-day-list">{DAYS.map(d=><details key={d.day}><summary><span className="eixo-day-number">{d.day}</span><span><small>{d.tag}</small><strong>{d.title}</strong></span><b>+</b></summary><p>{d.text}</p></details>)}</div>
         <div className="eixo-plan-note"><b>UMA META REALISTA</b><p>Dedicar {time.toLowerCase()} ao autoconhecimento e à atenção ao bem-estar, quando isso fizer sentido para você.</p></div>
         <InPageCta label="VER MEUS BÔNUS GRATUITOS" href="#eixo-bonus"/>
+      </div>
+    </section>
+
+    <section className="eixo-offer-section" id="eixo-preview">
+      <div className="eixo-offer-wrap eixo-column">
+        <div className="eixo-section-head"><span className="eixo-offer-kicker">03 / POR DENTRO DO EIXO</span><h2>NADA DE PROMESSA VAZIA. <em>VEJA O QUE VOCÊ ACESSA.</em></h2><p>Uma prévia navegável foi apresentada acima. Aqui está o material real que você pode abrir hoje, sem pagamento e sem instalar aplicativo.</p></div>
+        <div className="eixo-preview-cards">
+          <article><span>01 / SEU PERFIL</span><strong>O QUE SUAS RESPOSTAS REVELARAM</strong><p>Um resumo descritivo do que você indicou sobre pressão e rotina.</p></article>
+          <article><span>02 / SEU ROTEIRO</span><strong>SETE DIAS PARA OBSERVAR E PRATICAR</strong><p>Atividades curtas de atenção, comunicação e reflexão.</p></article>
+          <article><span>03 / SEUS BÔNUS</span><strong>CINCO MATERIAIS COMPLEMENTARES</strong><p>Guias e checklists com conteúdo disponível nesta página.</p></article>
+        </div>
+        <InPageCta label="ABRIR MEU ROTEIRO DE 7 DIAS" href="#eixo-plano"/>
       </div>
     </section>
 
@@ -304,6 +388,16 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
+    <section className="eixo-reference-section eixo-reference-access">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <div className="eixo-reference-subheading"><span>ACESSO AOS MATERIAIS</span><h2>O QUE ACONTECE <em>AGORA.</em></h2><p>Seu roteiro e os cinco guias já podem ser abertos. A compra de um produto pago só estará disponível se houver checkout real.</p></div>
+        <div className="eixo-reference-access-steps">
+          {[{n:"01",icon:"▣",title:"Abra sua página",text:"O resultado já está nesta tela."},{n:"02",icon:"✓",title:"Veja seu roteiro",text:"Sete atividades disponíveis."},{n:"03",icon:"◈",title:"Explore os bônus",text:"Cinco materiais em texto."},{n:"04",icon:"◎",title:"Volte quando quiser",text:"Retome as práticas no seu ritmo."}].map(v=><div key={v.n}><span>{v.icon}</span><strong>{v.title}</strong><small>{v.text}</small></div>)}
+        </div>
+        <InPageCta label="ABRIR MEUS CINCO BÔNUS" href="#eixo-bonus"/>
+      </div>
+    </section>
+
     <section className="eixo-offer-section" id="eixo-faq">
       <div className="eixo-offer-wrap eixo-column">
         <div className="eixo-section-head"><span className="eixo-offer-kicker">07 / DÚVIDAS FREQUENTES</span><h2>SEM TABUS. <em>SEM ENROLAÇÃO.</em></h2><p>Respostas diretas sobre privacidade, conteúdo educativo e a campanha Black Friday.</p></div>
@@ -322,6 +416,17 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
       </div>
     </section>
 
-    <div className="eixo-offer-sticky"><span><strong>{bottomText}</strong><small>{ready?"Pagamento em site externo":"Bônus gratuitos disponíveis"}</small></span><a href={primaryHref} target={ready?"_blank":undefined} rel={ready?"noopener noreferrer":undefined}>{primaryText} <span>↗</span></a></div>
+    <footer className="eixo-reference-footer">
+      <div className="eixo-offer-wrap eixo-reference-narrow">
+        <strong>◈ EIXO</strong>
+        <p>Conteúdo informativo sobre bem-estar, autocobrança e comunicação. Não substitui avaliação médica ou psicológica.</p>
+        <div><a href="#eixo-perfil">Seu perfil</a><a href="#eixo-plano">Roteiro</a><a href="#eixo-faq">Dúvidas frequentes</a></div>
+      </div>
+    </footer>
+
+    <div className="eixo-offer-sticky">
+      <span><strong>{bottomText}</strong><small>{ready?"Valor sujeito a conferência no checkout":"5 materiais gratuitos disponíveis"}</small></span>
+      <a href={primaryHref} target={ready?"_blank":undefined} rel={ready?"noopener noreferrer":undefined}>{primaryText} <span>→</span></a>
+    </div>
   </div>;
 }

@@ -54,6 +54,18 @@ export async function verifyEixoMember(accessToken:string):Promise<SupabaseUser|
   const user=await userResponse.json() as Partial<SupabaseUser>;
   if(typeof user.id!=="string"||!/^[0-9a-f-]{36}$/i.test(user.id))return null;
 
+  // Buyers may confirm their email after Kiwify posts the purchase.
+  // Claim only matching paid orders for a confirmed email, never by client metadata.
+  // An existing active membership remains valid even if this optional claim fails.
+  try{
+    const claim=await api("/rest/v1/rpc/eixo_claim_verified_purchase",{
+      method:"POST",body:"{}"
+    },accessToken);
+    if(!claim.ok)console.warn("EIXO purchase claim unavailable",claim.status);
+  }catch{
+    console.warn("EIXO purchase claim transiently unavailable");
+  }
+
   const path="/rest/v1/eixo_memberships?select=user_id&user_id=eq."+
     encodeURIComponent(user.id)+"&status=eq.active&limit=1";
   const memberResponse=await api(path,{method:"GET"},accessToken);

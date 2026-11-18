@@ -1,56 +1,123 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect,useState} from "react";
+import {useCallback,useEffect,useMemo,useState} from "react";
 import "./app.css";
 
-type MemberStatus="checking"|"authorized"|"unavailable";
+type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
+type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
+type Dashboard={email:string;completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
+type Tab="inicio"|"roteiro"|"bonus"|"progresso";
+const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["roteiro","Meu roteiro","◈"],["bonus","Meus bônus","✦"],["progresso","Progresso","◷"]];
+
+function Logo(){return <Link href="/" className="eixo-member-logo" aria-label="Método EIXO">EI<span>X</span>O<span className="eixo-member-logo-dot">.</span></Link>}
 
 export default function EixoMembersPage(){
-  const [status,setStatus]=useState<MemberStatus>("checking");
-  const [email,setEmail]=useState("");
-  const [message,setMessage]=useState("");
+  const [data,setData]=useState<Dashboard|null>(null);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState("");
+  const [savedError,setSavedError]=useState("");
+  const [savingDay,setSavingDay]=useState<number|null>(null);
+  const [tab,setTab]=useState<Tab>("inicio");
+  const [selectedDay,setSelectedDay]=useState(1);
+  const [selectedBonus,setSelectedBonus]=useState<number|null>(null);
 
-  useEffect(()=>{
-    let cancelled=false;
-    (async()=>{
-      try{
-        const response=await fetch("/api/eixo/auth/session",{credentials:"same-origin",cache:"no-store"});
-        if(cancelled)return;
-        if(response.status===401){window.location.replace("/login?acesso=necessario");return;}
-        if(!response.ok){setStatus("unavailable");return;}
-        const body=await response.json() as {authenticated?:boolean;email?:string};
-        if(!body.authenticated){window.location.replace("/login?acesso=necessario");return;}
-        setEmail(body.email||"");
-        setStatus("authorized");
-      }catch{if(!cancelled)setStatus("unavailable");}
-    })();
-    return ()=>{cancelled=true;};
+  const load=useCallback(async()=>{
+    setLoading(true);
+    setError("");
+    try{
+      const response=await fetch("/api/eixo/member/dashboard",{cache:"no-store",credentials:"same-origin"});
+      if(response.status===401){window.location.replace("/login?acesso=necessario");return;}
+      if(!response.ok)throw new Error("Falha ao carregar o painel");
+      const json=await response.json() as Dashboard;
+      if(!Array.isArray(json.lessons)||!Array.isArray(json.bonuses)||!Array.isArray(json.completedDays))throw new Error("Resposta inválida");
+      setData(json);
+    }catch{setError("Não foi possível carregar seus conteúdos agora. Tente novamente.");}
+    finally{setLoading(false);}
   },[]);
 
+  useEffect(()=>{void load();},[load]);
+
+  const completed=data?.completedDays||[];
+  const percent=Math.round(completed.length/7*100);
+  const currentDay=useMemo(()=>{
+    for(let n=1;n<=7;n++)if(!completed.includes(n))return n;
+    return 7;
+  },[completed]);
+  const lesson=data?.lessons.find(l=>l.day===selectedDay);
+  const bonus=data?.bonuses.find(b=>b.id===selectedBonus);
+  async function toggleCompletion(day:number){
+    if(!data||savingDay!==null)return;
+    const done=!completed.includes(day);
+    setSavingDay(day);
+    setSavedError("");
+    try{
+      const response=await fetch("/api/eixo/member/progress",{
+        method:"POST",credentials:"same-origin",cache:"no-store",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({day,completed:done})
+      });
+      if(response.status===401){window.location.replace("/login?acesso=necessario");return;}
+      if(!response.ok)throw Error("save failed");
+      setData(prev=>prev?{...prev,completedDays:done?[...prev.completedDays,day].sort((a,b)=>a-b):prev.completedDays.filter(n=>n!==day)}:prev);
+    }catch{setSavedError("Não conseguimos salvar sua marcação. Tente novamente.");}
+    finally{setSavingDay(null);}
+  }
   async function logout(){
     try{await fetch("/api/eixo/auth/logout",{method:"POST",credentials:"same-origin"});}catch{}
     window.location.replace("/login");
   }
+  function openLesson(day:number){setSelectedDay(day);setSelectedBonus(null);setTab("roteiro");window.scrollTo({top:0,behavior:"smooth"});}
+  function openBonus(id:number){setSelectedBonus(id);setTab("bonus");window.scrollTo({top:0,behavior:"smooth"});}
 
   return <main className="eixo-member-page">
-    <header className="eixo-member-header"><Link href="/" className="eixo-member-logo">EI<span>X</span>O.</Link><span>ÁREA DE MEMBROS</span></header>
-    <section className="eixo-member-card">
-      {status==="checking"?<p role="status">Validando seu acesso com segurança...</p>:
-      status==="unavailable"?<>
-        <h1>Não foi possível verificar seu acesso agora.</h1>
-        <p>Verifique sua conexão e tente novamente.</p>
-        <button onClick={()=>window.location.reload()}>Tentar novamente</button>
-      </>:<>
-        <div className="eixo-member-icon">✦</div>
-        <span className="eixo-member-eyebrow">ACESSO CONFIRMADO</span>
-        <h1>Bem-vindo ao seu espaço EIXO.</h1>
-        <p>{email?<>Você entrou com <strong>{email}</strong>. </>:null}Sua autorização está ativa. Estamos preparando o painel com o roteiro de sete dias e os materiais do Método EIXO.</p>
-        <div className="eixo-member-notice">O painel completo será disponibilizado na próxima etapa. O login e a autorização já são verificados no Supabase.</div>
-        <button className="eixo-member-logout" onClick={logout}>Sair com segurança →</button>
+    <header className="eixo-member-header">
+      <div className="eixo-member-header-inner"><Logo/><div className="eixo-member-header-right"><span className="eixo-member-member-chip"><span/> ACESSO AUTORIZADO</span><button onClick={logout} className="eixo-member-exit">Sair <span aria-hidden="true">↗</span></button></div></div>
+    </header>
+    {loading?<div className="eixo-member-loading" role="status"><span className="eixo-member-loader"/> Preparando seu espaço EIXO...</div>:
+      error||!data?<div className="eixo-member-failure"><h1>Não foi possível entrar na área.</h1><p>{error||"Tente novamente."}</p><button onClick={()=>void load()}>Tentar novamente →</button></div>:
+      <>
+        <section className="eixo-member-overline"><span>✦ EIXO / ESPAÇO PRIVADO</span><span>UMA JORNADA NO SEU RITMO</span></section>
+        <section className="eixo-member-heading">
+          <div><span className="eixo-member-kicker">BEM-VINDO AO MÉTODO EIXO</span><h1>Seu espaço.<br/><em>Seu ritmo.</em></h1><p>Aqui você encontra seu roteiro de sete dias, materiais complementares e um lugar para registrar cada etapa concluída.</p></div>
+          <div className="eixo-member-profile-stat"><div className="eixo-member-progress-ring" style={{"--p":percent+"%"} as React.CSSProperties}><strong>{percent}%</strong><small>CONCLUÍDO</small></div><strong>Seu progresso</strong><span>{completed.length} de 7 etapas realizadas</span></div>
+        </section>
+        <nav className="eixo-member-tabs" aria-label="Navegação da área de membros">
+          {NAV.map(([key,label,symbol])=><button key={key} type="button" className={tab===key?"active":""} onClick={()=>{setTab(key);setSelectedBonus(null);}} aria-current={tab===key?"page":undefined}><span aria-hidden="true">{symbol}</span> {label}</button>)}
+        </nav>
+        <div className="eixo-member-content">
+          {tab==="inicio"&&<section className="eixo-member-home" aria-labelledby="eixo-member-home-title">
+            <div className="eixo-member-section-heading"><span>01 / SUA JORNADA</span><h2 id="eixo-member-home-title">Um passo de cada vez.</h2><p>Você não precisa correr para terminar. Abra a próxima prática quando fizer sentido.</p></div>
+            <div className="eixo-member-next-card">
+              <div className="eixo-member-next-icon">◈</div>
+              <div className="eixo-member-next-text"><span>PRÓXIMO PASSO · DIA {String(currentDay).padStart(2,"0")}</span><h3>{data.lessons.find(l=>l.day===currentDay)?.title}</h3><p>{data.lessons.find(l=>l.day===currentDay)?.intro}</p><div className="eixo-member-next-tags"><span>◷ {data.lessons.find(l=>l.day===currentDay)?.estimatedMinutes} min de leitura e reflexão</span><span>Atividade educativa</span></div></div>
+              <button className="eixo-member-primary" onClick={()=>openLesson(currentDay)}>ABRIR MEU DIA <span>↗</span></button>
+            </div>
+            <div className="eixo-member-home-grid">
+              <button className="eixo-member-tile" onClick={()=>setTab("roteiro")}><span className="eixo-member-tile-icon">◷</span><span className="eixo-member-tile-count">07 DIAS</span><strong>Seu roteiro completo</strong><small>Atividades de atenção, diálogo e reflexão.</small><span className="eixo-member-tile-arrow">→</span></button>
+              <button className="eixo-member-tile" onClick={()=>setTab("bonus")}><span className="eixo-member-tile-icon">✦</span><span className="eixo-member-tile-count">05 MATERIAIS</span><strong>Seus bônus</strong><small>Guias complementares que você pode abrir agora.</small><span className="eixo-member-tile-arrow">→</span></button>
+              <button className="eixo-member-tile" onClick={()=>setTab("progresso")}><span className="eixo-member-tile-icon">◈</span><span className="eixo-member-tile-count">{String(completed.length).padStart(2,"0")} / 07</span><strong>Seu acompanhamento</strong><small>Registre o que já explorou, sem cobranças.</small><span className="eixo-member-tile-arrow">→</span></button>
+            </div>
+          </section>}
+          {tab==="roteiro"&&<section className="eixo-member-learn" aria-labelledby="eixo-member-learn-title">
+            <div className="eixo-member-section-heading"><span>02 / SEU ROTEIRO</span><h2 id="eixo-member-learn-title">Sete dias para <em>se observar.</em></h2><p>Abra cada dia para ler as orientações e marque como concluído quando terminar.</p></div>
+            <div className="eixo-member-learn-layout">
+              <div className="eixo-member-day-list" aria-label="Dias do roteiro">{data.lessons.map(day=><button type="button" key={day.day} onClick={()=>setSelectedDay(day.day)} className={selectedDay===day.day?"selected":""} aria-current={selectedDay===day.day?"step":undefined}><span className="eixo-member-day-index">{String(day.day).padStart(2,"0")}</span><span className="eixo-member-day-label"><small>{day.phase}</small><strong>{day.title}</strong></span>{completed.includes(day.day)?<span className="eixo-member-day-check" title="Concluído">✓</span>:<span aria-hidden="true" className="eixo-member-day-chevron">→</span>}</button>)}</div>
+              {lesson&&<article className="eixo-member-lesson" key={lesson.day}><span className="eixo-member-lesson-topline">DIA {String(lesson.day).padStart(2,"0")} DE 07 <span>◷ {lesson.estimatedMinutes} MIN</span></span><h3>{lesson.title}</h3><p className="eixo-member-lesson-intro">{lesson.intro}</p><div className="eixo-member-lesson-items">{lesson.steps.map((step,index)=><div key={index}><span className="eixo-member-lesson-step-index">{String(index+1).padStart(2,"0")}</span><div><h4>{step.title}</h4><p>{step.description}</p></div></div>)}</div><div className="eixo-member-lesson-closing">✦ {lesson.closing}</div>{savedError&&<p role="alert" className="eixo-member-save-error">{savedError}</p>}<button className="eixo-member-primary eixo-member-complete" disabled={savingDay!==null} onClick={()=>void toggleCompletion(lesson.day)}>{savingDay===lesson.day?"SALVANDO...":completed.includes(lesson.day)?"✓ DIA CONCLUÍDO · DESMARCAR":"MARCAR ESTE DIA COMO CONCLUÍDO"}<span>→</span></button></article>}
+            </div>
+          </section>}
+          {tab==="bonus"&&<section className="eixo-member-bonuses" aria-labelledby="eixo-member-bonuses-title">
+            <div className="eixo-member-section-heading"><span>03 / MATERIAIS COMPLEMENTARES</span><h2 id="eixo-member-bonuses-title">Mais ferramentas. <em>Menos pressão.</em></h2><p>Os cinco materiais estão disponíveis para leitura dentro da sua área.</p></div>
+            {bonus?<article className="eixo-member-bonus-detail"><button className="eixo-member-back" onClick={()=>setSelectedBonus(null)}>← Voltar aos bônus</button><span className="eixo-member-kicker">BÔNUS {String(bonus.id).padStart(2,"0")} / 05 · {bonus.duration}</span><h3>{bonus.title}</h3><p className="eixo-member-bonus-intro">{bonus.subtitle}</p>{bonus.sections.map((part,i)=><section key={i} className="eixo-member-bonus-part"><h4>{part.title}</h4>{part.paragraphs.map((p,j)=><p key={j}>{p}</p>)}</section>)}<button className="eixo-member-primary" onClick={()=>setSelectedBonus(null)}>VER OS DEMAIS BÔNUS <span>↗</span></button></article>:
+            <div className="eixo-member-bonus-grid">{data.bonuses.map(b=><button className="eixo-member-bonus-card" key={b.id} onClick={()=>openBonus(b.id)}><span className="eixo-member-bonus-numeral">{String(b.id).padStart(2,"0")}</span><span className="eixo-member-bonus-card-text"><small>BÔNUS INCLUÍDO · {b.duration}</small><strong>{b.title}</strong><span>{b.subtitle}</span><em>ABRIR MATERIAL <span>↗</span></em></span></button>)}</div>}
+          </section>}
+          {tab==="progresso"&&<section className="eixo-member-tracking" aria-labelledby="eixo-member-track-title">
+            <div className="eixo-member-section-heading"><span>04 / ACOMPANHAMENTO</span><h2 id="eixo-member-track-title">Sua evolução <em>sem comparações.</em></h2><p>Seu progresso é registrado apenas quando você marca um dia concluído. Isso não mede desempenho sexual nem prevê resultados.</p></div>
+            <div className="eixo-member-track-card"><div className="eixo-member-track-top"><strong>{completed.length} de 7 dias</strong><span>{percent}% concluído</span></div><div className="eixo-member-track-bar"><span style={{width:percent+"%"}}/></div><div className="eixo-member-track-days">{data.lessons.map(l=><button key={l.day} aria-label={`Abrir o dia ${l.day}`} onClick={()=>openLesson(l.day)} className={completed.includes(l.day)?"done":""}>{completed.includes(l.day)?"✓":l.day}</button>)}</div><p>Um dia concluído indica apenas que você leu ou realizou a atividade proposta.</p><button className="eixo-member-primary" onClick={()=>openLesson(currentDay)}>CONTINUAR MEU ROTEIRO <span>↗</span></button></div>
+          </section>}
+        </div>
+        <aside className="eixo-member-privacy"><span>◈</span><p><strong>Seu espaço é privado.</strong> Os dias concluídos ficam na sua conta. O EIXO não salva aqui as respostas do questionário nem fornece diagnósticos ou promessas de resultados físicos.</p></aside>
+        <footer className="eixo-member-footer"><span>© MÉTODO EIXO</span><span>{data.email}</span><span>Conteúdo educativo · Não substitui atendimento profissional</span></footer>
       </>}
-    </section>
-    {message&&<p>{message}</p>}
-    <footer>© MÉTODO EIXO · ACESSO RESTRITO</footer>
   </main>;
 }

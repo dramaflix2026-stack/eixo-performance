@@ -1956,3 +1956,238 @@
   .eixo-bonus-compact-price>b{font-size:9px}
   .eixo-bonus-compact-price>small{display:none}
 }
+
+
+/* EIXO — horizontal 9:16 conversation gallery, auto-changing + swipe.
+   Replaces the old three explanatory cards; URLs live under /images. */
+.eixo-reference-offer .eixo-feedback-section{
+  position:relative;
+  background:#0b0b0d;
+  color:#f6f3ed;
+  width:100%;
+  max-width:100%;
+  overflow:hidden;
+  padding:58px 0 52px;
+  border-top:1px solid #302820;
+  scroll-margin-top:40px;
+}
+.eixo-reference-offer .eixo-feedback-heading{
+  width:min(640px,calc(100% - 32px));
+  max-width:640px;
+  margin:0 auto 30px;
+  text-align:center;
+}
+.eixo-reference-offer .eixo-feedback-heading>span{
+  display:block;
+  color:#dcb568;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.1px;
+  line-height:1.4;
+}
+.eixo-reference-offer .eixo-feedback-heading h2{
+  margin:11px auto;
+  max-width:620px;
+  color:#f9f6ef;
+  font-size:clamp(29px,3.9vw,38px);
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:900;
+  letter-spacing:-.8px;
+  line-height:1.13;
+  text-wrap:balance;
+}
+.eixo-reference-offer .eixo-feedback-heading h2 em{
+  color:#d4a754;
+  font-style:normal;
+}
+.eixo-reference-offer .eixo-feedback-heading p{
+  margin:0 auto;
+  max-width:500px;
+  color:#b7b0a8;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:14px;
+  line-height:1.6;
+}
+.eixo-reference-offer .eixo-feedback-carousel{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+.eixo-reference-offer .eixo-feedback-track{
+  position:relative;
+  width:100%;
+  min-width:0;
+  display:flex;
+  align-items:stretch;
+  gap:19px;
+  margin:0;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:14px max(24px,calc((100% - 312px)/2)) 19px;
+  scroll-padding-inline:calc((100% - 312px)/2);
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  overscroll-behavior-inline:contain;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x pan-y;
+}
+.eixo-reference-offer .eixo-feedback-track::-webkit-scrollbar{display:none}
+.eixo-reference-offer .eixo-feedback-track:focus-visible{
+  outline:2px solid #dcb466;
+  outline-offset:-4px;
+}
+.eixo-reference-offer .eixo-feedback-slide{
+  position:relative;
+  flex:0 0 312px;
+  width:312px;
+  min-width:312px;
+  aspect-ratio:9/16;
+  overflow:hidden;
+  margin:0;
+  padding:0;
+  border:1px solid #51402a;
+  border-radius:17px;
+  background:#080d0d;
+  box-shadow:0 12px 35px #0007;
+  opacity:.62;
+  transform:scale(.954);
+  transform-origin:center;
+  scroll-snap-align:center;
+  scroll-snap-stop:always;
+  transition:opacity .35s ease,transform .35s ease,border-color .35s ease,box-shadow .35s ease;
+}
+.eixo-reference-offer .eixo-feedback-slide.is-active{
+  opacity:1;
+  transform:scale(1);
+  border-color:#c9a054;
+  box-shadow:0 0 0 3px rgba(205,154,69,.18),0 16px 46px #0009;
+}
+.eixo-reference-offer .eixo-feedback-slide>img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  border-radius:16px;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.eixo-reference-offer .eixo-feedback-controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:19px;
+  margin:5px auto 7px;
+}
+.eixo-reference-offer .eixo-feedback-arrow{
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  border:1px solid #6d5128;
+  background:#191714;
+  width:37px;
+  height:37px;
+  border-radius:50%;
+  color:#e5b65d;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:27px;
+  line-height:1;
+  cursor:pointer;
+}
+.eixo-reference-offer .eixo-feedback-arrow:hover{
+  background:#3a2b16;
+  border-color:#eacb86;
+}
+.eixo-reference-offer .eixo-feedback-arrow:focus-visible,
+.eixo-reference-offer .eixo-feedback-dots>button:focus-visible{
+  outline:2px solid #f5d68d;
+  outline-offset:3px;
+}
+.eixo-reference-offer .eixo-feedback-dots{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:7px;
+  max-width:300px;
+}
+.eixo-reference-offer .eixo-feedback-dots>button{
+  width:9px;
+  min-width:9px;
+  height:9px;
+  border:0;
+  border-radius:12px;
+  background:#514a40;
+  cursor:pointer;
+  padding:0;
+  transition:background-color .25s,width .25s ease;
+}
+.eixo-reference-offer .eixo-feedback-dots>button.is-active{
+  width:26px;
+  background:#e2b966;
+}
+.eixo-reference-offer .eixo-feedback-counter{
+  margin:0 auto 17px;
+  text-align:center;
+  color:#d0a458;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.8px;
+}
+.eixo-reference-offer .eixo-feedback-counter>span{
+  padding:0 5px;
+  color:#7c6851;
+}
+.eixo-reference-offer .eixo-feedback-disclaimer{
+  max-width:570px;
+  width:calc(100% - 32px);
+  margin:0 auto;
+  color:#8e867a;
+  font-size:11px;
+  text-align:center;
+  line-height:1.6;
+}
+@media(max-width:650px){
+  .eixo-reference-offer .eixo-feedback-section{
+    padding:37px 0 40px;
+  }
+  .eixo-reference-offer .eixo-feedback-heading{
+    width:calc(100% - 28px);
+    margin-bottom:23px;
+  }
+  .eixo-reference-offer .eixo-feedback-heading h2{
+    font-size:clamp(27px,6.5vw,34px);
+  }
+  .eixo-reference-offer .eixo-feedback-heading p{
+    font-size:13px;
+  }
+  .eixo-reference-offer .eixo-feedback-track{
+    gap:13px;
+    padding-left:max(12px,calc((100% - min(76vw,310px))/2));
+    padding-right:max(12px,calc((100% - min(76vw,310px))/2));
+    scroll-padding-inline:max(12px,calc((100% - min(76vw,310px))/2));
+  }
+  .eixo-reference-offer .eixo-feedback-slide{
+    flex:0 0 min(76vw,310px);
+    min-width:min(76vw,310px);
+    width:min(76vw,310px);
+    border-radius:14px;
+  }
+  .eixo-reference-offer .eixo-feedback-slide>img{
+    border-radius:13px;
+  }
+  .eixo-reference-offer .eixo-feedback-controls{
+    margin-top:3px;
+    gap:13px;
+  }
+  .eixo-reference-offer .eixo-feedback-arrow{
+    width:34px;height:34px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .eixo-reference-offer .eixo-feedback-track{scroll-behavior:auto}
+  .eixo-reference-offer .eixo-feedback-slide,
+  .eixo-reference-offer .eixo-feedback-dots>button{transition:none}
+}

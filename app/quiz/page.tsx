@@ -7,7 +7,7 @@ import OfferPage from "./offer";
 import "./quiz.css";
 
 type Question = { prompt: string; options: string[]; eyebrow?: string };
-type Step = { kind: "question"; number: number } | { kind: "story"; number: number } | { kind: "prep" } | { kind: "scratch" } | { kind: "result" };
+type Step = { kind: "question"; number: number } | { kind: "story"; number: number } | { kind: "prep" } | { kind: "result" };
 type StageImage = { src: string; alt: string };
 
 const QUESTIONS: Question[] = [
@@ -75,7 +75,7 @@ QUESTIONS.forEach((_,number)=>{
   FLOW.push({kind:"question",number});
   if((number+1)%3===0 && number<15) FLOW.push({kind:"story",number:Math.floor(number/3)});
 });
-FLOW.push({kind:"prep"},{kind:"scratch"},{kind:"result"});
+FLOW.push({kind:"prep"},{kind:"result"});
 
 const FINISH_INDEX=FLOW.length-1;
 const ageOptions=QUESTIONS[0].options;
@@ -88,13 +88,13 @@ function StoryAnimation({variant}:{variant:string}){
   return <div className="funnel-steps-visual" aria-hidden="true"><span>01 NOTAR</span><span>02 RESPIRAR</span><span>03 CONVERSAR</span></div>;
 }
 
-function ScratchCard({onReveal}:{onReveal:()=>void}){
+function ScratchCard({onReveal,initiallyRevealed=false}:{onReveal:()=>void;initiallyRevealed?:boolean}){
   const canvasRef=useRef<HTMLCanvasElement>(null);
   const dragging=useRef(false);
   const last=useRef<{x:number;y:number}|null>(null);
-  const revealed=useRef(false);
+  const revealed=useRef(initiallyRevealed);
   const drawCount=useRef(0);
-  const [isRevealed,setIsRevealed]=useState(false);
+  const [isRevealed,setIsRevealed]=useState(initiallyRevealed);
   const [scratchProgress,setScratchProgress]=useState(0);
 
   const finish=()=>{
@@ -108,7 +108,7 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
 
   useEffect(()=>{
     const canvas=canvasRef.current;
-    if(!canvas)return;
+    if(!canvas||initiallyRevealed)return;
     const ctx=canvas.getContext("2d",{willReadFrequently:true});
     if(!ctx)return;
     const rect=canvas.getBoundingClientRect();
@@ -120,32 +120,44 @@ function ScratchCard({onReveal}:{onReveal:()=>void}){
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.globalCompositeOperation="source-over";
     ctx.globalAlpha=1;
-    const gold=ctx.createLinearGradient(0,0,width,height);
-    gold.addColorStop(0,"#f9e0a3");
-    gold.addColorStop(.25,"#d4a054");
-    gold.addColorStop(.5,"#f0cb7b");
-    gold.addColorStop(.8,"#bb883d");
-    gold.addColorStop(1,"#f5d58e");
-    ctx.fillStyle=gold;
+    // Foil is completely opaque until the customer scratches it.
+    const foil=ctx.createLinearGradient(0,0,width,height);
+    foil.addColorStop(0,"#fff0b9");
+    foil.addColorStop(.24,"#c49446");
+    foil.addColorStop(.43,"#f9dea0");
+    foil.addColorStop(.69,"#b4823e");
+    foil.addColorStop(1,"#f7d890");
+    ctx.fillStyle=foil;
     ctx.fillRect(0,0,width,height);
-    for(let i=0;i<165;i++){
+    // Metallic diagonals and subtle grain reinforce the scratch-card texture.
+    ctx.strokeStyle="rgba(255,247,211,.10)";
+    ctx.lineWidth=14;
+    for(let x=-height;x<width+height;x+=43){
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+height,height);ctx.stroke();
+    }
+    for(let i=0;i<125;i++){
       const x=(i*171.73)%width;
       const y=(i*83.31)%height;
-      ctx.fillStyle=i%3===0?"rgba(255,255,255,.18)":"rgba(72,43,15,.10)";
-      ctx.beginPath();ctx.arc(x,y,i%4===0?1.3:.6,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=i%3===0?"rgba(255,255,255,.18)":"rgba(64,39,15,.11)";
+      ctx.beginPath();ctx.arc(x,y,i%4===0?1.2:.65,0,Math.PI*2);ctx.fill();
     }
-    ctx.strokeStyle="rgba(75,46,17,.32)";
+    ctx.strokeStyle="rgba(96,61,24,.34)";
     ctx.lineWidth=1.5;
-    ctx.strokeRect(12,12,width-24,height-24);
-    ctx.fillStyle="#35210d";
+    ctx.strokeRect(13,13,Math.max(0,width-26),Math.max(0,height-26));
+    const big=Math.min(44,Math.max(24,width*.074));
     ctx.textAlign="center";
-    ctx.font="900 "+Math.min(12,Math.max(10,width*.022))+"px Arial, sans-serif";
-    ctx.fillText("🔥 ESQUENTA BLACK FRIDAY 🔥",width/2,height*.28);
-    ctx.font="900 "+Math.min(43,Math.max(24,width*.08))+"px Arial, sans-serif";
-    ctx.fillText("RASPE AQUI",width/2,height*.51);
-    ctx.font="700 "+Math.min(13,Math.max(10,width*.026))+"px Arial, sans-serif";
-    ctx.fillText("DESLIZE O DEDO OU O MOUSE",width/2,height*.51+32);
-  },[]);
+    ctx.fillStyle="#513213";
+    ctx.font="900 "+Math.min(13,Math.max(9,width*.02))+"px Arial, sans-serif";
+    ctx.fillText("✦   EIXO  /  BLACK FRIDAY   ✦",width/2,height*.25);
+    ctx.font="900 "+big+"px Arial, sans-serif";
+    ctx.fillText("RASPE E REVELE",width/2,height*.49);
+    ctx.fillStyle="#594021";
+    ctx.font="700 "+Math.min(14,Math.max(10,width*.023))+"px Arial, sans-serif";
+    ctx.fillText("SEU BENEFÍCIO EXCLUSIVO",width/2,height*.49+30);
+    ctx.fillStyle="rgba(89,59,24,.65)";
+    ctx.font="700 "+Math.min(11,Math.max(9,width*.017))+"px Arial, sans-serif";
+    ctx.fillText("DESLIZE O DEDO OU O MOUSE SOBRE O DOURADO",width/2,height*.78);
+  },[initiallyRevealed]);
 
   const inspect=()=>{
     const canvas=canvasRef.current;
@@ -281,8 +293,39 @@ export default function Quiz(){
   const [answers,setAnswers]=useState<(number|null)[]>(Array(QUESTIONS.length).fill(null));
   const [name,setName]=useState("");
   const [revealed,setRevealed]=useState(false);
+  const [scratchOpen,setScratchOpen]=useState(false);
+  const modalRef=useRef<HTMLDivElement>(null);
+  const scratchTriggerRef=useRef<HTMLButtonElement>(null);
   const [restartKey,setRestartKey]=useState(0);
   useEffect(()=>{window.scrollTo({top:0,behavior:"auto"});},[position]);
+  useEffect(()=>{
+    if(!scratchOpen)return;
+    const previousOverflow=document.body.style.overflow;
+    document.body.style.overflow="hidden";
+    const raf=window.requestAnimationFrame(()=>modalRef.current?.focus());
+    const onKeyDown=(event:KeyboardEvent)=>{
+      if(event.key==="Escape"){
+        event.preventDefault();
+        setScratchOpen(false);
+        return;
+      }
+      if(event.key!=="Tab")return;
+      const focusable=modalRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]),a[href],input:not([disabled]),[tabindex]:not([tabindex="-1"])'
+      );
+      if(!focusable?.length)return;
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    };
+    window.addEventListener("keydown",onKeyDown);
+    return ()=>{
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("keydown",onKeyDown);
+      document.body.style.overflow=previousOverflow;
+      scratchTriggerRef.current?.focus();
+    };
+  },[scratchOpen]);
   const step=FLOW[position];
   const answered=answers.filter(a=>a!==null).length;
   const progress=Math.round(100*answered/QUESTIONS.length);
@@ -303,7 +346,7 @@ export default function Quiz(){
   const goBack=()=>setPosition(old=>Math.max(0,old-1));
   const reset=()=>{
     setPosition(0);setAnswers(Array(QUESTIONS.length).fill(null));
-    setName("");setRevealed(false);setRestartKey(old=>old+1);
+    setName("");setRevealed(false);setScratchOpen(false);setRestartKey(old=>old+1);
   };
   const currentLabel=step.kind==="question"?"PERGUNTA "+(step.number+1)+" DE "+QUESTIONS.length:
     step.kind==="story"?"MOMENTO EIXO · "+(step.number+1):
@@ -358,7 +401,7 @@ export default function Quiz(){
       {step.kind==="story"&&<section className="funnel-story" key={"story"+step.number}>
         <span className="funnel-tag">{STORIES[step.number].badge}</span>
         <h1>{STORIES[step.number].heading}</h1>
-        <div className={"funnel-story-media"+(STORY_GIFS[step.number]?" has-gif":"")}>
+        <div data-moment={step.number+1} className={"funnel-story-media"+(STORY_GIFS[step.number]?" has-gif":"")}>
           <img
             src={STORY_GIFS[step.number] ?? STORIES[step.number].photo}
             alt={STORY_GIFS[step.number] ? "Animação ilustrativa da pausa "+(step.number+1)+" do questionário EIXO" : STORIES[step.number].alt}
@@ -390,22 +433,32 @@ export default function Quiz(){
           <input id="eixo-display-name" value={name} onChange={e=>setName(e.target.value)} maxLength={40} placeholder="Seu primeiro nome"/>
         </div>
         <div className="funnel-offer-perks"><span>✓ 18 respostas consideradas</span><span>✓ Roteiro inicial de 7 dias</span><span>✓ Experiência discreta</span></div>
-        <button type="button" className="funnel-main-cta" onClick={()=>setPosition(pos=>pos+1)}>LIBERAR MINHA RASPADINHA <span>↗</span></button>
+        <button ref={scratchTriggerRef} type="button" className="funnel-main-cta" onClick={()=>setScratchOpen(true)}>LIBERAR MINHA RASPADINHA <span>↗</span></button>
       </section>}
 
-      {step.kind==="scratch"&&<section className="funnel-scratch-step">
-        <span className="funnel-tag">🔥 ESQUENTA BLACK FRIDAY · EIXO</span>
-        <h1>{name.trim()?name.trim().slice(0,40)+", ":""}SEU PRESENTE ESTÁ NESTA <em>RASPADINHA.</em></h1>
-        <p>Raspe o dourado com o dedo ou mouse. Ao chegar a 70%, o restante desaparece e você descobre seu bônus Black Friday.</p>
-        <ScratchCard key={restartKey} onReveal={()=>setRevealed(true)}/>
-        {revealed&&<button type="button" className="funnel-main-cta funnel-scratch-next" onClick={()=>setPosition(FINISH_INDEX)}>CONTINUAR COM MEU BÔNUS <span>↗</span></button>}
-        <small>Campanha Esquenta Black Friday EIXO. O desconto de 80% precisará ser configurado e validado na etapa de pagamento.</small>
-      </section>}
+
 
       {step.kind==="result"&&<OfferPage answers={answers} name={name} onReset={reset}/>} 
 
       {position>0&&step.kind!=="result"&&!isGuided&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
     </div>
+    {scratchOpen&&step.kind==="prep"&&
+      <div className="eixo-scratch-overlay" onPointerDown={event=>{if(event.target===event.currentTarget)setScratchOpen(false);}}>
+        <div ref={modalRef} tabIndex={-1} className="eixo-scratch-dialog" role="dialog" aria-modal="true" aria-labelledby="eixo-scratch-title" aria-describedby="eixo-scratch-description">
+          <div className="eixo-scratch-dialog-header">
+            <div className="eixo-scratch-dialog-brand"><span>◈</span> EIXO <small>BLACK FRIDAY</small></div>
+            <button type="button" className="eixo-scratch-dialog-close" onClick={()=>setScratchOpen(false)} aria-label="Fechar raspadinha e voltar ao seu perfil">×</button>
+          </div>
+          <div className="eixo-scratch-dialog-content">
+            <span className="eixo-scratch-kicker">✦ BENEFÍCIO EXCLUSIVO DESBLOQUEADO</span>
+            <h2 id="eixo-scratch-title">{name.trim()?name.trim().slice(0,40)+", ":""}<em>seu presente</em> está aqui.</h2>
+            <p id="eixo-scratch-description">Raspe o cartão dourado com o dedo ou mouse. Ao chegar a 70%, revelamos o restante automaticamente.</p>
+            <ScratchCard key={restartKey} initiallyRevealed={revealed} onReveal={()=>setRevealed(true)}/>
+            {revealed&&<button type="button" className="eixo-scratch-redeem" onClick={()=>{setScratchOpen(false);setPosition(FINISH_INDEX);}}>CONTINUAR COM MEU BÔNUS <span aria-hidden="true">→</span></button>}
+            <p className="eixo-scratch-legal">O benefício de 80% está sujeito à confirmação das condições e do valor real no checkout. Nenhuma cobrança ocorre nesta etapa.</p>
+          </div>
+        </div>
+      </div>}
     {!isGuided&&<footer className="funnel-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE</span><span>Conteúdo educativo. As respostas permanecem apenas nesta página.</span></footer>}
   </main>;
 }

@@ -42,7 +42,7 @@ export default function Home() {
 
         <div className="eixo-hero-compare">
           <img
-            src="/images/eixo-antes-depois.webp"
+            src="/images/eixo-antes-depois.avif"
             alt="Comparação ilustrativa: à esquerda um homem preocupado sentado na cama; à direita um casal sorrindo e abraçado na cama"
             width={920}
             height={399}

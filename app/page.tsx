@@ -7,17 +7,16 @@ export default function Home() {
       <div className="eixoh-canvas">
         <section className="eixoh-intro" aria-labelledby="eixoh-title">
           <div className="eixoh-trust">
-            <strong>✦ QUESTIONÁRIO GRATUITO E DISCRETO</strong>
-            <span>18 perguntas · Sem cadastro para começar</span>
+            <strong>✦ EIXO · CONFIANÇA COMEÇA NA MENTE</strong>
+            <span>🔒 18 perguntas · Gratuito · Discreto</span>
           </div>
 
           <h1 id="eixoh-title" className="eixoh-heading">
-            Medo de brochar, de não durar ou de decepcionar?
-            {" "}<em>Entenda a pressão na hora H.</em>
+            Aumente sua confiança sexual, entenda o medo de brochar
+            e viva com menos pressão na cama{" "}<em>COMECE COM O EIXO.</em>
           </h1>
           <p className="eixoh-description">
-            Vamos organizar uma reflexão personalizada sobre a sua confiança
-            na hora de transar. Comece respondendo a algumas perguntas.
+            Vamos personalizar uma reflexão exclusiva para você!
           </p>
         </section>
 
@@ -27,17 +26,17 @@ export default function Home() {
           aria-label="Ilustração original de celular do EIXO, com 18 perguntas sobre ansiedade e confiança na hora do sexo"
         >
           <span className="eixoh-floating eixoh-floating-left" aria-hidden="true">
-            <strong>18</strong><small>perguntas<br/>objetivas</small>
+            <strong>18</strong><small>perguntas<br/>para seu perfil</small>
           </span>
           <span className="eixoh-floating eixoh-floating-right" aria-hidden="true">
-            <strong>DISCRETO</strong><small>sem cadastro<br/>para começar</small>
+            <strong>SEU PERFIL</strong><small>confidencial<br/>e gratuito</small>
           </span>
 
           <div className="eixoh-device" aria-hidden="true">
             <div className="eixoh-device-notch"/>
             <div className="eixoh-device-screen">
               <div className="eixoh-device-brand">EIXO</div>
-              <span className="eixoh-device-badge">PERFORMANCE MENTAL</span>
+              <span className="eixoh-device-badge">100% DISCRETO</span>
               <div className="eixoh-device-ring">
                 <div className="eixoh-device-ring-inner">
                   <strong>18</strong>
@@ -45,10 +44,10 @@ export default function Home() {
                 </div>
               </div>
               <strong className="eixoh-device-statement">
-                CONFIANÇA COMEÇA NA <em>MENTE.</em>
+                AUMENTE SUA <em>CONFIANÇA</em> SEXUAL
               </strong>
-              <span className="eixoh-device-text">Reflexão individual · Sem promessas milagrosas</span>
-              <div className="eixoh-device-button">DESCUBRA SEU PONTO DE PARTIDA ↗</div>
+              <span className="eixoh-device-text">Plano educativo · Sem exposição · Comece gratuitamente</span>
+              <div className="eixoh-device-button">CRIAR MEU PLANO →</div>
               <span className="eixoh-device-home"/>
             </div>
           </div>
@@ -58,7 +57,7 @@ export default function Home() {
           Criar meu plano personalizado <span aria-hidden="true">→</span>
         </Link>
         <p className="eixoh-safe-note">
-          🔒 Questionário gratuito · Respostas mantidas nesta página
+          🔒 Questionário gratuito · Sem cadastro para começar
         </p>
         <footer className="eixoh-footer">
           EIXO — Confiança começa na mente.

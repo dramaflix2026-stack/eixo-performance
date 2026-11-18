@@ -154,6 +154,10 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
   const basePrice=Number(process.env.NEXT_PUBLIC_EIXO_BASE_PRICE||0);
   const ready=checkout.startsWith("https://")&&Number.isFinite(basePrice)&&basePrice>0;
   const discounted=ready?basePrice*.2:0;
+  // A faixa replica o visual da oferta de referência enquanto o checkout não foi configurado.
+  // Quando o checkout real estiver ativo, prioriza automaticamente os valores configurados.
+  const displayOriginalPrice=ready?basePrice:110;
+  const displayPromoPrice=ready?discounted:19.83;
   const primaryHref=ready?checkout:"#eixo-bonus";
   const primaryText=ready?"CONFERIR OFERTA NO CHECKOUT":"DESBLOQUEAR MEUS 5 BÔNUS";
   const bottomText=ready?currency(discounted)+" · CONFERIR OFERTA":"80% OFF · OFERTA EM PREPARAÇÃO";
@@ -166,10 +170,11 @@ export default function OfferPage({answers,name,onReset}:OfferProps){
         <span className="eixo-offer-kicker">SEU PLANO PERSONALIZADO ESTÁ PRONTO</span>
         <h1>{cleanName&&<><em>{cleanName},</em> </>}VOCÊ PODE TER <em>MAIS PRESENÇA E CONFIANÇA</em> NA SUA VIDA SEXUAL.</h1>
         <p>Um plano educativo para homens que desejam compreender a pressão, conversar com mais tranquilidade e cuidar da intimidade — com discrição e no seu ritmo.</p>
-        <div className="eixo-reference-price-pill">
-          {ready?<><strong>80% OFF</strong><span>De {currency(basePrice)} por <b>{currency(discounted)}</b> no checkout</span></>:<><strong>PLANO LIBERADO</strong><span>7 dias de orientação educativa + 5 materiais para abrir agora</span></>}
+        <div className="eixo-reference-price-pill" aria-label={`Oferta ilustrativa: 80 por cento de desconto, de ${currency(displayOriginalPrice)} por ${currency(displayPromoPrice)}`}>
+          <strong>80% OFF</strong>
+          <span>De <s>{currency(displayOriginalPrice)}</s> por <b>{currency(displayPromoPrice)}</b></span>
         </div>
-        <div className="eixo-reference-tags"><span>● Plano pronto</span><span>● 7 dias</span><span>● Sem cadastro</span><span>● Discreto</span></div>
+        <div className="eixo-reference-tags"><span>● Plano pronto</span><span>● 7 dias</span><span>● Sem remédio</span><span>● Discreto</span></div>
       </div>
     </section>
 

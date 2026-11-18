@@ -29,6 +29,7 @@ export async function GET(){
     const done=rows.map(x=>x.day_number).filter(x=>Number.isInteger(x)&&x>=1&&x<=7);
     const response=NextResponse.json({
       email:session.user.email||"",
+      memberRole:session.user.memberRole||"student",
       completedDays:done,
       lessons:EIXO_LESSONS,
       bonuses:EIXO_BONUSES,

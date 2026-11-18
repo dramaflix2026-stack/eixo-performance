@@ -287,7 +287,14 @@ export default function Quiz(){
   const answered=answers.filter(a=>a!==null).length;
   const progress=Math.round(100*answered/QUESTIONS.length);
   const isResult=step.kind==="result";
+  const isGuided=step.kind==="question"||step.kind==="story"||step.kind==="prep";
   const questionNumber=step.kind==="question"?step.number:0;
+  const guidedProgress=step.kind==="question"?step.number+1:answered;
+  const guidedPhase=step.kind==="story"?"Momento "+(step.number+1)+" de 5":
+    step.kind==="prep"?"Seu plano":
+    questionNumber<3?"Perfil":questionNumber<6?"Expectativas":
+    questionNumber<9?"Pressão":questionNumber<12?"Rotina":
+    questionNumber<15?"Conexão":"Seu plano";
   const showProgress=step.kind!=="result";
   const select=(value:number)=>{
     setAnswers(old=>{const next=[...old];next[questionNumber]=value;return next;});
@@ -303,18 +310,18 @@ export default function Quiz(){
     step.kind==="prep"?"SEU ROTEIRO":"RASPADINHA EIXO";
   const profileAge=ageOptions[answers[0]??4];
 
-  return <main className={"funnel-page"+(step.kind==="question"?" is-question":"")}>
-    {step.kind==="question"?
+  return <main className={"funnel-page"+(isGuided?" is-guided":"")+(step.kind==="story"?" is-story":"")+(step.kind==="prep"?" is-prep":"")}>
+    {isGuided?
       <header className="funnel-header funnel-quiz-header">
         <div className="funnel-quiz-top">
           {position===0?
             <Link href="/" className="funnel-quiz-back" aria-label="Voltar à página inicial">←</Link>:
             <button type="button" className="funnel-quiz-back" onClick={goBack} aria-label="Voltar para a etapa anterior">←</button>}
           <Link href="/" className="funnel-quiz-logo" aria-label="EIXO, página inicial">E<span>I</span>XO</Link>
-          <span className="funnel-quiz-phase">{questionNumber<3?"Perfil":questionNumber<6?"Expectativas":questionNumber<9?"Pressão":questionNumber<12?"Rotina":questionNumber<15?"Conexão":"Seu plano"}</span>
+          <span className="funnel-quiz-phase">{guidedPhase}</span>
         </div>
-        <div className="funnel-quiz-header-progress" role="progressbar" aria-label="Progresso do questionário" aria-valuemin={0} aria-valuemax={18} aria-valuenow={questionNumber+1}>
-          {Array.from({length:4},(_,i)=><i key={i}><span style={{width:(Math.max(0,Math.min(1,((questionNumber+1)/18)*4-i))*100)+"%"}}/></i>)}
+        <div className="funnel-quiz-header-progress" role="progressbar" aria-label="Progresso do questionário" aria-valuemin={0} aria-valuemax={18} aria-valuenow={guidedProgress}>
+          {Array.from({length:4},(_,i)=><i key={i}><span style={{width:(Math.max(0,Math.min(1,(guidedProgress/18)*4-i))*100)+"%"}}/></i>)}
         </div>
       </header>
       :
@@ -323,7 +330,7 @@ export default function Quiz(){
         <div className="funnel-private">◉ &nbsp; CONTEÚDO DISCRETO E EDUCATIVO</div>
       </div></header>}
     <div className={"funnel-content"+(step.kind==="result"?" funnel-content-offer":"")}>
-      {showProgress&&step.kind!=="question"&&<div className="funnel-progress">
+      {showProgress&&!isGuided&&<div className="funnel-progress">
         <div className="funnel-progress-line"><span>{currentLabel}</span><span>{progress}% CONCLUÍDO</span></div>
         <div className="funnel-progress-segments">{Array.from({length:6},(_,i)=><i key={i} style={{background:answered>=((i+1)*3)?"#d9a95f":"#35302a"}}/>)}</div>
       </div>}
@@ -397,8 +404,8 @@ export default function Quiz(){
 
       {step.kind==="result"&&<OfferPage answers={answers} name={name} onReset={reset}/>} 
 
-      {position>0&&step.kind!=="result"&&step.kind!=="question"&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
+      {position>0&&step.kind!=="result"&&!isGuided&&<button type="button" onClick={goBack} className="funnel-back">← VOLTAR</button>}
     </div>
-    {step.kind!=="question"&&<footer className="funnel-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE</span><span>Conteúdo educativo. As respostas permanecem apenas nesta página.</span></footer>}
+    {!isGuided&&<footer className="funnel-footer"><span>© EIXO · CONFIANÇA COMEÇA NA MENTE</span><span>Conteúdo educativo. As respostas permanecem apenas nesta página.</span></footer>}
   </main>;
 }

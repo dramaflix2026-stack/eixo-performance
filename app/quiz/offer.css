@@ -2309,3 +2309,263 @@
   .eixo-reference-offer .eixo-feedback-pause{padding:0 10px;font-size:10px}
   .eixo-reference-offer .eixo-feedback-dots{gap:5px}
 }
+
+
+/* =============================================================
+   EIXO | Perfil em estilo do cartão de referência — 18/11/2026
+   Visual: coluna central, título contextual, barra e quatro linhas.
+   A barra representa conclusão do quiz, nunca desempenho clínico.
+   ============================================================= */
+.eixo-reference-offer .eixo-profile-section{
+  background:#0b0b0c;
+  border-color:#262320;
+  padding:54px 0 63px;
+  scroll-margin-top:62px;
+}
+.eixo-reference-offer .eixo-profile-reference-wrap{
+  display:flex;
+  flex-direction:column;
+  width:min(600px,calc(100% - 36px));
+  max-width:600px;
+  margin:0 auto;
+  align-items:stretch;
+  gap:0;
+  color:#f5f4f2;
+}
+.eixo-reference-offer .eixo-profile-reference-title{
+  margin:0 auto 27px;
+  width:100%;
+  color:#f6f6f4;
+  text-align:center;
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:820;
+  font-size:clamp(24px,3.1vw,30px);
+  line-height:1.2;
+  letter-spacing:-.7px;
+  text-transform:none;
+  overflow-wrap:break-word;
+}
+.eixo-reference-offer .eixo-profile-reference-title em{
+  color:#d6b35e;
+  font-style:normal;
+}
+.eixo-reference-offer .eixo-profile-progress-card,
+.eixo-reference-offer .eixo-profile-summary-card{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  border:1px solid #303031;
+  border-radius:16px;
+  background:linear-gradient(140deg,#1c1c1d,#1a1a1b);
+  overflow:hidden;
+  box-shadow:none;
+}
+.eixo-reference-offer .eixo-profile-progress-card{
+  padding:24px 20px 19px;
+  margin:0 0 15px;
+}
+.eixo-reference-offer .eixo-profile-progress-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  min-height:33px;
+  margin-bottom:17px;
+  font-family:Arial,Helvetica,sans-serif;
+}
+.eixo-reference-offer .eixo-profile-progress-head strong{
+  color:#fff;
+  font-size:14px;
+  font-weight:850;
+  line-height:1.35;
+}
+.eixo-reference-offer .eixo-profile-progress-head b{
+  color:#d5ac53;
+  font-size:33px;
+  font-weight:900;
+  letter-spacing:-1px;
+  line-height:1;
+  white-space:nowrap;
+}
+.eixo-reference-offer .eixo-profile-progress-track{
+  display:block;
+  height:9px;
+  width:100%;
+  overflow:hidden;
+  background:#090909;
+  border-radius:20px;
+  border:1px solid #303030;
+  box-sizing:border-box;
+}
+.eixo-reference-offer .eixo-profile-progress-fill{
+  width:100%;
+  height:100%;
+  display:block;
+  background:linear-gradient(90deg,#a98939,#edda8d);
+  border-radius:20px;
+}
+.eixo-reference-offer .eixo-profile-progress-labels{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:12px;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+  line-height:1.45;
+}
+.eixo-reference-offer .eixo-profile-progress-labels span{
+  color:#a7a09a;
+}
+.eixo-reference-offer .eixo-profile-progress-labels strong{
+  color:#35d472;
+  font-size:12px;
+  font-weight:850;
+  text-align:right;
+}
+.eixo-reference-offer .eixo-profile-summary-card{
+  padding:0 16px;
+  margin:0 0 16px;
+}
+.eixo-reference-offer .eixo-profile-summary-row{
+  display:grid;
+  grid-template-columns:minmax(112px,1fr) minmax(0,1.2fr);
+  align-items:center;
+  gap:14px;
+  padding:17px 0;
+  min-height:49px;
+  border-bottom:1px solid #2e2e30;
+  font-family:Arial,Helvetica,sans-serif;
+  box-sizing:border-box;
+}
+.eixo-reference-offer .eixo-profile-summary-row:last-child{
+  border-bottom:0;
+}
+.eixo-reference-offer .eixo-profile-summary-row>span{
+  color:#aaa6a2;
+  font-size:14px;
+  font-weight:400;
+  line-height:1.4;
+}
+.eixo-reference-offer .eixo-profile-summary-row>strong{
+  color:#fff;
+  font-size:14px;
+  font-weight:750;
+  line-height:1.4;
+  text-align:right;
+  overflow-wrap:anywhere;
+}
+.eixo-reference-offer .eixo-profile-summary-row:nth-child(2)>strong,
+.eixo-reference-offer .eixo-profile-summary-row:last-child>strong{
+  color:#dbb45c;
+}
+.eixo-reference-offer .eixo-profile-conclusion{
+  width:100%;
+  background:#191710;
+  border:1px solid #94762f;
+  border-radius:14px;
+  padding:18px 16px;
+  box-sizing:border-box;
+  color:#f5f4f2;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:14px;
+  line-height:1.55;
+  margin:0;
+}
+.eixo-reference-offer .eixo-profile-conclusion strong{
+  color:#e3ba61;
+  font-weight:900;
+}
+.eixo-reference-offer .eixo-profile-conclusion span{
+  color:#f5f4f2;
+  font-weight:550;
+}
+.eixo-reference-offer .eixo-profile-source{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  margin:15px auto 0;
+  color:#aca297;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+  line-height:1.5;
+  text-align:center;
+}
+.eixo-reference-offer .eixo-profile-source span{
+  color:#d2ae63;
+  font-size:12px;
+}
+.eixo-reference-offer .eixo-profile-disclaimer{
+  width:100%;
+  max-width:560px;
+  margin:10px auto 0;
+  text-align:center;
+  color:#77736d;
+  font:400 10px/1.55 Arial,Helvetica,sans-serif;
+}
+.eixo-reference-offer .eixo-profile-reference-wrap>.eixo-offer-cta{
+  width:100%;
+  max-width:100%;
+  min-height:53px;
+  margin:23px auto 0;
+  font-size:13px;
+  border-radius:12px;
+  box-sizing:border-box;
+}
+@media(max-width:650px){
+  .eixo-reference-offer .eixo-profile-section{
+    padding:35px 0 43px;
+  }
+  .eixo-reference-offer .eixo-profile-reference-wrap{
+    width:calc(100% - 28px);
+  }
+  .eixo-reference-offer .eixo-profile-reference-title{
+    font-size:clamp(23px,6vw,29px);
+    margin-bottom:23px;
+    line-height:1.21;
+    letter-spacing:-.5px;
+  }
+  .eixo-reference-offer .eixo-profile-progress-card{
+    padding:19px 17px 17px;
+    margin-bottom:13px;
+  }
+  .eixo-reference-offer .eixo-profile-progress-head b{
+    font-size:31px;
+  }
+  .eixo-reference-offer .eixo-profile-progress-head strong{
+    font-size:13px;
+  }
+  .eixo-reference-offer .eixo-profile-progress-labels{
+    font-size:10px;
+    gap:8px;
+  }
+  .eixo-reference-offer .eixo-profile-progress-labels strong{
+    font-size:10px;
+  }
+  .eixo-reference-offer .eixo-profile-summary-card{
+    padding:0 14px;
+  }
+  .eixo-reference-offer .eixo-profile-summary-row{
+    grid-template-columns:minmax(0,42%) minmax(0,1fr);
+    padding:16px 0;
+    gap:10px;
+  }
+  .eixo-reference-offer .eixo-profile-summary-row>span{
+    font-size:12px;
+  }
+  .eixo-reference-offer .eixo-profile-summary-row>strong{
+    font-size:12px;
+  }
+  .eixo-reference-offer .eixo-profile-conclusion{
+    padding:17px 14px;
+    font-size:13px;
+  }
+  .eixo-reference-offer .eixo-profile-source{
+    font-size:11px;
+  }
+  .eixo-reference-offer .eixo-profile-reference-wrap>.eixo-offer-cta{
+    margin-top:19px;
+  }
+}

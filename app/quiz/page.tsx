@@ -331,7 +331,7 @@ export default function Quiz(){
       {step.kind==="question"&&<section className="funnel-question" key={"q"+questionNumber}>
         {questionNumber===0?
           <div className="funnel-quiz-intro">Vamos começar!</div>:
-          <span className="funnel-quiz-step-label">PERGUNTA {questionNumber+1} DE 18 · {QUESTIONS[questionNumber].eyebrow?.replace(/^\\d+\\s*·\\s*/, "")}</span>}
+          <span className="funnel-quiz-step-label">PERGUNTA {questionNumber+1} DE 18 · {QUESTIONS[questionNumber].eyebrow?.split(" · ").slice(1).join(" · ")}</span>}
         <h1>{QUESTIONS[questionNumber].prompt}</h1>
         <p className="funnel-quiz-hint">{HINTS[questionNumber]}</p>
         <div className="funnel-options" role="group" aria-label={"Respostas da pergunta "+(questionNumber+1)}>

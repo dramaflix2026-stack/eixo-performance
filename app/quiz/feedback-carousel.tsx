@@ -23,6 +23,7 @@ export default function FeedbackCarousel(){
   const [index,setIndex]=useState(0);
   const [paused,setPaused]=useState(false);
   const [inView,setInView]=useState(false);
+  const [pageVisible,setPageVisible]=useState(true);
   const trackRef=useRef<HTMLDivElement>(null);
   const sectionRef=useRef<HTMLElement>(null);
 
@@ -41,12 +42,19 @@ export default function FeedbackCarousel(){
   },[]);
 
   useEffect(()=>{
-    if(paused||!inView||document.hidden||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    const updateVisibility=()=>setPageVisible(!document.hidden);
+    updateVisibility();
+    document.addEventListener("visibilitychange",updateVisibility);
+    return ()=>document.removeEventListener("visibilitychange",updateVisibility);
+  },[]);
+
+  useEffect(()=>{
+    if(paused||!inView||!pageVisible||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
     const timer=window.setInterval(()=>{
       if(!document.hidden)setIndex(i=>(i+1)%SLIDES.length);
     },INTERVAL_MS);
     return ()=>window.clearInterval(timer);
-  },[paused,inView]);
+  },[paused,inView,pageVisible]);
 
   useEffect(()=>{
     const track=trackRef.current;
@@ -77,7 +85,7 @@ export default function FeedbackCarousel(){
       <h2>A CONFIANÇA COMEÇA <em>QUANDO VOCÊ SE ESCUTA.</em></h2>
       <p>Deslize para conhecer situações e reflexões sobre confiança, pressão e intimidade.</p>
     </div>
-    <div className="eixo-feedback-carousel" role="region" aria-roledescription="carrossel" aria-label="Exemplos ilustrativos de conversas" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget as Node))setPaused(false);}}>
+    <div className="eixo-feedback-carousel" role="region" aria-roledescription="carrossel" aria-label="Exemplos ilustrativos de conversas">
       <div ref={trackRef} className="eixo-feedback-track" tabIndex={0} role="group" aria-label="Deslize horizontalmente entre as imagens" onTouchStart={()=>setPaused(true)} onTouchEnd={()=>{syncSwipe();setPaused(false);}} onMouseUp={syncSwipe} onKeyDown={event=>{
         if(event.key==="ArrowRight"){event.preventDefault();move(index+1);}
         if(event.key==="ArrowLeft"){event.preventDefault();move(index-1);}
@@ -92,8 +100,9 @@ export default function FeedbackCarousel(){
           {SLIDES.map((item,i)=><button key={item.id} type="button" className={i===index?"is-active":""} aria-label={"Ir para imagem "+(i+1)} aria-current={i===index?"true":undefined} onClick={()=>move(i)}/>)}
         </div>
         <button type="button" className="eixo-feedback-arrow" aria-label="Próxima imagem" onClick={()=>move(index+1)}>›</button>
+        <button type="button" className="eixo-feedback-pause" aria-label={paused?"Retomar passagem automática":"Pausar passagem automática"} aria-pressed={paused} onClick={()=>setPaused(value=>!value)}>{paused?"▶ Continuar":"Ⅱ Pausar"}</button>
       </div>
-      <p className="eixo-feedback-counter" aria-live="polite">{String(index+1).padStart(2,"0")} / {String(SLIDES.length).padStart(2,"0")} <span>·</span> PASSAGEM AUTOMÁTICA</p>
+      <p className="eixo-feedback-counter" aria-live="polite">{String(index+1).padStart(2,"0")} / {String(SLIDES.length).padStart(2,"0")} <span>·</span> {paused?"PAUSADA":"PASSAGEM AUTOMÁTICA"}</p>
     </div>
     <p className="eixo-feedback-disclaimer">Imagens e conversas fictícias, criadas para ilustrar os temas do EIXO. Não são depoimentos verificados nem comprovam resultados.</p>
   </section>;

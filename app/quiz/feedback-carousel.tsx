@@ -2,10 +2,19 @@
 
 import {useCallback,useEffect,useRef,useState} from "react";
 
-const SLIDES=Array.from({length:8},(_,i)=>({
+// Imagens enviadas diretamente ao GitHub, mantendo os nomes originais.
+const FEEDBACK_FILES=[
+  "Depoimento no Método Eixo.png",
+  "Depoimento do Método Eixo no WhatsApp.png",
+  "Depoimento do Método Eixo no WhatsApp (1).png",
+  "Depoimento sobre o Método Eixo no WhatsApp.png",
+  "Conversa sobre confiança e evolução.png",
+  "066362a4-09e5-4620-91c2-ddbb6c5708f9.png",
+  "5061aaf7-b7c0-4437-b93c-b394dc61c245.png"
+] as const;
+const SLIDES=FEEDBACK_FILES.map((file,i)=>({
   id:i+1,
-  src:"/images/depoimentos/feedback-"+String(i+1).padStart(2,"0")+".png",
-  fallback:"/images/eixo-feedback-"+String(i+1).padStart(2,"0")+".svg",
+  src:"/images/depoimentos/"+encodeURIComponent(file),
   label:"Conversa ilustrativa "+String(i+1).padStart(2,"0")
 }));
 const INTERVAL_MS=5100;
@@ -74,7 +83,7 @@ export default function FeedbackCarousel(){
         if(event.key==="ArrowLeft"){event.preventDefault();move(index-1);}
       }}>
         {SLIDES.map((item,i)=><figure key={item.id} className={"eixo-feedback-slide"+(i===index?" is-active":"")} aria-label={item.label}>
-          <img src={item.src} width={720} height={1280} loading={i===0?"eager":"lazy"} onError={event=>{const image=event.currentTarget;if(!image.src.endsWith(item.fallback))image.src=item.fallback;}} alt={"Imagem vertical de conversa ilustrativa sobre o Método EIXO, exemplo "+(i+1)+" de "+SLIDES.length}/>
+          <img src={item.src} width={720} height={1280} loading={i===0?"eager":"lazy"} alt={"Imagem vertical de conversa ilustrativa sobre o Método EIXO, exemplo "+(i+1)+" de "+SLIDES.length}/>
         </figure>)}
       </div>
       <div className="eixo-feedback-controls">

@@ -1,67 +1,85 @@
 import Link from "next/link";
 import "./landing.css";
 
+const CTA = "Criar meu plano personalizado";
+
+function PhoneShowcase() {
+  return (
+    <div className="eixo-ref-stage" role="img" aria-label="Apresentação ilustrativa do EIXO: um celular preto e dourado mostrando o roteiro educativo de sete dias e o questionário de 18 perguntas">
+      <div className="eixo-ref-glow" aria-hidden="true" />
+      <div className="eixo-ref-sparks" aria-hidden="true" />
+
+      <div className="eixo-ref-phone" aria-hidden="true">
+        <span className="eixo-ref-phone-side" />
+        <div className="eixo-ref-phone-bezel">
+          <span className="eixo-ref-island" />
+          <div className="eixo-ref-screen">
+            <div className="eixo-ref-screen-top">
+              <strong>EIXO</strong>
+              <span>100% DISCRETO</span>
+            </div>
+
+            <div className="eixo-ref-disc">
+              <div className="eixo-ref-disc-inner">
+                <b>07</b>
+                <small>dias</small>
+              </div>
+            </div>
+
+            <div className="eixo-ref-screen-offer">
+              <span>CONHEÇA SUA</span>
+              <strong>CONFIANÇA</strong>
+              <span>SEXUAL</span>
+            </div>
+            <div className="eixo-ref-screen-small">
+              Reflexão personalizada • 18 perguntas
+            </div>
+            <div className="eixo-ref-screen-button">Criar meu plano <span>➜</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="eixo-ref-float eixo-ref-float-left" aria-hidden="true">
+        <strong>18</strong>
+        <small>perguntas<br/>objetivas</small>
+      </div>
+      <div className="eixo-ref-float eixo-ref-float-right" aria-hidden="true">
+        <strong>07</strong>
+        <small>dias de<br/>roteiro</small>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
-    <main className="eixoh-page">
-      <div className="eixoh-canvas">
-        <section className="eixoh-intro" aria-labelledby="eixoh-title">
-          <div className="eixoh-trust">
-            <strong>✦ CRIADO PARA HOMENS QUE QUEREM MAIS CONFIANÇA</strong>
-            <span>🔒 Questionário gratuito · Sem cadastro</span>
-          </div>
-
-          <h1 id="eixoh-title" className="eixoh-heading">
-            Aumente sua confiança sexual, entenda a ejaculação precoce e aprenda a lidar com a pressão na cama{" "}<em>COM O EIXO.</em>
-          </h1>
-          <p className="eixoh-description">
-            Iremos personalizar um plano exclusivo para você!
-          </p>
-        </section>
-
-        <div
-          className="eixoh-showcase"
-          role="img"
-          aria-label="Ilustração original de celular do EIXO, com 18 perguntas sobre ansiedade e confiança na hora do sexo"
-        >
-          <span className="eixoh-floating eixoh-floating-left" aria-hidden="true">
-            <strong>18</strong><small>perguntas<br/>para seu perfil</small>
-          </span>
-          <span className="eixoh-floating eixoh-floating-right" aria-hidden="true">
-            <strong>SEU PERFIL</strong><small>confidencial<br/>e gratuito</small>
-          </span>
-
-          <div className="eixoh-device" aria-hidden="true">
-            <div className="eixoh-device-notch"/>
-            <div className="eixoh-device-screen">
-              <div className="eixoh-device-brand">EIXO</div>
-              <span className="eixoh-device-badge">100% DISCRETO</span>
-              <div className="eixoh-device-ring">
-                <div className="eixoh-device-ring-inner">
-                  <strong>18</strong>
-                  <span>PERGUNTAS</span>
-                </div>
-              </div>
-              <strong className="eixoh-device-statement">
-                AUMENTE SUA <em>CONFIANÇA</em> SEXUAL
-              </strong>
-              <span className="eixoh-device-text">Plano personalizado · Sem pílulas · Comece gratuitamente</span>
-              <div className="eixoh-device-button">CRIAR MEU PLANO →</div>
-              <span className="eixoh-device-home"/>
-            </div>
+    <main className="eixo-ref-page">
+      <div className="eixo-ref-panel">
+        <div className="eixo-ref-trust">
+          <strong>CONFIANÇA COMEÇA NA MENTE · EIXO</strong>
+          <div className="eixo-ref-trust-meta" aria-label="Questionário gratuito e discreto">
+            <span>🔒</span>
+            <span>18 PERGUNTAS</span>
+            <span>SEM CADASTRO</span>
           </div>
         </div>
 
-        <Link className="eixoh-primary" href="/quiz">
-          Criar meu plano personalizado <span aria-hidden="true">→</span>
+        <h1 className="eixo-ref-headline">
+          Aumente sua confiança sexual, entenda a ejaculação precoce e lide melhor com a pressão na cama
+          {" "}<em>COMECE COM O EIXO</em>
+        </h1>
+
+        <p className="eixo-ref-subheading">Iremos personalizar um plano exclusivo para você!</p>
+
+        <PhoneShowcase />
+
+        <Link href="/quiz" className="eixo-ref-cta" aria-label="Criar meu plano personalizado, começar o questionário">
+          {CTA} <span aria-hidden="true">→</span>
         </Link>
-        <p className="eixoh-safe-note">
-          🔒 Questionário gratuito · Sem cadastro para começar
-        </p>
-        <footer className="eixoh-footer">
-          EIXO — Confiança começa na mente.
-          <br/>
-          Conteúdo educativo. Não substitui avaliação médica ou psicológica.
+        <p className="eixo-ref-discreet"><span aria-hidden="true">🔒</span> Questionário gratuito • Sem cadastro para começar</p>
+
+        <footer className="eixo-ref-footer">
+          EIXO · Conteúdo educativo. Não substitui diagnóstico ou tratamento médico.
         </footer>
       </div>
     </main>

@@ -743,9 +743,9 @@
    EIXO QUESTION EXPERIENCE — bright editorial UI.
    Reference: black horizontal header, slim segmented progress,
    ivory canvas and white bordered answer cards.
-   Scoped to .is-question: story/GIF, scratch and sales stay intact.
+   Scoped to .is-guided: story/GIF, scratch and sales stay intact.
    ========================================================== */
-.funnel-page.is-question{
+.funnel-page.is-guided{
   --q-bg:#f5f4f2;
   --q-black:#141414;
   --q-gold:#c4a052;
@@ -755,7 +755,7 @@
   overflow-x:clip;
   min-height:100svh;
 }
-.is-question .funnel-quiz-header{
+.is-guided .funnel-quiz-header{
   background:#0e0e0e;
   border:0;
   min-height:74px;
@@ -766,7 +766,7 @@
   position:relative;
   z-index:10;
 }
-.is-question .funnel-quiz-top{
+.is-guided .funnel-quiz-top{
   display:flex;
   align-items:center;
   gap:16px;
@@ -774,7 +774,7 @@
   margin:0 auto;
   min-height:51px;
 }
-.is-question .funnel-quiz-back{
+.is-guided .funnel-quiz-back{
   display:grid;
   place-items:center;
   flex:0 0 34px;
@@ -791,15 +791,15 @@
   cursor:pointer;
   transition:background-color .15s,border-color .15s;
 }
-.is-question .funnel-quiz-back:hover{
+.is-guided .funnel-quiz-back:hover{
   background:#242424;
   border-color:#b59a69;
 }
-.is-question .funnel-quiz-back:focus-visible{
+.is-guided .funnel-quiz-back:focus-visible{
   outline:2px solid #e2bc6b;
   outline-offset:3px;
 }
-.is-question .funnel-quiz-logo{
+.is-guided .funnel-quiz-logo{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -810,8 +810,8 @@
   color:#e3b356;
   text-shadow:0 0 11px #ba842e36;
 }
-.is-question .funnel-quiz-logo span{color:#f1d18b}
-.is-question .funnel-quiz-phase{
+.is-guided .funnel-quiz-logo span{color:#f1d18b}
+.is-guided .funnel-quiz-phase{
   margin-left:auto;
   padding-left:12px;
   font-size:12px;
@@ -819,14 +819,14 @@
   color:#b6b0a9;
   letter-spacing:.2px;
 }
-.is-question .funnel-quiz-header-progress{
+.is-guided .funnel-quiz-header-progress{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:6px;
   width:min(730px,calc(100% - 36px));
   margin:0 auto 10px;
 }
-.is-question .funnel-quiz-header-progress>i{
+.is-guided .funnel-quiz-header-progress>i{
   display:block;
   height:4px;
   overflow:hidden;
@@ -834,20 +834,20 @@
   background:#2b2b2b;
   font-style:normal;
 }
-.is-question .funnel-quiz-header-progress>i>span{
+.is-guided .funnel-quiz-header-progress>i>span{
   display:block;
   height:100%;
   border-radius:7px;
   background:linear-gradient(90deg,#c0953c,#ebc86b);
   transition:width .32s ease;
 }
-.is-question .funnel-content{
+.is-guided .funnel-content{
   width:min(730px,calc(100% - 36px));
   max-width:730px;
   padding:28px 0 78px;
   margin:0 auto;
 }
-.is-question .funnel-question{
+.is-guided .funnel-question{
   width:100%;
   color:var(--q-black);
   animation:eixoQuestionEntry .23s ease-out both;
@@ -856,7 +856,7 @@
   from{opacity:.6;transform:translateY(7px)}
   to{opacity:1;transform:translateY(0)}
 }
-.is-question .funnel-quiz-intro{
+.is-guided .funnel-quiz-intro{
   display:flex;
   align-items:center;
   width:100%;
@@ -871,7 +871,7 @@
   font-size:14px;
   line-height:1.4;
 }
-.is-question .funnel-quiz-step-label{
+.is-guided .funnel-quiz-step-label{
   display:inline-block;
   color:#9a7b43;
   font-weight:750;
@@ -881,7 +881,7 @@
   margin:0 0 12px;
   text-transform:uppercase;
 }
-.is-question .funnel-question h1{
+.is-guided .funnel-question h1{
   font-family:Arial,Helvetica,sans-serif;
   font-size:clamp(27px,3vw,33px);
   font-weight:790;
@@ -892,21 +892,21 @@
   margin:0 0 12px;
   text-wrap:pretty;
 }
-.is-question .funnel-question h1::selection{background:#edd7a2}
-.is-question .funnel-quiz-hint{
+.is-guided .funnel-question h1::selection{background:#edd7a2}
+.is-guided .funnel-quiz-hint{
   margin:0 0 20px;
   color:#766d62;
   font-size:13px;
   line-height:1.55;
   max-width:650px;
 }
-.is-question .funnel-options{
+.is-guided .funnel-options{
   display:grid;
   gap:12px;
   width:100%;
   margin:0;
 }
-.is-question .funnel-option{
+.is-guided .funnel-option{
   width:100%;
   min-height:78px;
   display:flex;
@@ -928,24 +928,24 @@
   transform:none;
   transition:border-color .18s,background-color .18s,box-shadow .18s,transform .18s;
 }
-.is-question .funnel-option:hover{
+.is-guided .funnel-option:hover{
   background:#fffdf9;
   border-color:#caaa73;
   box-shadow:0 7px 20px rgba(55,41,17,.08);
   transform:translateY(-1px);
 }
-.is-question .funnel-option:focus-visible{
+.is-guided .funnel-option:focus-visible{
   outline:3px solid #d5af67;
   outline-offset:3px;
   border-color:#bf9959;
 }
-.is-question .funnel-option.is-selected{
+.is-guided .funnel-option.is-selected{
   background:#fcf7ed;
   border-color:#cba052;
   box-shadow:0 0 0 2px #d8b56a44;
   transform:none;
 }
-.is-question .funnel-option-icon{
+.is-guided .funnel-option-icon{
   display:grid;
   place-items:center;
   flex:0 0 61px;
@@ -960,7 +960,7 @@
   line-height:1;
   text-align:center;
 }
-.is-question .funnel-option-label{
+.is-guided .funnel-option-label{
   flex:1;
   min-width:0;
   overflow-wrap:break-word;
@@ -968,7 +968,7 @@
   font-weight:650;
   letter-spacing:-.2px;
 }
-.is-question .funnel-radio{
+.is-guided .funnel-radio{
   display:block;
   position:relative;
   flex:0 0 24px;
@@ -980,12 +980,12 @@
   background:#fff;
   box-shadow:none;
 }
-.is-question .funnel-option.is-selected .funnel-radio{
+.is-guided .funnel-option.is-selected .funnel-radio{
   border-color:#c4994e;
   background:#fff;
   box-shadow:none;
 }
-.is-question .funnel-option.is-selected .funnel-radio::after{
+.is-guided .funnel-option.is-selected .funnel-radio::after{
   content:"";
   position:absolute;
   inset:5px;
@@ -993,58 +993,372 @@
   background:#c4994e;
 }
 @media(max-width:760px){
-  .is-question .funnel-quiz-header{min-height:70px}
-  .is-question .funnel-quiz-top{
+  .is-guided .funnel-quiz-header{min-height:70px}
+  .is-guided .funnel-quiz-top{
     min-height:49px;
     width:calc(100% - 30px);
     gap:13px;
   }
-  .is-question .funnel-quiz-header-progress{width:calc(100% - 30px);margin-bottom:9px}
-  .is-question .funnel-content{
+  .is-guided .funnel-quiz-header-progress{width:calc(100% - 30px);margin-bottom:9px}
+  .is-guided .funnel-content{
     width:calc(100% - 32px);
     padding:24px 0 62px;
   }
-  .is-question .funnel-question h1{
+  .is-guided .funnel-question h1{
     font-size:clamp(25px,5.6vw,31px);
     line-height:1.2;
     letter-spacing:-.55px;
   }
-  .is-question .funnel-quiz-hint{
+  .is-guided .funnel-quiz-hint{
     font-size:12px;
     margin-bottom:19px;
   }
-  .is-question .funnel-options{gap:11px}
-  .is-question .funnel-option{
+  .is-guided .funnel-options{gap:11px}
+  .is-guided .funnel-option{
     min-height:73px;
     border-radius:15px;
     padding:8px 13px 8px 8px;
     gap:12px;
   }
-  .is-question .funnel-option-icon{
+  .is-guided .funnel-option-icon{
     flex-basis:55px;
     width:55px;
     height:55px;
     font-size:28px;
     border-radius:11px;
   }
-  .is-question .funnel-option-label{font-size:14px}
-  .is-question .funnel-radio{
+  .is-guided .funnel-option-label{font-size:14px}
+  .is-guided .funnel-radio{
     flex-basis:22px;
     width:22px;
     height:22px;
   }
 }
 @media(max-width:370px){
-  .is-question .funnel-content{width:calc(100% - 24px);padding-top:21px}
-  .is-question .funnel-quiz-intro{font-size:13px}
-  .is-question .funnel-question h1{font-size:24px}
-  .is-question .funnel-option{gap:9px;padding-right:10px}
-  .is-question .funnel-option-icon{flex-basis:48px;width:48px;height:48px;font-size:25px}
-  .is-question .funnel-option-label{font-size:13px}
-  .is-question .funnel-radio{flex-basis:20px;width:20px;height:20px}
+  .is-guided .funnel-content{width:calc(100% - 24px);padding-top:21px}
+  .is-guided .funnel-quiz-intro{font-size:13px}
+  .is-guided .funnel-question h1{font-size:24px}
+  .is-guided .funnel-option{gap:9px;padding-right:10px}
+  .is-guided .funnel-option-icon{flex-basis:48px;width:48px;height:48px;font-size:25px}
+  .is-guided .funnel-option-label{font-size:13px}
+  .is-guided .funnel-radio{flex-basis:20px;width:20px;height:20px}
 }
 @media(prefers-reduced-motion:reduce){
-  .is-question .funnel-question{animation:none}
-  .is-question .funnel-option,.is-question .funnel-quiz-header-progress>i>span{transition:none}
-  .is-question .funnel-option:hover{transform:none}
+  .is-guided .funnel-question{animation:none}
+  .is-guided .funnel-option,.is-guided .funnel-quiz-header-progress>i>span{transition:none}
+  .is-guided .funnel-option:hover{transform:none}
+}
+
+
+/* EIXO — 5 interludes + personalized prep: same light visual system as questions.
+   Keep GIF files, their original playback, and the dark scratch/offer screens intact. */
+.is-guided.is-story .funnel-content,
+.is-guided.is-prep .funnel-content{
+  width:min(730px,calc(100% - 36px));
+  max-width:730px;
+  padding:28px 0 67px;
+}
+.is-guided.is-story .funnel-story,
+.is-guided.is-prep .funnel-prep{
+  color:#171717;
+  animation:eixoQuestionEntry .23s ease-out both;
+}
+.is-guided.is-story .funnel-story>.funnel-tag,
+.is-guided.is-prep .funnel-prep>.funnel-tag{
+  display:inline-flex;
+  align-items:center;
+  max-width:100%;
+  padding:9px 12px;
+  margin-bottom:15px;
+  border:1px solid #e7dcc7;
+  background:#fffdf7;
+  border-radius:8px;
+  color:#96723a;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:1px;
+  line-height:1.45;
+}
+.is-guided.is-story .funnel-story h1,
+.is-guided.is-prep .funnel-prep h1{
+  font-family:Arial,Helvetica,sans-serif;
+  max-width:730px;
+  color:#151515;
+  font-size:clamp(28px,3.45vw,36px);
+  font-weight:850;
+  line-height:1.15;
+  letter-spacing:-.75px;
+  margin:0 0 22px;
+  text-wrap:pretty;
+  overflow-wrap:break-word;
+}
+.is-guided.is-story .funnel-story-media,
+.is-guided.is-story .funnel-story-media.has-gif{
+  width:100%;
+  height:clamp(230px,34vw,346px);
+  min-height:0;
+  aspect-ratio:auto;
+  overflow:hidden;
+  padding:7px;
+  border:1px solid #e3d9c9;
+  border-radius:17px;
+  background:#fff;
+  box-shadow:0 5px 17px rgba(40,32,19,.06);
+}
+.is-guided.is-story .funnel-story-media>img{
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:11px;
+}
+.is-guided.is-story .funnel-story-media.has-gif>img{
+  object-fit:contain;
+  object-position:center center;
+  filter:none;
+  transform:none;
+  animation:none;
+  background:#0b0b0c;
+}
+.is-guided.is-story .funnel-story-media.has-gif:after{
+  display:none;
+}
+.is-guided.is-story .funnel-story>p{
+  color:#655f57;
+  font-size:15px;
+  line-height:1.7;
+  margin:20px 0 14px;
+}
+.is-guided.is-story .funnel-story-foot{
+  display:flex;
+  align-items:center;
+  padding:11px 14px;
+  margin:0 0 20px;
+  min-height:43px;
+  border-left:3px solid #c6a057;
+  border-radius:0 9px 9px 0;
+  background:#fbf7ed;
+  color:#7c6135;
+  font-size:10px;
+  letter-spacing:.7px;
+  font-weight:850;
+  line-height:1.5;
+}
+.is-guided.is-story .funnel-main-cta,
+.is-guided.is-prep .funnel-main-cta{
+  min-height:72px;
+  padding:17px 22px;
+  border:1px solid #cfad70;
+  border-radius:15px;
+  background:linear-gradient(125deg,#fffdf8,#f7edd9);
+  box-shadow:0 5px 14px rgba(64,47,19,.07);
+  color:#25211b;
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:850;
+  font-size:14px;
+  letter-spacing:.2px;
+  animation:none;
+  transform:none;
+  transition:background-color .18s,border-color .18s,box-shadow .18s;
+}
+.is-guided.is-story .funnel-main-cta:after,
+.is-guided.is-prep .funnel-main-cta:after{display:none}
+.is-guided.is-story .funnel-main-cta>span,
+.is-guided.is-prep .funnel-main-cta>span{
+  color:#aa7c3e;
+  font-size:24px;
+}
+.is-guided.is-story .funnel-main-cta:hover,
+.is-guided.is-prep .funnel-main-cta:hover{
+  border-color:#b18a48;
+  background:linear-gradient(125deg,#fffaf0,#f3e3c1);
+  box-shadow:0 9px 18px rgba(64,47,19,.09);
+  filter:none;
+}
+.is-guided.is-story .funnel-main-cta:focus-visible,
+.is-guided.is-prep .funnel-main-cta:focus-visible{
+  outline:3px solid #bd964e;
+  outline-offset:3px;
+}
+.is-guided.is-prep .funnel-prep{
+  text-align:left;
+}
+.is-guided.is-prep .funnel-icon{
+  display:grid;
+  place-items:center;
+  margin:0 0 17px;
+  width:55px;
+  height:55px;
+  border:1px solid #e6d7bc;
+  border-radius:13px;
+  background:#faf2df;
+  color:#ad8747;
+  font-size:29px;
+}
+.is-guided.is-prep .funnel-prep h1{
+  margin-bottom:15px;
+}
+.is-guided.is-prep .funnel-prep h1 em{
+  color:#ac8746;
+  font-style:normal;
+}
+.is-guided.is-prep .funnel-prep>p{
+  max-width:700px;
+  margin:0 0 24px;
+  color:#655f57;
+  font-size:15px;
+  line-height:1.7;
+}
+.is-guided.is-prep .funnel-private-panel{
+  padding:23px 25px;
+  border:1px solid #e3d9ca;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 5px 16px rgba(44,36,23,.045);
+  color:#222;
+}
+.is-guided.is-prep .funnel-private-panel>span{
+  color:#9c753b;
+  font-size:10px;
+  letter-spacing:.8px;
+  font-weight:900;
+}
+.is-guided.is-prep .funnel-private-panel p{
+  color:#625c54;
+  font-size:14px;
+  line-height:1.65;
+  margin:12px 0 18px;
+}
+.is-guided.is-prep .funnel-private-panel label{
+  display:block;
+  margin:0 0 9px;
+  font-size:11px;
+  line-height:1.5;
+  font-weight:850;
+  color:#403629;
+  letter-spacing:.6px;
+}
+.is-guided.is-prep .funnel-private-panel label small{
+  color:#867d70;
+}
+.is-guided.is-prep .funnel-private-panel input{
+  width:100%;
+  min-height:57px;
+  border:1px solid #d8cfc2;
+  border-radius:11px;
+  background:#fbfaf8;
+  color:#242424;
+  font-size:15px;
+  padding:12px 16px;
+  outline:none;
+}
+.is-guided.is-prep .funnel-private-panel input::placeholder{color:#999086}
+.is-guided.is-prep .funnel-private-panel input:focus{
+  border-color:#b08a4d;
+  box-shadow:0 0 0 3px rgba(193,151,77,.2);
+}
+.is-guided.is-prep .funnel-offer-perks{
+  display:flex;
+  justify-content:flex-start;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:17px 0 25px;
+  color:#574d40;
+  font-size:11px;
+  font-weight:750;
+}
+.is-guided.is-prep .funnel-offer-perks>span{
+  display:inline-flex;
+  align-items:center;
+  padding:9px 10px;
+  border:1px solid #e6dcca;
+  border-radius:8px;
+  background:#fffdf8;
+  line-height:1.35;
+}
+@media(max-width:760px){
+  .is-guided.is-story .funnel-content,
+  .is-guided.is-prep .funnel-content{
+    width:calc(100% - 32px);
+    padding:24px 0 58px;
+  }
+  .is-guided.is-story .funnel-story>.funnel-tag,
+  .is-guided.is-prep .funnel-prep>.funnel-tag{
+    font-size:9px;
+    letter-spacing:.55px;
+    margin-bottom:12px;
+  }
+  .is-guided.is-story .funnel-story h1,
+  .is-guided.is-prep .funnel-prep h1{
+    font-size:clamp(25px,6.6vw,32px);
+    line-height:1.2;
+    letter-spacing:-.6px;
+    margin:0 0 16px;
+  }
+  .is-guided.is-story .funnel-story-media,
+  .is-guided.is-story .funnel-story-media.has-gif{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/10;
+    min-height:0;
+    padding:6px;
+    border-radius:14px;
+  }
+  .is-guided.is-story .funnel-story>p{
+    margin:16px 0 13px;
+    font-size:14px;
+    line-height:1.65;
+  }
+  .is-guided.is-story .funnel-story-foot{
+    margin-bottom:16px;
+    padding:10px 12px;
+    font-size:9px;
+  }
+  .is-guided.is-story .funnel-main-cta,
+  .is-guided.is-prep .funnel-main-cta{
+    min-height:64px;
+    padding:15px 16px;
+    font-size:12px;
+    border-radius:13px;
+  }
+  .is-guided.is-prep .funnel-icon{
+    width:48px;
+    height:48px;
+    font-size:25px;
+    margin-bottom:14px;
+  }
+  .is-guided.is-prep .funnel-prep>p{
+    font-size:14px;
+    line-height:1.65;
+    margin-bottom:20px;
+  }
+  .is-guided.is-prep .funnel-private-panel{
+    padding:19px 17px;
+    border-radius:14px;
+  }
+  .is-guided.is-prep .funnel-private-panel p{font-size:13px}
+  .is-guided.is-prep .funnel-offer-perks{
+    gap:7px;
+    margin:15px 0 21px;
+  }
+  .is-guided.is-prep .funnel-offer-perks>span{
+    padding:8px 9px;
+    font-size:10px;
+  }
+}
+@media(max-width:370px){
+  .is-guided.is-story .funnel-content,
+  .is-guided.is-prep .funnel-content{
+    width:calc(100% - 24px);
+    padding-top:21px;
+  }
+  .is-guided.is-story .funnel-story h1,
+  .is-guided.is-prep .funnel-prep h1{font-size:24px}
+  .is-guided.is-story .funnel-main-cta,
+  .is-guided.is-prep .funnel-main-cta{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .is-guided.is-story .funnel-story,
+  .is-guided.is-prep .funnel-prep{animation:none}
+  .is-guided.is-story .funnel-main-cta,
+  .is-guided.is-prep .funnel-main-cta{transition:none}
 }

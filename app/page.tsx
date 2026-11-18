@@ -1,46 +1,71 @@
 import Link from "next/link";
+import "./landing.css";
 
-const faqs = [
-  ["O questionário é gratuito?","Sim. Você pode responder às 18 perguntas sem pagamento nem cadastro."],
-  ["É uma avaliação médica ou psicológica?","Não. O questionário é educativo e não fornece diagnóstico. Se as dificuldades forem persistentes, procure um profissional habilitado."],
-  ["Minhas respostas ficam armazenadas?","Não nesta versão. As respostas permanecem na página durante o preenchimento e não são enviadas a um servidor."],
-  ["E se a ansiedade estiver afetando minha relação?","Conversar abertamente e buscar orientação de um profissional de saúde pode ajudar a compreender as possíveis causas e as opções de cuidado."]
-];
-function Brand(){return <Link href="/" className="mx-brand" aria-label="EIXO, início"><span className="mx-brand-symbol">E<span>✕</span></span><strong>EIXO</strong><small>PERFORMANCE MENTAL</small></Link>}
-export default function Home(){
- return <div className="mx-site">
-  <header className="mx-header"><div className="mx-wrap mx-header-inner"><Brand/><nav aria-label="Navegação principal"><a href="#metodo">O EIXO</a><a href="#perguntas">Perguntas</a></nav><Link className="mx-top-cta" href="/quiz">INICIAR AGORA <span>↗</span></Link></div></header>
-  <main>
-   <section className="mx-hero">
-    <div className="mx-wrap mx-hero-inner">
-     <div className="mx-hero-copy">
-      <div className="mx-eyebrow"><span/> MENTE FORTE. MENOS COBRANÇA.</div>
-      <h1>O MAIOR PESO<br/>NÃO ESTÁ NO<br/><em>SEU CORPO.</em><br/><span>ESTÁ NA PRESSÃO.</span></h1>
-      <p>Medo de brochar, de não durar o quanto gostaria ou de decepcionar alguém? A ansiedade na hora de transar pode transformar o sexo em uma prova. Entenda seus gatilhos e comece a lidar com essa pressão.</p>
-      <div className="mx-hero-actions"><Link className="mx-button mx-button-primary" href="/quiz">DESCOBRIR COMO A PRESSÃO ME AFETA <span>↗</span></Link></div>
-      <div className="mx-hero-proof"><span>01 / DISCRETO</span><span>02 / 18 PERGUNTAS</span><span>03 / SEM CADASTRO</span></div>
-     </div>
-     <div className="mx-hero-photo" aria-label="Retrato masculino editorial"><picture className="mx-photo-picture"><img src="/images/hero.jpg" alt="Homem adulto em retrato editorial de iluminação dramática" loading="eager" fetchPriority="high"/></picture>
-      <div className="mx-photo-caption">CONFIANÇA<br/><strong>COMEÇA NA MENTE.</strong></div>
-      <span className="mx-vertical-caption">EIXO · CONSCIÊNCIA · EQUILÍBRIO · PRESENÇA</span>
-     </div>
-    </div>
-    <div className="mx-bottom-rule"><div className="mx-wrap"><span>PERFORMANCE NÃO É SOBRE PROVAR. É SOBRE ESTAR PRESENTE.</span><a href="#metodo">CONHEÇA O EIXO ↓</a></div></div>
-   </section>
-   <section id="metodo" className="mx-method">
-    <div className="mx-wrap">
-     <div className="mx-method-head"><div><span className="mx-overline">POR QUE O EIXO EXISTE</span><h2>QUANDO A MENTE<br/>COBRA DEMAIS,<br/><em>O MOMENTO MUDA.</em></h2></div><p>Na hora de transar, o medo de falhar pode ocupar o lugar do prazer. O primeiro passo não é fingir que isso não existe — é entender como a ansiedade e a autocobrança aparecem para você.</p></div>
-     <div className="mx-steps">
-      <article><div className="mx-step-top"><span>01</span><b>↗</b></div><div className="mx-step-graphic mx-graphic-one"><img className="mx-card-photo" src="/images/pressao.jpg" alt="Homem pensativo em ambiente escuro" loading="lazy"/></div><div className="mx-step-foot"><h3>PRESSÃO</h3><h4>RECONHEÇA O CICLO</h4><p>Observe expectativas, pensamentos antecipatórios e medo de falhar.</p></div></article>
-      <article><div className="mx-step-top"><span>02</span><b>↗</b></div><div className="mx-step-graphic mx-graphic-two"><img className="mx-card-photo" src="/images/clareza.jpg" alt="Retrato masculino em preto e branco" loading="lazy"/></div><div className="mx-step-foot"><h3>CLAREZA</h3><h4>ENTENDA SEUS PADRÕES</h4><p>Responda a 18 perguntas objetivas, com pausas visuais e reflexão no seu ritmo.</p></div></article>
-      <article><div className="mx-step-top"><span>03</span><b>↗</b></div><div className="mx-step-graphic mx-graphic-three"><img className="mx-card-photo" src="/images/partida.jpg" alt="Homem com expressão determinada em retrato editorial" loading="lazy"/></div><div className="mx-step-foot"><h3>PONTO DE PARTIDA</h3><h4>COMECE COM CONSCIÊNCIA</h4><p>Receba uma reflexão educativa baseada nas suas respostas.</p></div></article>
-     </div>
-     <div className="mx-method-cta"><span>SEM CADASTRO. SEM EXPOSIÇÃO. SEM PROMESSAS MILAGROSAS.</span><Link className="mx-button mx-button-dark" href="/quiz">FAZER MINHA REFLEXÃO <span>↗</span></Link></div>
-    </div>
-   </section>
-   <section className="mx-manifesto"><div className="mx-wrap mx-manifesto-inner"><span>EIXO / MANIFESTO</span><h2>VOCÊ NÃO PRECISA<br/><em>PROVAR NADA.</em></h2><p>Transar não precisa ser uma prova de desempenho. Comece entendendo o que o medo de falhar provoca em você.</p><Link className="mx-button mx-button-primary mx-manifesto-cta" href="/quiz">COMEÇAR QUESTIONÁRIO <span aria-hidden="true">↗</span></Link><small>18 perguntas · Pausas visuais · Raspadinha educativa</small></div></section>
-   <section className="mx-faq" id="perguntas"><div className="mx-wrap mx-faq-grid"><div><span className="mx-overline">DÚVIDAS FREQUENTES</span><h2>SEM TABUS.<br/><em>SEM ENROLAÇÃO.</em></h2><p>As informações abaixo ajudam você a entender o propósito dessa experiência.</p></div><div className="mx-faq-items">{faqs.map(([question,answer],i)=><details key={question}><summary><span>{String(i+1).padStart(2,"0")}</span>{question}<b>+</b></summary><p>{answer}</p></details>)}</div></div></section>
-  </main>
-  <footer className="mx-footer"><div className="mx-wrap"><Brand/><p>EIXO — Confiança começa na mente.</p><small>Conteúdo educativo. Não substitui aconselhamento médico ou psicológico.</small><Link href="/quiz">INICIAR QUESTIONÁRIO ↗</Link></div></footer>
- </div>;
+export default function Home() {
+  return (
+    <main className="eixoh-page">
+      <div className="eixoh-canvas">
+        <section className="eixoh-intro" aria-labelledby="eixoh-title">
+          <div className="eixoh-trust">
+            <strong>✦ QUESTIONÁRIO GRATUITO E DISCRETO</strong>
+            <span>18 perguntas · Sem cadastro para começar</span>
+          </div>
+
+          <h1 id="eixoh-title" className="eixoh-heading">
+            Medo de brochar, de não durar ou de decepcionar?
+            {" "}<em>Entenda a pressão na hora H.</em>
+          </h1>
+          <p className="eixoh-description">
+            Vamos organizar uma reflexão personalizada sobre a sua confiança
+            na hora de transar. Comece respondendo a algumas perguntas.
+          </p>
+        </section>
+
+        <div
+          className="eixoh-showcase"
+          role="img"
+          aria-label="Ilustração original de celular do EIXO, com 18 perguntas sobre ansiedade e confiança na hora do sexo"
+        >
+          <span className="eixoh-floating eixoh-floating-left" aria-hidden="true">
+            <strong>18</strong><small>perguntas<br/>objetivas</small>
+          </span>
+          <span className="eixoh-floating eixoh-floating-right" aria-hidden="true">
+            <strong>DISCRETO</strong><small>sem cadastro<br/>para começar</small>
+          </span>
+
+          <div className="eixoh-device" aria-hidden="true">
+            <div className="eixoh-device-notch"/>
+            <div className="eixoh-device-screen">
+              <div className="eixoh-device-brand">EIXO</div>
+              <span className="eixoh-device-badge">PERFORMANCE MENTAL</span>
+              <div className="eixoh-device-ring">
+                <div className="eixoh-device-ring-inner">
+                  <strong>18</strong>
+                  <span>PERGUNTAS</span>
+                </div>
+              </div>
+              <strong className="eixoh-device-statement">
+                CONFIANÇA COMEÇA NA <em>MENTE.</em>
+              </strong>
+              <span className="eixoh-device-text">Reflexão individual · Sem promessas milagrosas</span>
+              <div className="eixoh-device-button">DESCUBRA SEU PONTO DE PARTIDA ↗</div>
+              <span className="eixoh-device-home"/>
+            </div>
+          </div>
+        </div>
+
+        <Link className="eixoh-primary" href="/quiz">
+          Criar meu plano personalizado <span aria-hidden="true">→</span>
+        </Link>
+        <p className="eixoh-safe-note">
+          🔒 Questionário gratuito · Respostas mantidas nesta página
+        </p>
+        <footer className="eixoh-footer">
+          EIXO — Confiança começa na mente.
+          <br/>
+          Conteúdo educativo. Não substitui avaliação médica ou psicológica.
+        </footer>
+      </div>
+    </main>
+  );
 }

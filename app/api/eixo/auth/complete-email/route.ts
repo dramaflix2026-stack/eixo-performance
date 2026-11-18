@@ -25,6 +25,14 @@ export async function POST(request:NextRequest){
    const user=await checked.json() as {id?:unknown;email_confirmed_at?:unknown};
    if(typeof user.id!=="string"||!user.email_confirmed_at)
      return NextResponse.json({message:"O e-mail ainda não foi confirmado."},{status:401,headers});
+   // After a new signup, confirm the email and return to LOGIN rather than
+   // silently signing the user into the paid area. Entitlement is checked at login.
+   if(body.type==="signup"){
+     return NextResponse.json({
+       ok:true,verified:true,registered:true,authorized:false,
+       message:"E-mail confirmado com sucesso! Seu cadastro está pronto. Agora faça login com seu e-mail e a senha criada."
+     },{headers});
+   }
    const member=await verifyEixoMember(accessToken);
    if(!member)return NextResponse.json({
      ok:true,verified:true,authorized:false,

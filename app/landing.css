@@ -324,3 +324,218 @@
   .eixoh-primary{transition:none}
   .eixoh-primary:hover{transform:none}
 }
+
+/* 2026-11-18 · Precision layout pass based on mobile and desktop reference:
+   narrow black canvas, central copy, near-full-height hero device and large CTA. */
+.eixoh-page{background:#fff}
+.eixoh-canvas{max-width:1032px;padding:46px 22px 32px;background:#090909}
+.eixoh-intro{max-width:580px}
+.eixoh-trust{
+  min-width:0;
+  width:min(100%,369px);
+  min-height:59px;
+  justify-content:center;
+  gap:8px;
+  border-color:#302b24;
+  border-radius:15px;
+  background:#171513;
+  padding:10px 14px;
+}
+.eixoh-trust strong{font-size:11px;letter-spacing:.3px;color:#dab16a}
+.eixoh-trust span{font-size:11px;color:#b9b0a5}
+.eixoh-heading{
+  max-width:510px;
+  font-size:clamp(31px,3vw,35px);
+  line-height:1.11;
+  letter-spacing:-1px;
+  font-weight:800;
+  margin:22px auto 14px;
+}
+.eixoh-heading em{color:#d3a84e}
+.eixoh-description{
+  max-width:460px;
+  font-size:18px;
+  line-height:1.45;
+  margin:0 auto 5px;
+  color:#f0ece5;
+}
+.eixoh-showcase{
+  width:min(100%,435px);
+  height:auto;
+  aspect-ratio:4/5;
+  margin:4px auto 0;
+  border-radius:11px;
+  background:
+    radial-gradient(ellipse at 56% 47%,#9b6e303b,transparent 58%),
+    radial-gradient(ellipse at 46% 52%,#b58b3a30,transparent 67%),
+    #0c0b09;
+  box-shadow:inset 0 0 50px #0009;
+}
+.eixoh-showcase:before{
+  opacity:.72;
+  background-size:101px 103px,117px 127px,91px 104px,139px 123px,161px 173px;
+}
+.eixoh-showcase:after{background:#c9974d;filter:blur(84px);opacity:.29}
+.eixoh-device{
+  width:62%;
+  height:90%;
+  border:6px solid #292827;
+  border-right-color:#9e753e;
+  border-bottom-color:#8b6331;
+  border-radius:38px;
+  transform:perspective(900px) rotateY(-11deg) rotateZ(7deg) translateY(5px);
+  box-shadow:
+     0 0 0 1px #dfb874,
+     4px 0 0 1px #7d572d,
+     11px 5px 1px #2c241a,
+     21px 20px 34px #000d,
+     -15px 0 45px #c9985150,
+     0 0 90px #c58d424f;
+}
+.eixoh-device:after{
+  border-radius:30px;
+  box-shadow:inset 4px 0 14px #ebd5a52a,inset -19px 0 24px #0008;
+}
+.eixoh-device-screen{
+  padding:32px 14px 21px;
+  background:
+    radial-gradient(ellipse at 50% 39%,#6b542936 0%,transparent 47%),
+    linear-gradient(125deg,#0d0d0e,#1b1813 55%,#090909);
+}
+.eixoh-device-notch{width:82px;height:18px;top:7px}
+.eixoh-device-brand{font-size:11px;color:#d6b57b;letter-spacing:1.2px}
+.eixoh-device-badge{
+  font-size:7px;
+  padding:5px 7px;
+  border-radius:16px;
+  margin-top:-18px;
+  letter-spacing:0;
+}
+.eixoh-device-ring{
+  width:min(76%,182px);
+  aspect-ratio:1/1;
+  height:auto;
+  flex-shrink:0;
+  margin:35px 0 23px;
+  border:2px solid #d2b26f;
+  box-shadow:
+    0 0 0 6px #ba8f4b30,
+    0 0 0 13px #ab7c3330,
+    inset 0 0 0 5px #e1c78f15,
+    0 0 34px #d6ad6640;
+  background:radial-gradient(circle at 35% 30%,#413725,#1b1916 65%,#0b0b0d);
+}
+.eixoh-device-ring strong{
+  font-size:clamp(68px,9vw,91px);
+  letter-spacing:-6px;
+  line-height:.9;
+}
+.eixoh-device-ring span{font-size:10px;color:#bca98a}
+.eixoh-device-statement{
+  font-family:Arial,Helvetica,sans-serif;
+  max-width:200px;
+  font-size:clamp(21px,2.5vw,25px);
+  line-height:1.08;
+  letter-spacing:-.8px;
+  font-weight:950;
+  text-shadow:0 1px 5px #000;
+}
+.eixoh-device-text{font-size:7px;line-height:1.5;color:#938776;margin:13px 0 18px}
+.eixoh-device-button{min-height:39px;font-size:9px;margin-top:auto;margin-bottom:14px}
+.eixoh-floating{
+  background:linear-gradient(125deg,#6c5232bf,#201b17d9);
+  border-color:#d0b37e87;
+  padding:12px 11px;
+  backdrop-filter:blur(5px);
+  box-shadow:0 10px 26px #000b;
+}
+.eixoh-floating strong{font-size:28px}
+.eixoh-floating small{font-size:9px}
+.eixoh-floating-left{left:7%;bottom:21%;transform:rotate(-6deg)}
+.eixoh-floating-right{right:6%;top:29%;transform:rotate(4deg)}
+.eixoh-floating-right strong{font-size:12px}
+.eixoh-primary{
+  width:min(100%,420px);
+  min-height:81px;
+  margin:7px auto 0;
+  border:1px solid #d7b371;
+  border-radius:15px;
+  background:linear-gradient(180deg,#efcf85 0%,#dabb6c 48%,#af8a3f 100%);
+  color:#101012;
+  font-size:18px;
+  letter-spacing:-.2px;
+  font-weight:850;
+  box-shadow:0 0 0 7px #d2aa5a1c,0 14px 25px #c39a4940;
+}
+.eixoh-safe-note{margin:18px 0 0;font-size:10px;color:#938676}
+.eixoh-footer{margin-top:48px}
+@media(max-width:600px){
+  .eixoh-page{background:#090909}
+  .eixoh-canvas{padding:27px 18px 29px}
+  .eixoh-trust{
+    width:min(100%,405px);
+    min-height:53px;
+    padding:9px 10px;
+    gap:6px;
+  }
+  .eixoh-trust strong{font-size:10px}
+  .eixoh-trust span{font-size:10px}
+  .eixoh-heading{
+    max-width:500px;
+    font-size:clamp(29px,6.2vw,34px);
+    line-height:1.115;
+    margin:22px auto 13px;
+    letter-spacing:-.6px;
+  }
+  .eixoh-description{
+    max-width:480px;
+    font-size:17px;
+    line-height:1.5;
+    margin-bottom:4px;
+  }
+  .eixoh-showcase{
+    width:min(100%,480px);
+    height:auto;
+    aspect-ratio:4/5;
+    margin:2px auto 0;
+    border-radius:10px;
+  }
+  .eixoh-device{
+    width:62%;
+    height:91%;
+    transform:perspective(850px) rotateY(-11deg) rotateZ(7deg) translateY(3px);
+  }
+  .eixoh-device-screen{padding:31px 12px 15px}
+  .eixoh-device-ring{
+    width:min(76%,192px);
+    margin:34px 0 20px;
+  }
+  .eixoh-device-ring strong{font-size:clamp(72px,16vw,95px)}
+  .eixoh-device-statement{font-size:clamp(21px,4.5vw,26px);max-width:210px}
+  .eixoh-device-text{font-size:7px;margin:10px 0 16px}
+  .eixoh-floating{padding:10px 8px}
+  .eixoh-floating-left{left:7%;bottom:23%}
+  .eixoh-floating-right{right:6%;top:29%}
+  .eixoh-primary{
+    min-height:83px;
+    width:min(100%,447px);
+    border-radius:16px;
+    font-size:17px;
+    margin:8px auto 0;
+  }
+  .eixoh-safe-note{margin-top:17px;font-size:10px}
+  .eixoh-footer{margin-top:39px}
+}
+@media(max-width:405px){
+  .eixoh-canvas{padding:25px 14px 25px}
+  .eixoh-heading{font-size:clamp(26px,7vw,30px)}
+  .eixoh-description{font-size:15px}
+  .eixoh-device{width:64%;height:91%;border-width:5px}
+  .eixoh-device-ring{margin:24px 0 19px}
+  .eixoh-device-ring strong{font-size:clamp(63px,17vw,76px)}
+  .eixoh-device-statement{font-size:clamp(17px,5vw,21px)}
+  .eixoh-floating small{font-size:8px}
+  .eixoh-floating strong{font-size:23px}
+  .eixoh-floating-right strong{font-size:10px}
+  .eixoh-primary{min-height:72px;font-size:15px}
+}

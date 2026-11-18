@@ -110,9 +110,27 @@ export function clearEixoCookies(response:NextResponse){
 }
 
 export function sameOrigin(request:Request):boolean{
+  // Railway may expose the public HTTPS hostname while Next.js sees a proxy
+  // or internal host in request.url. Compare against an explicit origin allowlist,
+  // never an untrusted x-forwarded-host header.
   const origin=request.headers.get("origin");
   if(!origin)return false;
   try{
-    return new URL(origin).host===new URL(request.url).host;
+    const parsed=new URL(origin);
+    if(parsed.origin!==origin)return false;
+    const allowlist=new Set<string>(["https://eixo-performance-production.up.railway.app"]);
+    const railwayDomain=process.env.RAILWAY_PUBLIC_DOMAIN?.trim().toLowerCase();
+    if(railwayDomain&&/^[a-z0-9.-]+$/.test(railwayDomain)){
+      allowlist.add("https://"+railwayDomain);
+    }
+    const publicOrigin=process.env.EIXO_PUBLIC_ORIGIN?.trim();
+    if(publicOrigin&&/^https:\/\/[a-z0-9.-]+$/i.test(publicOrigin)){
+      allowlist.add(publicOrigin);
+    }
+    if(process.env.NODE_ENV!=="production"){
+      allowlist.add("http://localhost:3000");
+      allowlist.add("http://127.0.0.1:3000");
+    }
+    return allowlist.has(parsed.origin);
   }catch{return false;}
 }

@@ -16,12 +16,12 @@ const GOALS=[
  {id:"dialogo",title:"Melhorar o diálogo",detail:"Conversar com mais clareza e menos vergonha",symbol:"↗"},
  {id:"rotina",title:"Cuidar da minha rotina",detail:"Organizar hábitos, descanso e autocuidado",symbol:"◷"}
 ];
-export function MemberOnboarding({onComplete}:{onComplete:()=>Promise<void>}){
+export function MemberOnboarding({onComplete,initial}:{onComplete:()=>Promise<void>;initial?:MemberProfile}){
  const [step,setStep]=useState(1);
- const [fullName,setFullName]=useState("");
- const [birthDate,setBirthDate]=useState("");
- const [goal,setGoal]=useState("confianca");
- const [minutes,setMinutes]=useState(10);
+ const [fullName,setFullName]=useState(initial?.fullName||"");
+ const [birthDate,setBirthDate]=useState(initial?.birthDate||"");
+ const [goal,setGoal]=useState(initial?.primaryGoal||"confianca");
+ const [minutes,setMinutes]=useState(initial?.dailyMinutes||10);
  const [consent,setConsent]=useState(false);
  const [busy,setBusy]=useState(false);
  const [message,setMessage]=useState("");

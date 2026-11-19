@@ -155,3 +155,22 @@
  .eixo-member-bonus-card-text strong{font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){.eixo-member-page *, .eixo-member-page *:before{transition:none!important;animation:none!important}}
+
+
+/* EIXO MVP 2: 6 destinations, mobile-safe scrolling and current-page visual distinction */
+.eixo-member-tabs{justify-content:center;overflow-x:auto;scrollbar-width:none;overscroll-behavior-inline:contain}
+.eixo-member-tabs::-webkit-scrollbar{display:none}
+.eixo-member-tabs button{flex-shrink:0}
+.eixo-member-content:has(.eixo-member-home){width:min(1240px,calc(100% - 44px))}
+.eixo-member-content:has(.eixo-member-home){margin-top:38px}
+.eixo-member-profile .eixo-onboard{min-height:auto;padding:0 0 30px}
+.eixo-member-profile .eixo-onboard-panel{margin:0;width:min(640px,100%)}
+@media(max-width:780px){
+ .eixo-member-tabs{justify-content:flex-start;padding-left:14px;padding-right:14px}
+ .eixo-member-tabs button{padding:11px 14px}
+}
+@media(max-width:480px){
+ .eixo-member-tabs{gap:4px}
+ .eixo-member-tabs button{font-size:10px;padding:10px 11px}
+ .eixo-member-content:has(.eixo-member-home){width:min(1240px,calc(100% - 28px))}
+}

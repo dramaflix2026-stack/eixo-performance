@@ -3,12 +3,14 @@
 import Link from "next/link";
 import {useCallback,useEffect,useMemo,useState} from "react";
 import "./app.css";
+import {MemberOnboarding,type MemberProfile} from "./member-onboarding";
+import {MemberCatalog} from "./member-catalog";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
-type Dashboard={email:string;memberRole?:"student"|"admin_master";completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
-type Tab="inicio"|"roteiro"|"bonus"|"progresso";
-const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["roteiro","Meu roteiro","◈"],["bonus","Meus bônus","✦"],["progresso","Progresso","◷"]];
+type Dashboard={email:string;memberRole?:"student"|"admin_master";profile:MemberProfile|null;completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
+type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"progresso"|"perfil";
+const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Catálogo","▤"],["roteiro","Jornada","◈"],["bonus","Bônus","✦"],["progresso","Progresso","◷"],["perfil","Perfil","◎"]];
 
 function Logo(){return <Link href="/" className="eixo-member-logo" aria-label="Método EIXO">EI<span>X</span>O<span className="eixo-member-logo-dot">.</span></Link>}
 
@@ -76,28 +78,21 @@ export default function EixoMembersPage(){
     </header>
     {loading?<div className="eixo-member-loading" role="status"><span className="eixo-member-loader"/> Preparando seu espaço EIXO...</div>:
       error||!data?<div className="eixo-member-failure"><h1>Não foi possível entrar na área.</h1><p>{error||"Tente novamente."}</p><button onClick={()=>void load()}>Tentar novamente →</button></div>:
+      !data.profile?<MemberOnboarding onComplete={load}/>:
       <>
         <section className="eixo-member-overline"><span>✦ EIXO / ESPAÇO PRIVADO</span><span>UMA JORNADA NO SEU RITMO</span></section>
         <section className="eixo-member-heading">
-          <div><span className="eixo-member-kicker">BEM-VINDO AO MÉTODO EIXO</span><h1>Seu espaço.<br/><em>Seu ritmo.</em></h1><p>Aqui você encontra seu roteiro de sete dias, materiais complementares e um lugar para registrar cada etapa concluída.</p></div>
+          <div><span className="eixo-member-kicker">BEM-VINDO DE VOLTA · {data.profile.fullName.split(" ")[0].toUpperCase()}</span><h1>Seu espaço.<br/><em>Seu ritmo.</em></h1><p>Um catálogo de experiências e orientações para explorar no seu tempo. O que importa aqui é cuidar de você, sem competir com ninguém.</p></div>
           <div className="eixo-member-profile-stat"><div className="eixo-member-progress-ring" style={{"--p":percent+"%"} as React.CSSProperties}><strong>{percent}%</strong><small>CONCLUÍDO</small></div><strong>Seu progresso</strong><span>{completed.length} de 7 etapas realizadas</span></div>
         </section>
         <nav className="eixo-member-tabs" aria-label="Navegação da área de membros">
           {NAV.map(([key,label,symbol])=><button key={key} type="button" className={tab===key?"active":""} onClick={()=>{setTab(key);setSelectedBonus(null);}} aria-current={tab===key?"page":undefined}><span aria-hidden="true">{symbol}</span> {label}</button>)}
         </nav>
         <div className="eixo-member-content">
-          {tab==="inicio"&&<section className="eixo-member-home" aria-labelledby="eixo-member-home-title">
-            <div className="eixo-member-section-heading"><span>01 / SUA JORNADA</span><h2 id="eixo-member-home-title">Um passo de cada vez.</h2><p>Você não precisa correr para terminar. Abra a próxima prática quando fizer sentido.</p></div>
-            <div className="eixo-member-next-card">
-              <div className="eixo-member-next-icon">◈</div>
-              <div className="eixo-member-next-text"><span>PRÓXIMO PASSO · DIA {String(currentDay).padStart(2,"0")}</span><h3>{data.lessons.find(l=>l.day===currentDay)?.title}</h3><p>{data.lessons.find(l=>l.day===currentDay)?.intro}</p><div className="eixo-member-next-tags"><span>◷ {data.lessons.find(l=>l.day===currentDay)?.estimatedMinutes} min de leitura e reflexão</span><span>Atividade educativa</span></div></div>
-              <button className="eixo-member-primary" onClick={()=>openLesson(currentDay)}>ABRIR MEU DIA <span>↗</span></button>
-            </div>
-            <div className="eixo-member-home-grid">
-              <button className="eixo-member-tile" onClick={()=>setTab("roteiro")}><span className="eixo-member-tile-icon">◷</span><span className="eixo-member-tile-count">07 DIAS</span><strong>Seu roteiro completo</strong><small>Atividades de atenção, diálogo e reflexão.</small><span className="eixo-member-tile-arrow">→</span></button>
-              <button className="eixo-member-tile" onClick={()=>setTab("bonus")}><span className="eixo-member-tile-icon">✦</span><span className="eixo-member-tile-count">05 MATERIAIS</span><strong>Seus bônus</strong><small>Guias complementares que você pode abrir agora.</small><span className="eixo-member-tile-arrow">→</span></button>
-              <button className="eixo-member-tile" onClick={()=>setTab("progresso")}><span className="eixo-member-tile-icon">◈</span><span className="eixo-member-tile-count">{String(completed.length).padStart(2,"0")} / 07</span><strong>Seu acompanhamento</strong><small>Registre o que já explorou, sem cobranças.</small><span className="eixo-member-tile-arrow">→</span></button>
-            </div>
+          {(tab==="inicio"||tab==="catalogo")&&<section className="eixo-member-home" aria-label="Biblioteca e jornada do Método EIXO">
+            <MemberCatalog firstName={data.profile.fullName.split(" ")[0]} goal={data.profile.primaryGoal}
+              completedDays={completed} lessons={data.lessons} bonuses={data.bonuses}
+              onOpenLesson={openLesson} onOpenBonus={openBonus}/>
           </section>}
           {tab==="roteiro"&&<section className="eixo-member-learn" aria-labelledby="eixo-member-learn-title">
             <div className="eixo-member-section-heading"><span>02 / SEU ROTEIRO</span><h2 id="eixo-member-learn-title">Sete dias para <em>se observar.</em></h2><p>Abra cada dia para ler as orientações e marque como concluído quando terminar.</p></div>
@@ -114,6 +109,10 @@ export default function EixoMembersPage(){
           {tab==="progresso"&&<section className="eixo-member-tracking" aria-labelledby="eixo-member-track-title">
             <div className="eixo-member-section-heading"><span>04 / ACOMPANHAMENTO</span><h2 id="eixo-member-track-title">Sua evolução <em>sem comparações.</em></h2><p>Seu progresso é registrado apenas quando você marca um dia concluído. Isso não mede desempenho sexual nem prevê resultados.</p></div>
             <div className="eixo-member-track-card"><div className="eixo-member-track-top"><strong>{completed.length} de 7 dias</strong><span>{percent}% concluído</span></div><div className="eixo-member-track-bar"><span style={{width:percent+"%"}}/></div><div className="eixo-member-track-days">{data.lessons.map(l=><button key={l.day} aria-label={`Abrir o dia ${l.day}`} onClick={()=>openLesson(l.day)} className={completed.includes(l.day)?"done":""}>{completed.includes(l.day)?"✓":l.day}</button>)}</div><p>Um dia concluído indica apenas que você leu ou realizou a atividade proposta.</p><button className="eixo-member-primary" onClick={()=>openLesson(currentDay)}>CONTINUAR MEU ROTEIRO <span>↗</span></button></div>
+          </section>}
+          {tab==="perfil"&&<section className="eixo-member-profile" aria-label="Editar meus dados">
+            <div className="eixo-member-section-heading"><span>06 / CONTA E PREFERÊNCIAS</span><h2>Meu perfil <em>privado.</em></h2><p>Você pode atualizar seus dados pessoais e o foco das orientações quando quiser. Informações de saúde ou intimidade não são solicitadas aqui.</p></div>
+            <MemberOnboarding initial={data.profile} onComplete={async()=>{await load();setTab("inicio");}}/>
           </section>}
         </div>
         <aside className="eixo-member-privacy"><span>◈</span><p><strong>Seu espaço é privado.</strong> Os dias concluídos ficam na sua conta. O EIXO não salva aqui as respostas do questionário nem fornece diagnósticos ou promessas de resultados físicos.</p></aside>

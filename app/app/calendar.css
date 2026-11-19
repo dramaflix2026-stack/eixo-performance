@@ -1,0 +1,107 @@
+/* Método EIXO — entrega 02: calendário privado */
+.eixo-calendar-page{display:flex;flex-direction:column;gap:28px;width:100%;color:#f7efe7}
+.eixo-calendar-heading{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.eixo-calendar-eyebrow,.eixo-calendar-editor-eyebrow{font-size:10px;font-weight:900;letter-spacing:1.8px;color:#d8ad6b}
+.eixo-calendar-heading h2{font-size:clamp(33px,4vw,53px);letter-spacing:-1.8px;line-height:1.07;font-weight:950;margin:12px 0 14px}
+.eixo-calendar-heading h2 em,.eixo-calendar-preview h3 em{font-style:normal;color:#e7bc75}
+.eixo-calendar-heading p{color:#b5aa9d;font-size:14px;max-width:710px;line-height:1.7;margin:0}
+.eixo-calendar-private-tag{white-space:nowrap;border-radius:99px;border:1px solid #705333;background:#211c14;color:#e5bf85;font-size:10px;font-weight:900;letter-spacing:1px;padding:12px 16px}
+.eixo-calendar-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.eixo-calendar-stat-grid>div{background:linear-gradient(140deg,#201e1c,#171719);border:1px solid #4b3c2e;border-radius:14px;padding:19px 18px;display:flex;flex-direction:column;gap:8px;min-height:118px}
+.eixo-calendar-stat-grid small{font-size:9px;color:#bfaa8a;font-weight:900;letter-spacing:1.1px}
+.eixo-calendar-stat-grid strong{color:#e7bf7b;font-size:31px;font-weight:900;line-height:1.05}
+.eixo-calendar-stat-grid span{font-size:11px;color:#a99e91}
+.eixo-calendar-main-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);gap:18px;align-items:start}
+.eixo-calendar-board,.eixo-calendar-editor{min-width:0;border:1px solid #6d5130;background:linear-gradient(155deg,#22201d,#151516 78%);border-radius:19px;padding:27px;box-shadow:0 22px 55px #0006}
+.eixo-calendar-month-head{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:23px}
+.eixo-calendar-month-head>div:first-child>span{color:#cba56c;font-size:10px;letter-spacing:1.3px;font-weight:900}
+.eixo-calendar-month-head h3{font-size:24px;text-transform:capitalize;margin:5px 0 0;letter-spacing:-.5px}
+.eixo-calendar-month-head>div:last-child{display:flex;gap:7px}
+.eixo-calendar-month-head button{display:grid;place-items:center;height:38px;width:38px;border:1px solid #776040;background:#221e18;border-radius:10px;color:#e8bd78;font-size:20px}
+.eixo-calendar-month-head button:hover:not(:disabled){background:#3e2e1c}
+.eixo-calendar-month-head button:disabled{opacity:.3;cursor:not-allowed}
+.eixo-calendar-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.eixo-calendar-weekday{display:grid;place-items:center;text-align:center;font-size:10px;font-weight:800;color:#9d9285;padding-bottom:8px}
+.eixo-calendar-blank{aspect-ratio:1;min-width:0}
+.eixo-calendar-day{min-width:0;min-height:44px;aspect-ratio:1;background:#18191b;border:1px solid #3b3430;border-radius:10px;color:#e4d9cb;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;transition:background .15s,border-color .15s}
+.eixo-calendar-day>span:first-child{font-size:13px;font-weight:800}
+.eixo-calendar-day.today{border-color:#af8a56}
+.eixo-calendar-day.has-entry{background:#2e251a}
+.eixo-calendar-day.selected{border-color:#f7d38b;background:#5c4425;box-shadow:inset 0 0 0 1px #d5ad6b}
+.eixo-calendar-day:hover:not(:disabled){border-color:#e2b679}
+.eixo-calendar-day:disabled{color:#5b5651;background:#141416;cursor:not-allowed;opacity:.55}
+.eixo-calendar-day-markers{height:6px;display:flex;gap:3px}
+.eixo-calendar-day-markers i{height:5px;width:5px;border-radius:50%;display:inline-block;flex-shrink:0}
+.eixo-calendar-marker-move{background:#ddb66f}
+.eixo-calendar-marker-intimacy{background:#c994b0}
+.eixo-calendar-marker-mood{background:#70bb9c}
+.eixo-calendar-legend{display:flex;gap:15px;flex-wrap:wrap;border-top:1px solid #3a3128;margin-top:22px;padding-top:16px}
+.eixo-calendar-legend>span{display:flex;align-items:center;gap:7px;font-size:10px;color:#b9a894}
+.eixo-calendar-legend i{display:inline-block;height:7px;width:7px;border-radius:50%}
+.eixo-calendar-load,.eixo-calendar-error,.eixo-calendar-success{font-size:12px;line-height:1.55;padding:12px;border-radius:9px;margin:13px 0}
+.eixo-calendar-load{color:#c5b9a5}.eixo-calendar-error{background:#44261d;color:#ffd1b9;border:1px solid #89553f}
+.eixo-calendar-error button{text-decoration:underline;margin-left:6px;color:inherit;border:0;background:transparent}
+.eixo-calendar-success{background:#183225;color:#bbebcb;border:1px solid #42765c}
+.eixo-calendar-editor>h3{font-size:21px;letter-spacing:-.6px;text-transform:capitalize;margin:9px 0 6px}
+.eixo-calendar-editor-description{font-size:12px;color:#b4a897;line-height:1.65;margin:0 0 23px}
+.eixo-calendar-editor>form{display:flex;flex-direction:column;gap:20px}
+.eixo-calendar-choice-field,.eixo-calendar-moods{border:0;padding:0;min-width:0;margin:0}
+.eixo-calendar-choice-field legend,.eixo-calendar-moods legend{font-size:12px;font-weight:900;color:#efe2ce;margin-bottom:11px}
+.eixo-calendar-choice-options{display:flex;gap:7px;flex-wrap:wrap}
+.eixo-calendar-choice-options button{border-radius:9px;border:1px solid #534638;background:#171719;color:#bcaea1;padding:10px 14px;font-size:11px;font-weight:850}
+.eixo-calendar-choice-options button.active{border-color:#e3b66f;background:#4a3720;color:#f2d79d}
+.eixo-calendar-choice-options button.active.muted{background:#292522}
+.eixo-calendar-minutes{font-size:12px;font-weight:850;color:#e7daca;display:flex;flex-direction:column;gap:9px}
+.eixo-calendar-minutes>span{display:flex;align-items:center;gap:9px}
+.eixo-calendar-minutes input{width:120px;min-height:43px;border-radius:9px;border:1px solid #695136;background:#111214;color:#f4eee4;padding:9px 13px;font-size:15px;outline:none;color-scheme:dark}
+.eixo-calendar-minutes small{font-size:11px;font-weight:500;color:#a69a89}
+.eixo-calendar-moods>div{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.eixo-calendar-moods button{padding:10px 4px;border-radius:10px;border:1px solid #483b2f;background:#181819;color:#b9aa96;display:flex;flex-direction:column;gap:6px;align-items:center;font-size:9px;font-weight:800;min-width:0}
+.eixo-calendar-moods button span{font-size:22px}
+.eixo-calendar-moods button.active{background:#3d3120;border-color:#e3b66f;color:#f7d69b}
+.eixo-calendar-consent{display:flex;align-items:flex-start;gap:12px;font-size:11px;color:#c7bbaa;line-height:1.7;padding:15px;background:#2b241c;border:1px solid #5c4830;border-radius:10px}
+.eixo-calendar-consent input{accent-color:#d9b471;width:17px;height:17px;flex-shrink:0;margin-top:2px}
+.eixo-calendar-save{width:100%;min-height:52px;border:1px solid #f2d39a;border-radius:9px;background:linear-gradient(110deg,#cfa45f,#f0d18a);display:flex;align-items:center;justify-content:space-between;padding:13px 17px;font-size:12px;font-weight:950;letter-spacing:.4px;color:#1a1511}
+.eixo-calendar-save:disabled{opacity:.6;cursor:wait}
+.eixo-calendar-delete{border:0;background:transparent;color:#c2a592;text-decoration:underline;font-size:12px;align-self:center;padding:5px}
+.eixo-calendar-insights{border:1px solid #655037;border-radius:15px;background:linear-gradient(110deg,#272218,#191919);padding:21px;display:flex;align-items:flex-start;gap:14px}
+.eixo-calendar-insight-icon{font-size:24px;color:#e0b977}
+.eixo-calendar-insights>div>span{font-size:10px;font-weight:950;letter-spacing:1.3px;color:#d4a667}
+.eixo-calendar-insights p{font-size:14px;color:#f2e5d2;line-height:1.6;margin:9px 0}
+.eixo-calendar-insights small{color:#aa9e91;font-size:10px;line-height:1.6;display:block}
+.eixo-calendar-privacy-row{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #3b3227;padding:17px 0}
+.eixo-calendar-privacy-row p{font-size:11px;color:#a89b8a;line-height:1.7;max-width:730px}
+.eixo-calendar-privacy-row button{white-space:nowrap;padding:10px 14px;background:transparent;border:1px solid #65413e;border-radius:8px;color:#e0b9ad;font-size:11px}
+.eixo-calendar-privacy-row button:disabled{opacity:.4}
+.eixo-calendar-preview{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:25px 28px;border:1px solid #635035;border-radius:16px;background:linear-gradient(112deg,#24201b,#191919);color:#f4e8d9}
+.eixo-calendar-preview-left{max-width:520px}
+.eixo-calendar-preview h3{font-weight:950;letter-spacing:-.7px;font-size:27px;margin:9px 0 8px}
+.eixo-calendar-preview p{color:#b7a99b;font-size:12px;line-height:1.7;max-width:475px;margin:0 0 16px}
+.eixo-calendar-action{background:#dfb978;border:1px solid #f1d095;border-radius:9px;display:flex;align-items:center;gap:15px;justify-content:space-between;padding:12px 16px;color:#22180f;font-weight:950;font-size:11px;min-width:225px}
+.eixo-calendar-preview-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;min-width:min(390px,50%);}
+.eixo-calendar-preview-stats>div{border:1px solid #4a3a27;background:#191715;border-radius:10px;padding:14px 11px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.eixo-calendar-preview-stats span{font-size:9px;letter-spacing:1px;color:#b29b76;font-weight:900}
+.eixo-calendar-preview-stats strong{font-size:22px;color:#f2ce8a;white-space:nowrap}
+.eixo-calendar-preview-stats .eixo-calendar-preview-status strong{font-size:12px;white-space:normal;line-height:1.4}
+.eixo-calendar-preview-stats>small{font-size:10px;color:#d8ac8a;grid-column:1/-1}
+@media(max-width:1050px){
+ .eixo-calendar-preview{flex-direction:column;align-items:stretch}
+ .eixo-calendar-preview-stats{min-width:0;width:100%}
+ .eixo-calendar-main-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+ .eixo-calendar-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .eixo-calendar-heading{align-items:flex-start;flex-direction:column}
+ .eixo-calendar-board,.eixo-calendar-editor{padding:19px 15px}
+ .eixo-calendar-month-head h3{font-size:20px}
+ .eixo-calendar-days{gap:3px}
+ .eixo-calendar-day{min-height:42px;border-radius:8px}
+ .eixo-calendar-privacy-row{flex-direction:column;align-items:stretch}
+ .eixo-calendar-privacy-row button{white-space:normal}
+}
+@media(max-width:390px){
+ .eixo-calendar-moods>div{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .eixo-calendar-choice-options button{padding:9px;font-size:10px}
+ .eixo-calendar-preview-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .eixo-calendar-preview-status{grid-column:1/-1}
+}

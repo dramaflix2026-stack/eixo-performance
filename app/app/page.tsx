@@ -11,12 +11,13 @@ import {EixoMediaLibrary} from "./media-library";
 import {EixoContextualInsights} from "./member-insights";
 import {EixoTraining} from "./member-training";
 import {EixoNutrition} from "./member-nutrition";
+import {EixoExperienceHub,EixoSos} from "./experience-hub";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
 type Dashboard={email:string;memberRole?:"student"|"admin_master";profile:MemberProfile|null;completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
-type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"calendario"|"progresso"|"midia"|"orientacoes"|"treinos"|"alimentacao"|"perfil";
-const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Catálogo","▤"],["roteiro","Jornada","◈"],["bonus","Bônus","✦"],["calendario","Calendário","▦"],["progresso","Progresso","◷"],["midia","Vídeos e áudios","▶"],["orientacoes","Orientações","✦"],["treinos","Treinos","◉"],["alimentacao","Alimentação","♧"],["perfil","Perfil","◎"]];
+type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"calendario"|"progresso"|"midia"|"orientacoes"|"treinos"|"alimentacao"|"perfil"|"ferramentas"|"sos";
+const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Explorar","▤"],["roteiro","Minha Jornada","◈"],["calendario","Meu Diário","▦"],["ferramentas","Ferramentas","✦"],["perfil","Meu Perfil","◎"]];
 
 function Logo(){return <Link href="/" className="eixo-member-logo" aria-label="Método EIXO">EI<span>X</span>O<span className="eixo-member-logo-dot">.</span></Link>}
 
@@ -117,6 +118,9 @@ export default function EixoMembersPage(){
           {tab==="progresso"&&<EixoJourney lessons={data.lessons} completedDays={completed} onOpenLesson={openLesson}/>}
           {tab==="midia"&&<EixoMediaLibrary/>}
           {tab==="orientacoes"&&<EixoContextualInsights profile={data.profile} completedDays={completed} onOpenLesson={openLesson} onOpenCalendar={()=>setTab("calendario")}/>}
+          {tab==="ferramentas"&&<EixoExperienceHub onOpen={id=>{setTab(id);window.scrollTo({top:0,behavior:"smooth"});}}/>}
+          {tab==="sos"&&<EixoSos/>}
+          {(["sos","orientacoes","treinos","alimentacao"] as Tab[]).includes(tab)&&<button type="button" className="eixo-member-back" onClick={()=>setTab("ferramentas")}>← Voltar às ferramentas</button>}
           {tab==="treinos"&&<EixoTraining dailyMinutes={data.profile.dailyMinutes}/>}
           {tab==="alimentacao"&&<EixoNutrition/>}
           {tab==="perfil"&&<section className="eixo-member-profile" aria-label="Editar meus dados">

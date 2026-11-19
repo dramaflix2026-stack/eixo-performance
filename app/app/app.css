@@ -212,3 +212,22 @@
  .eixo-member-member-chip{display:none}
  .eixo-member-tabs button{padding:9px 11px}
 }
+
+/* Stage 4.1: align the private overline and navigation as one compact header */
+.eixo-member-overline{width:min(1100px,calc(100% - 44px));margin:0 auto;padding:12px 0 9px;align-items:center;line-height:1.35}
+.eixo-member-tabs{min-height:64px;padding:8px max(22px,calc((100vw - 1100px)/2));justify-content:center;gap:7px}
+.eixo-member-tabs button{padding:12px 17px;display:inline-flex;align-items:center;justify-content:center;gap:9px;line-height:1.2}
+.eixo-member-tabs button span{font-size:16px;line-height:1;margin:0}
+.eixo-member-tabs button.active{box-shadow:0 3px 15px #0003}
+.eixo-member-content{margin-top:34px}
+@media(max-width:1100px){
+ .eixo-member-tabs{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#695033 transparent;padding:8px 22px}
+}
+@media(max-width:700px){
+ .eixo-member-overline{width:calc(100% - 30px);margin:0 auto;padding:9px 0;font-size:8px;letter-spacing:1px}
+ .eixo-member-overline span:last-child{display:none}
+ .eixo-member-tabs{min-height:54px;padding:6px 12px;gap:5px}
+ .eixo-member-tabs button{padding:10px 12px;font-size:11px;gap:6px}
+ .eixo-member-tabs button span{font-size:14px}
+ .eixo-member-content{margin-top:19px}
+}

@@ -12,7 +12,7 @@
 .eixo-catalog-featured-count{position:absolute;right:30px;bottom:25px;text-align:right;display:flex;flex-direction:column;gap:3px}
 .eixo-catalog-featured-count strong{font-size:30px;color:#ecc786}.eixo-catalog-featured-count span{color:#a79273;font-size:8px;font-weight:900;letter-spacing:1px}
 .eixo-catalog-rail{min-width:0}
-.eixo-catalog-rail-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:22px}
+.eixo-catalog-rail-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:22px}
 .eixo-catalog-rail-head h3{font-size:clamp(24px,2.7vw,36px);line-height:1.1;letter-spacing:-.8px;margin:12px 0 8px;color:#f3e9de}
 .eixo-catalog-rail-head p{margin:0;font-size:13px;color:#aba193}
 .eixo-catalog-rail-actions{display:flex;gap:8px}

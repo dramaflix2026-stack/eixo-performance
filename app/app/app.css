@@ -174,3 +174,41 @@
  .eixo-member-tabs button{font-size:10px;padding:10px 11px}
  .eixo-member-content:has(.eixo-member-home){width:min(1240px,calc(100% - 28px))}
 }
+
+/* EIXO stage 4: responsive shell and visual hierarchy */
+.eixo-member-heading-compact{margin-top:28px;margin-bottom:24px}
+.eixo-member-heading-compact h1{font-size:clamp(31px,4vw,48px);letter-spacing:-1.5px;margin:10px 0}
+.eixo-member-heading-compact>div:first-child>p{font-size:13px}
+.eixo-member-page{overflow-x:clip}
+.eixo-member-tabs{scroll-padding-inline:18px}
+.eixo-member-tabs button{transition:background .2s,color .2s,border-color .2s}
+.eixo-member-content{scroll-margin-top:90px}
+.eixo-member-page button:disabled{cursor:not-allowed}
+@media(max-width:900px){
+ .eixo-member-tabs{justify-content:flex-start;overflow-x:auto;overflow-y:hidden;max-width:100%;padding:9px 18px;gap:5px}
+ .eixo-member-tabs button{flex:0 0 auto;min-height:43px;padding:11px 15px}
+ .eixo-member-tabs button span{font-size:16px;margin-right:4px}
+ .eixo-member-heading-compact{margin-bottom:20px}
+}
+@media(max-width:700px){
+ .eixo-member-header-inner,.eixo-member-overline,.eixo-member-heading,.eixo-member-content,.eixo-member-privacy{width:calc(100% - 30px)}
+ .eixo-member-overline{margin-top:18px}
+ .eixo-member-heading-compact{margin-top:18px;margin-bottom:14px}
+ .eixo-member-heading-compact h1{font-size:32px;letter-spacing:-1px}
+ .eixo-member-heading-compact>div:first-child>p{font-size:12px}
+ .eixo-member-content{margin-top:20px;margin-bottom:40px;min-height:400px}
+ .eixo-member-tabs{min-height:57px;gap:6px;padding:7px 12px}
+ .eixo-member-tabs button{font-size:11px;min-height:41px;padding:10px 12px}
+ .eixo-member-header-right{gap:8px}
+ .eixo-member-member-chip{font-size:8px;letter-spacing:0}
+ .eixo-member-logo{font-size:24px}
+ .eixo-member-section-heading{margin-bottom:23px}
+ .eixo-member-section-heading h2{font-size:clamp(28px,8vw,38px)}
+ .eixo-member-lesson,.eixo-member-bonus-detail{min-width:0}
+ .eixo-member-privacy{padding:14px}
+}
+@media(max-width:390px){
+ .eixo-member-header-inner{gap:8px}
+ .eixo-member-member-chip{display:none}
+ .eixo-member-tabs button{padding:9px 11px}
+}

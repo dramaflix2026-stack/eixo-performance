@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import {useCallback,useEffect,useMemo,useState} from "react";
+import {useCallback,useEffect,useState} from "react";
 import "./app.css";
 import {MemberOnboarding,type MemberProfile} from "./member-onboarding";
 import {MemberCatalog} from "./member-catalog";
-import {EixoMemberCalendar,EixoCalendarPreview} from "./member-calendar";
+import {EixoMemberCalendar} from "./member-calendar";
 import {EixoJourney} from "./member-journey";
 import {EixoMediaLibrary} from "./media-library";
 import {EixoContextualInsights} from "./member-insights";
@@ -51,10 +51,6 @@ export default function EixoMembersPage(){
 
   const completed=data?.completedDays||[];
   const percent=Math.round(completed.length/7*100);
-  const currentDay=useMemo(()=>{
-    for(let n=1;n<=7;n++)if(!completed.includes(n))return n;
-    return 7;
-  },[completed]);
   const lesson=data?.lessons.find(l=>l.day===selectedDay);
   const bonus=data?.bonuses.find(b=>b.id===selectedBonus);
   async function toggleCompletion(day:number){
@@ -78,6 +74,8 @@ export default function EixoMembersPage(){
     try{await fetch("/api/eixo/auth/logout",{method:"POST",credentials:"same-origin"});}catch{}
     window.location.replace("/login");
   }
+  const activeNav:Tab=tab==="bonus"||tab==="midia"?"catalogo":tab==="progresso"?"roteiro":(["sos","orientacoes","treinos","alimentacao"] as Tab[]).includes(tab)?"ferramentas":tab;
+  function navigate(next:Tab){setTab(next);setSelectedBonus(null);window.scrollTo({top:0,behavior:"smooth"});}
   function openLesson(day:number){setSelectedDay(day);setSelectedBonus(null);setTab("roteiro");window.scrollTo({top:0,behavior:"smooth"});}
   function openBonus(id:number){setSelectedBonus(id);setTab("bonus");window.scrollTo({top:0,behavior:"smooth"});}
 
@@ -90,15 +88,12 @@ export default function EixoMembersPage(){
       !data.profile?<MemberOnboarding onComplete={load}/>:
       <>
         <section className="eixo-member-overline"><span>✦ EIXO / ESPAÇO PRIVADO</span><span>UMA JORNADA NO SEU RITMO</span></section>
-        <section className="eixo-member-heading">
-          <div><span className="eixo-member-kicker">BEM-VINDO DE VOLTA · {data.profile.fullName.split(" ")[0].toUpperCase()}</span><h1>Seu espaço.<br/><em>Seu ritmo.</em></h1><p>Um catálogo de experiências e orientações para explorar no seu tempo. O que importa aqui é cuidar de você, sem competir com ninguém.</p></div>
-          <div className="eixo-member-profile-stat"><div className="eixo-member-progress-ring" style={{"--p":percent+"%"} as React.CSSProperties}><strong>{percent}%</strong><small>CONCLUÍDO</small></div><strong>Seu progresso</strong><span>{completed.length} de 7 etapas realizadas</span></div>
-        </section>
+        {tab!=="inicio"&&<section className="eixo-member-heading eixo-member-heading-compact"><div><span className="eixo-member-kicker">MÉTODO EIXO · {NAV.find(([key])=>key===activeNav)?.[1].toUpperCase()}</span><h1>{NAV.find(([key])=>key===activeNav)?.[1]}<em>.</em></h1><p>Explore este espaço no seu próprio ritmo.</p></div></section>}
         <nav className="eixo-member-tabs" aria-label="Navegação da área de membros">
-          {NAV.map(([key,label,symbol])=><button key={key} type="button" className={tab===key?"active":""} onClick={()=>{setTab(key);setSelectedBonus(null);}} aria-current={tab===key?"page":undefined}><span aria-hidden="true">{symbol}</span> {label}</button>)}
+          {NAV.map(([key,label,symbol])=><button key={key} type="button" className={activeNav===key?"active":""} onClick={()=>navigate(key)} aria-current={activeNav===key?"page":undefined}><span aria-hidden="true">{symbol}</span> {label}</button>)}
         </nav>
         <div className="eixo-member-content">
-          {tab==="inicio"&&<EixoMemberHome firstName={data.profile.fullName.split(" ")[0]} completedDays={completed} lessons={data.lessons} onExplore={()=>setTab("catalogo")} onJourney={openLesson} onCalendar={()=>setTab("calendario")} onTools={()=>setTab("ferramentas")}/>}
+          {tab==="inicio"&&<EixoMemberHome firstName={data.profile.fullName.split(" ")[0]} completedDays={completed} lessons={data.lessons} onExplore={()=>navigate("catalogo")} onJourney={openLesson} onCalendar={()=>navigate("calendario")} onTools={()=>navigate("ferramentas")}/>}
           {tab==="catalogo"&&<section className="eixo-member-home" aria-label="Explorar biblioteca do Método EIXO"><MemberCatalog firstName={data.profile.fullName.split(" ")[0]} goal={data.profile.primaryGoal} completedDays={completed} lessons={data.lessons} bonuses={data.bonuses} onOpenLesson={openLesson} onOpenBonus={openBonus}/></section>}
           {tab==="roteiro"&&<section className="eixo-member-learn" aria-labelledby="eixo-member-learn-title">
             <div className="eixo-member-section-heading"><span>02 / SEU ROTEIRO</span><h2 id="eixo-member-learn-title">Sete dias para <em>se observar.</em></h2><p>Abra cada dia para ler as orientações e marque como concluído quando terminar.</p></div>

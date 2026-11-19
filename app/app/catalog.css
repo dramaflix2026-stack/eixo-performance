@@ -1,0 +1,43 @@
+
+.eixo-catalog{display:flex;flex-direction:column;gap:58px}
+.eixo-catalog-featured{position:relative;isolation:isolate;min-height:360px;overflow:hidden;border:1px solid #594325;border-radius:22px;background:#171717;display:flex;align-items:center;padding:43px 48px;box-shadow:0 22px 55px #0007}
+.eixo-catalog-featured-photo{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(90deg,#0e1011 5%,#101011e8 35%,#0f111195 62%,#0d101140),url("/images/hero.jpg");background-size:cover;background-position:center 30%}
+.eixo-catalog-featured-copy{width:min(590px,100%);position:relative;z-index:1}
+.eixo-catalog-kicker,.eixo-catalog-rail-head>div:first-child>span{color:#e4b970;font-size:10px;font-weight:900;letter-spacing:1.6px}
+.eixo-catalog-featured h2{font-size:clamp(36px,4.4vw,62px);line-height:1.01;letter-spacing:-2px;font-weight:950;margin:17px 0}.eixo-catalog-featured h2 em{font-style:normal;color:#e6ba72}
+.eixo-catalog-featured p{font-size:14px;line-height:1.75;max-width:490px;color:#c9c1b7}
+.eixo-catalog-featured-meta{display:flex;gap:9px;margin:23px 0}
+.eixo-catalog-featured-meta span{font-size:10px;color:#e0bd81;border:1px solid #665038;background:#211d1acc;border-radius:30px;padding:8px 10px;font-weight:900}
+.eixo-catalog-featured-cta{padding:15px 20px;min-height:54px;border-radius:10px;border:1px solid #f0d08d;color:#17130e;background:linear-gradient(115deg,#d3a661,#f0d18d);font-weight:950;font-size:12px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.eixo-catalog-featured-count{position:absolute;right:30px;bottom:25px;text-align:right;display:flex;flex-direction:column;gap:3px}
+.eixo-catalog-featured-count strong{font-size:30px;color:#ecc786}.eixo-catalog-featured-count span{color:#a79273;font-size:8px;font-weight:900;letter-spacing:1px}
+.eixo-catalog-rail{min-width:0}
+.eixo-catalog-rail-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:22px}
+.eixo-catalog-rail-head h3{font-size:clamp(24px,2.7vw,36px);line-height:1.1;letter-spacing:-.8px;margin:12px 0 8px;color:#f3e9de}
+.eixo-catalog-rail-head p{margin:0;font-size:13px;color:#aba193}
+.eixo-catalog-rail-actions{display:flex;gap:8px}
+.eixo-catalog-rail-actions button{height:38px;width:38px;flex-shrink:0;border-radius:50%;background:#1c1b1b;color:#f1ca8a;border:1px solid #5b462b;font-size:18px}
+.eixo-catalog-rail-actions button:hover{background:#3a2b1b}
+.eixo-catalog-track{display:flex;gap:15px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;padding-bottom:15px;scrollbar-width:thin;scrollbar-color:#695033 #151515}
+.eixo-catalog-poster{flex:0 0 180px;min-width:180px;height:345px;scroll-snap-align:start;position:relative;overflow:hidden;border:1px solid #705735;background:#171514;border-radius:13px;padding:0;color:#fcf1e2;text-align:left;transition:transform .18s,border-color .18s}
+.eixo-catalog-poster:hover{transform:translateY(-4px);border-color:#f0cf91}
+.eixo-catalog-poster-media{position:absolute;inset:0 0 42px;background-size:cover;background-repeat:no-repeat;background-color:#36302a}
+.eixo-catalog-poster:after{content:"";position:absolute;inset:0 0 42px;pointer-events:none;background:linear-gradient(0deg,#0a0a0aea 0%,transparent 57%),linear-gradient(90deg,#b7793a22,transparent 75%)}
+.eixo-poster-navy:after{background:linear-gradient(0deg,#070b14f5,transparent 65%),linear-gradient(90deg,#1f3a5c66,transparent)}
+.eixo-poster-wine:after{background:linear-gradient(0deg,#13060afa,transparent 65%),linear-gradient(90deg,#6e1c3266,transparent)}
+.eixo-poster-forest:after{background:linear-gradient(0deg,#07110cf5,transparent 60%),linear-gradient(90deg,#22533a55,transparent)}
+.eixo-poster-copper:after{background:linear-gradient(0deg,#1c0e07f5,transparent 65%),linear-gradient(90deg,#a54a2255,transparent)}
+.eixo-catalog-poster-top{position:absolute;top:15px;left:14px;right:12px;display:flex;justify-content:space-between;gap:8px;z-index:2;color:#f6d18e;font-size:9px;letter-spacing:1.3px;font-weight:950}
+.eixo-catalog-poster-top span span{color:#f5f1ea}
+.eixo-catalog-poster-bottom{position:absolute;z-index:2;bottom:58px;left:12px;right:12px;display:flex;flex-direction:column;gap:8px}
+.eixo-catalog-poster-symbol{font-size:27px;color:#ebc37d}
+.eixo-catalog-poster-category{font-size:9px;letter-spacing:1px;color:#e6bd79;font-weight:950}
+.eixo-catalog-poster-bottom strong{font-size:clamp(14px,1.4vw,18px);line-height:1.15;text-shadow:0 2px 5px #000b;font-weight:950}
+.eixo-catalog-poster-duration{font-size:9px;color:#f1d5a6;font-weight:900;letter-spacing:.8px}
+.eixo-catalog-poster-caption{position:absolute;bottom:0;left:0;right:0;height:42px;display:flex;align-items:center;justify-content:space-between;background:#181614;padding:0 12px;z-index:3;gap:5px}
+.eixo-catalog-poster-caption strong{font-size:9px;letter-spacing:1px;color:#d6b982}.eixo-catalog-poster-caption>span{color:#efc683;font-size:10px;font-weight:900;white-space:nowrap}
+.eixo-catalog-completed{position:absolute;z-index:4;top:35px;right:10px;border-radius:5px;padding:5px;background:#1c5d3a;color:#adf5c7;font-size:8px;font-weight:900}
+.eixo-catalog-media-note{display:flex;gap:16px;align-items:flex-start;border:1px solid #4e3d2c;background:#211d17;border-radius:15px;padding:21px 25px}
+.eixo-catalog-media-note-icon{color:#dcb779;font-size:25px}.eixo-catalog-media-note strong{font-size:13px;color:#ebd7b5}.eixo-catalog-media-note p{font-size:12px;line-height:1.6;margin:5px 0 0;color:#a99b88}
+@media(max-width:750px){.eixo-catalog-featured{min-height:355px;padding:25px 24px}.eixo-catalog-featured-photo{background-image:linear-gradient(90deg,#0e1011fa,#101011d6 75%,#0f111194),url("/images/hero.jpg")}.eixo-catalog-featured-count{right:22px;bottom:12px}.eixo-catalog-featured-copy{padding-bottom:18px}}
+@media(max-width:480px){.eixo-catalog{gap:41px}.eixo-catalog-featured{padding:22px 18px;min-height:345px}.eixo-catalog-featured h2{font-size:37px}.eixo-catalog-featured p{font-size:12px}.eixo-catalog-featured-meta{margin:14px 0}.eixo-catalog-featured-cta{font-size:10px}.eixo-catalog-featured-count{display:none}.eixo-catalog-poster{flex-basis:157px;min-width:157px;height:309px}.eixo-catalog-rail-actions{display:none}.eixo-catalog-track{gap:11px}.eixo-catalog-poster-bottom strong{font-size:16px}.eixo-catalog-rail-head h3{font-size:27px}}

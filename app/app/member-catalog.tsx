@@ -8,7 +8,7 @@ type Bonus={id:number;title:string;subtitle:string;duration:string};
 type CatalogProps={
  firstName:string;goal:string;completedDays:number[];
  lessons:Lesson[];bonuses:Bonus[];
- onOpenLesson:(day:number)=>void;onOpenBonus:(id:number)=>void;
+ onOpenLesson:(day:number)=>void;onOpenBonus:(id:number)=>void;checkinPreview?:React.ReactNode;
 };
 type Cover={image:string;filter:string;position:string;theme:string;label:string};
 const lessonCovers:Cover[]=[
@@ -45,7 +45,7 @@ function Poster({cover,kicker,title,number,caption,completed,onClick}:{cover:Cov
    <div className="eixo-catalog-poster-caption"><strong>{caption}</strong><span>ABRIR ↗</span></div>
  </button>;
 }
-export function MemberCatalog({firstName,goal,completedDays,lessons,bonuses,onOpenLesson,onOpenBonus}:CatalogProps){
+export function MemberCatalog({firstName,goal,completedDays,lessons,bonuses,onOpenLesson,onOpenBonus,checkinPreview}:CatalogProps){
  const current=lessons.find(l=>!completedDays.includes(l.day))||lessons[6]||lessons[0];
  const goalLabel:{[key:string]:string}={confianca:"confiança",presenca:"presença",dialogo:"conexão",rotina:"bem-estar"};
  return <section className="eixo-catalog" aria-label="Catálogo de conteúdos do Método EIXO">
@@ -61,6 +61,7 @@ export function MemberCatalog({firstName,goal,completedDays,lessons,bonuses,onOp
    <div className="eixo-catalog-featured-count"><strong>{String(completedDays.length).padStart(2,"0")}/07</strong><span>DIAS CONCLUÍDOS</span></div>
   </div>
 
+  {checkinPreview}
   <Rail title="Sua jornada, um dia por vez" eyebrow="01 / CONTINUE ASSISTINDO E EXPLORANDO" description="Sete etapas com atividades práticas e reflexões.">
    {lessons.map((l,i)=><Poster key={l.day} cover={lessonCovers[i]||lessonCovers[0]} kicker={"DIA "+String(l.day).padStart(2,"0")+" · "+l.estimatedMinutes+" MIN"} title={l.title} number={String(l.day).padStart(2,"0")+"/07"} caption={l.phase} completed={completedDays.includes(l.day)} onClick={()=>onOpenLesson(l.day)}/>)}
   </Rail>

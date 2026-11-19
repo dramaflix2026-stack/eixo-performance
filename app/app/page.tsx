@@ -8,12 +8,13 @@ import {MemberCatalog} from "./member-catalog";
 import {EixoMemberCalendar,EixoCalendarPreview} from "./member-calendar";
 import {EixoJourney} from "./member-journey";
 import {EixoMediaLibrary} from "./media-library";
+import {EixoContextualInsights} from "./member-insights";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
 type Dashboard={email:string;memberRole?:"student"|"admin_master";profile:MemberProfile|null;completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
-type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"calendario"|"progresso"|"midia"|"perfil";
-const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Catálogo","▤"],["roteiro","Jornada","◈"],["bonus","Bônus","✦"],["calendario","Calendário","▦"],["progresso","Progresso","◷"],["midia","Vídeos e áudios","▶"],["perfil","Perfil","◎"]];
+type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"calendario"|"progresso"|"midia"|"orientacoes"|"perfil";
+const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Catálogo","▤"],["roteiro","Jornada","◈"],["bonus","Bônus","✦"],["calendario","Calendário","▦"],["progresso","Progresso","◷"],["midia","Vídeos e áudios","▶"],["orientacoes","Orientações","✦"],["perfil","Perfil","◎"]];
 
 function Logo(){return <Link href="/" className="eixo-member-logo" aria-label="Método EIXO">EI<span>X</span>O<span className="eixo-member-logo-dot">.</span></Link>}
 
@@ -113,6 +114,7 @@ export default function EixoMembersPage(){
           {tab==="calendario"&&<EixoMemberCalendar/>}
           {tab==="progresso"&&<EixoJourney lessons={data.lessons} completedDays={completed} onOpenLesson={openLesson}/>}
           {tab==="midia"&&<EixoMediaLibrary/>}
+          {tab==="orientacoes"&&<EixoContextualInsights profile={data.profile} completedDays={completed} onOpenLesson={openLesson} onOpenCalendar={()=>setTab("calendario")}/>}
           {tab==="perfil"&&<section className="eixo-member-profile" aria-label="Editar meus dados">
             <div className="eixo-member-section-heading"><span>07 / CONTA E PREFERÊNCIAS</span><h2>Meu perfil <em>privado.</em></h2><p>Você pode atualizar seus dados pessoais e o foco das orientações quando quiser. Informações de saúde ou intimidade não são solicitadas aqui.</p></div>
             <MemberOnboarding initial={data.profile} onComplete={async()=>{await load();setTab("inicio");}}/>

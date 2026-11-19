@@ -49,10 +49,6 @@ export async function GET(request:NextRequest){
     const start=month+"-01";
     const [y,m]=month.split("-").map(Number);
     const next=(m===12?y+1:y)+"-"+String(m===12?1:m+1).padStart(2,"0")+"-01";
-    const qs=new URLSearchParams({select:"entry_date,did_exercise,had_intimacy,intimacy_minutes,mood",
-      user_id:"eq."+auth.session.user.id,entry_date:"gte."+start,"entry_date.lt":next});
-    // PostgREST needs two filters for the same column; URLSearchParams supports them.
-    qs.delete("entry_date.lt");
     const query="user_id=eq."+encodeURIComponent(auth.session.user.id)+
       "&entry_date=gte."+start+"&entry_date=lt."+next+
       "&select=entry_date,did_exercise,had_intimacy,intimacy_minutes,mood&order=entry_date.asc";
@@ -85,7 +81,7 @@ export async function POST(request:NextRequest){
       !([null,true,false] as unknown[]).includes(hadIntimacy)||
       !([null,"calmo","confiante","ansioso","cansado","neutro"] as unknown[]).includes(mood)||
       (didExercise===null&&hadIntimacy===null&&mood===null)||
-      (duration!==null&&(!Number.isInteger(duration)||Number(duration)<1||Number(duration)>180||hadIntimacy!==true))||
+      (duration!==null&&(typeof duration!=="number"||!Number.isInteger(duration)||duration<1||duration>180||hadIntimacy!==true))||
       value.consent!==true){
       return NextResponse.json({message:"Confira o dia, os campos e a autorização para salvar os registros privados."},{status:400,headers:noStore});
     }

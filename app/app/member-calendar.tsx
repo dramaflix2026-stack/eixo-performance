@@ -91,7 +91,6 @@ export function EixoMemberCalendar(){
   setDuration(row?.durationMinutes?String(row.durationMinutes):"");
   setMood(row?.mood??null);
   setConsent(false);
-  setMessage("");
  },[selected,entries]);
  const days=useMemo(()=>{
   const year=Number(month.slice(0,4)),index=Number(month.slice(5,7))-1;
@@ -115,6 +114,7 @@ export function EixoMemberCalendar(){
   const target=nextMonth(month,offset);
   if(target<"2020-01"||target>monthOf(currentDate()))return;
   setMonth(target);
+  setMessage("");
   setSelected(target===monthOf(currentDate())?iso(currentDate()):target+"-01");
  }
  async function save(e:FormEvent<HTMLFormElement>){
@@ -190,7 +190,7 @@ export function EixoMemberCalendar(){
        return <button key={date} type="button" role="gridcell" disabled={disabled} aria-selected={selected===date}
          aria-label={String(i+1)+" de "+monthLabel(month)+(entry?", com registro":"")}
          className={["eixo-calendar-day",selected===date?"selected":"",entry?"has-entry":"",date===today?"today":""].join(" ")}
-         onClick={()=>setSelected(date)}>
+         onClick={()=>{setSelected(date);setMessage("");}}>
          <span>{i+1}</span><span className="eixo-calendar-day-markers" aria-hidden="true">
            {entry?.didExercise===true&&<i className="eixo-calendar-marker-move"/>}
            {entry?.hadIntimacy===true&&<i className="eixo-calendar-marker-intimacy"/>}

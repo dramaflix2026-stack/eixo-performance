@@ -5,12 +5,13 @@ import {useCallback,useEffect,useMemo,useState} from "react";
 import "./app.css";
 import {MemberOnboarding,type MemberProfile} from "./member-onboarding";
 import {MemberCatalog} from "./member-catalog";
+import {EixoMemberCalendar,EixoCalendarPreview} from "./member-calendar";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
 type Dashboard={email:string;memberRole?:"student"|"admin_master";profile:MemberProfile|null;completedDays:number[];lessons:Lesson[];bonuses:Bonus[];notice:string};
-type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"progresso"|"perfil";
-const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Catálogo","▤"],["roteiro","Jornada","◈"],["bonus","Bônus","✦"],["progresso","Progresso","◷"],["perfil","Perfil","◎"]];
+type Tab="inicio"|"catalogo"|"roteiro"|"bonus"|"calendario"|"progresso"|"perfil";
+const NAV:[Tab,string,string][]=[["inicio","Início","⌂"],["catalogo","Catálogo","▤"],["roteiro","Jornada","◈"],["bonus","Bônus","✦"],["calendario","Calendário","▦"],["progresso","Progresso","◷"],["perfil","Perfil","◎"]];
 
 function Logo(){return <Link href="/" className="eixo-member-logo" aria-label="Método EIXO">EI<span>X</span>O<span className="eixo-member-logo-dot">.</span></Link>}
 
@@ -92,7 +93,8 @@ export default function EixoMembersPage(){
           {(tab==="inicio"||tab==="catalogo")&&<section className="eixo-member-home" aria-label="Biblioteca e jornada do Método EIXO">
             <MemberCatalog firstName={data.profile.fullName.split(" ")[0]} goal={data.profile.primaryGoal}
               completedDays={completed} lessons={data.lessons} bonuses={data.bonuses}
-              onOpenLesson={openLesson} onOpenBonus={openBonus}/>
+              onOpenLesson={openLesson} onOpenBonus={openBonus}
+              checkinPreview={<EixoCalendarPreview openCalendar={()=>{setTab("calendario");window.scrollTo({top:0,behavior:"smooth"});}}/>}/>
           </section>}
           {tab==="roteiro"&&<section className="eixo-member-learn" aria-labelledby="eixo-member-learn-title">
             <div className="eixo-member-section-heading"><span>02 / SEU ROTEIRO</span><h2 id="eixo-member-learn-title">Sete dias para <em>se observar.</em></h2><p>Abra cada dia para ler as orientações e marque como concluído quando terminar.</p></div>
@@ -106,16 +108,17 @@ export default function EixoMembersPage(){
             {bonus?<article className="eixo-member-bonus-detail"><button className="eixo-member-back" onClick={()=>setSelectedBonus(null)}>← Voltar aos bônus</button><span className="eixo-member-kicker">BÔNUS {String(bonus.id).padStart(2,"0")} / 05 · {bonus.duration}</span><h3>{bonus.title}</h3><p className="eixo-member-bonus-intro">{bonus.subtitle}</p>{bonus.sections.map((part,i)=><section key={i} className="eixo-member-bonus-part"><h4>{part.title}</h4>{part.paragraphs.map((p,j)=><p key={j}>{p}</p>)}</section>)}<button className="eixo-member-primary" onClick={()=>setSelectedBonus(null)}>VER OS DEMAIS BÔNUS <span>↗</span></button></article>:
             <div className="eixo-member-bonus-grid">{data.bonuses.map(b=><button className="eixo-member-bonus-card" key={b.id} onClick={()=>openBonus(b.id)}><span className="eixo-member-bonus-numeral">{String(b.id).padStart(2,"0")}</span><span className="eixo-member-bonus-card-text"><small>BÔNUS INCLUÍDO · {b.duration}</small><strong>{b.title}</strong><span>{b.subtitle}</span><em>ABRIR MATERIAL <span>↗</span></em></span></button>)}</div>}
           </section>}
+          {tab==="calendario"&&<EixoMemberCalendar/>}
           {tab==="progresso"&&<section className="eixo-member-tracking" aria-labelledby="eixo-member-track-title">
             <div className="eixo-member-section-heading"><span>04 / ACOMPANHAMENTO</span><h2 id="eixo-member-track-title">Sua evolução <em>sem comparações.</em></h2><p>Seu progresso é registrado apenas quando você marca um dia concluído. Isso não mede desempenho sexual nem prevê resultados.</p></div>
             <div className="eixo-member-track-card"><div className="eixo-member-track-top"><strong>{completed.length} de 7 dias</strong><span>{percent}% concluído</span></div><div className="eixo-member-track-bar"><span style={{width:percent+"%"}}/></div><div className="eixo-member-track-days">{data.lessons.map(l=><button key={l.day} aria-label={`Abrir o dia ${l.day}`} onClick={()=>openLesson(l.day)} className={completed.includes(l.day)?"done":""}>{completed.includes(l.day)?"✓":l.day}</button>)}</div><p>Um dia concluído indica apenas que você leu ou realizou a atividade proposta.</p><button className="eixo-member-primary" onClick={()=>openLesson(currentDay)}>CONTINUAR MEU ROTEIRO <span>↗</span></button></div>
           </section>}
           {tab==="perfil"&&<section className="eixo-member-profile" aria-label="Editar meus dados">
-            <div className="eixo-member-section-heading"><span>06 / CONTA E PREFERÊNCIAS</span><h2>Meu perfil <em>privado.</em></h2><p>Você pode atualizar seus dados pessoais e o foco das orientações quando quiser. Informações de saúde ou intimidade não são solicitadas aqui.</p></div>
+            <div className="eixo-member-section-heading"><span>07 / CONTA E PREFERÊNCIAS</span><h2>Meu perfil <em>privado.</em></h2><p>Você pode atualizar seus dados pessoais e o foco das orientações quando quiser. Informações de saúde ou intimidade não são solicitadas aqui.</p></div>
             <MemberOnboarding initial={data.profile} onComplete={async()=>{await load();setTab("inicio");}}/>
           </section>}
         </div>
-        <aside className="eixo-member-privacy"><span>◈</span><p><strong>Seu espaço é privado.</strong> Os dias concluídos ficam na sua conta. O EIXO não salva aqui as respostas do questionário nem fornece diagnósticos ou promessas de resultados físicos.</p></aside>
+        <aside className="eixo-member-privacy"><span>◈</span><p><strong>Seu espaço é privado.</strong> Dias concluídos e registros do calendário ficam associados à sua conta com permissões individuais. Os registros íntimos são opcionais e podem ser excluídos. O EIXO não usa estes dados para diagnósticos.</p></aside>
         <footer className="eixo-member-footer"><span>© MÉTODO EIXO</span><span>{data.email}</span><span>Conteúdo educativo · Não substitui atendimento profissional</span></footer>
       </>}
   </main>;

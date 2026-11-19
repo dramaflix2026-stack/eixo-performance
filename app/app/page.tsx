@@ -13,6 +13,7 @@ import {EixoTraining} from "./member-training";
 import {EixoNutrition} from "./member-nutrition";
 import {EixoExperienceHub,EixoSos} from "./experience-hub";
 import {EixoContentExperience} from "./content-experience";
+import {EixoMemberHome} from "./member-home";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
@@ -97,12 +98,8 @@ export default function EixoMembersPage(){
           {NAV.map(([key,label,symbol])=><button key={key} type="button" className={tab===key?"active":""} onClick={()=>{setTab(key);setSelectedBonus(null);}} aria-current={tab===key?"page":undefined}><span aria-hidden="true">{symbol}</span> {label}</button>)}
         </nav>
         <div className="eixo-member-content">
-          {(tab==="inicio"||tab==="catalogo")&&<section className="eixo-member-home" aria-label="Biblioteca e jornada do Método EIXO">
-            <MemberCatalog firstName={data.profile.fullName.split(" ")[0]} goal={data.profile.primaryGoal}
-              completedDays={completed} lessons={data.lessons} bonuses={data.bonuses}
-              onOpenLesson={openLesson} onOpenBonus={openBonus}
-              checkinPreview={<EixoCalendarPreview openCalendar={()=>{setTab("calendario");window.scrollTo({top:0,behavior:"smooth"});}}/>}/>
-          </section>}
+          {tab==="inicio"&&<EixoMemberHome firstName={data.profile.fullName.split(" ")[0]} completedDays={completed} lessons={data.lessons} onExplore={()=>setTab("catalogo")} onJourney={openLesson} onCalendar={()=>setTab("calendario")} onTools={()=>setTab("ferramentas")}/>}
+          {tab==="catalogo"&&<section className="eixo-member-home" aria-label="Explorar biblioteca do Método EIXO"><MemberCatalog firstName={data.profile.fullName.split(" ")[0]} goal={data.profile.primaryGoal} completedDays={completed} lessons={data.lessons} bonuses={data.bonuses} onOpenLesson={openLesson} onOpenBonus={openBonus}/></section>}
           {tab==="roteiro"&&<section className="eixo-member-learn" aria-labelledby="eixo-member-learn-title">
             <div className="eixo-member-section-heading"><span>02 / SEU ROTEIRO</span><h2 id="eixo-member-learn-title">Sete dias para <em>se observar.</em></h2><p>Abra cada dia para ler as orientações e marque como concluído quando terminar.</p></div>
             <div className="eixo-member-learn-layout">

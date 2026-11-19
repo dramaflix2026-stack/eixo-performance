@@ -1,6 +1,6 @@
 "use client";
 
-import {useRef} from "react";
+import {useMemo,useRef,useState} from "react";
 import "./catalog.css";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string};
@@ -47,6 +47,11 @@ function Poster({cover,kicker,title,number,caption,completed,onClick}:{cover:Cov
 }
 export function MemberCatalog({firstName,goal,completedDays,lessons,bonuses,onOpenLesson,onOpenBonus,checkinPreview}:CatalogProps){
  const current=lessons.find(l=>!completedDays.includes(l.day))||lessons[6]||lessons[0];
+ const [query,setQuery]=useState("");
+ const [filter,setFilter]=useState<"todos"|"jornada"|"bonus"|"pendentes">("todos");
+ const normalized=query.trim().toLocaleLowerCase("pt-BR");
+ const visibleLessons=useMemo(()=>lessons.filter(l=>(filter!=="bonus")&&(filter!=="pendentes"||!completedDays.includes(l.day))&&(!normalized||(l.title+" "+l.phase).toLocaleLowerCase("pt-BR").includes(normalized))),[lessons,completedDays,filter,normalized]);
+ const visibleBonuses=useMemo(()=>bonuses.filter(b=>(filter==="todos"||filter==="bonus")&&(!normalized||(b.title+" "+b.subtitle).toLocaleLowerCase("pt-BR").includes(normalized))),[bonuses,filter,normalized]);
  const goalLabel:{[key:string]:string}={confianca:"confiança",presenca:"presença",dialogo:"conexão",rotina:"bem-estar"};
  return <section className="eixo-catalog" aria-label="Catálogo de conteúdos do Método EIXO">
   <div className="eixo-catalog-featured">
@@ -62,12 +67,19 @@ export function MemberCatalog({firstName,goal,completedDays,lessons,bonuses,onOp
   </div>
 
   {checkinPreview}
-  <Rail title="Sua jornada, um dia por vez" eyebrow="01 / CONTINUE ASSISTINDO E EXPLORANDO" description="Sete etapas com atividades práticas e reflexões.">
-   {lessons.map((l,i)=><Poster key={l.day} cover={lessonCovers[i]||lessonCovers[0]} kicker={"DIA "+String(l.day).padStart(2,"0")+" · "+l.estimatedMinutes+" MIN"} title={l.title} number={String(l.day).padStart(2,"0")+"/07"} caption={l.phase} completed={completedDays.includes(l.day)} onClick={()=>onOpenLesson(l.day)}/>)}
-  </Rail>
-  <Rail title="Materiais exclusivos" eyebrow="02 / BIBLIOTECA EIXO" description="Guias e exercícios complementares já disponíveis para você.">
-   {bonuses.map((b,i)=><Poster key={b.id} cover={bonusCovers[i]||bonusCovers[0]} kicker={b.duration} title={b.title} number={String(b.id).padStart(2,"0")+"/05"} caption={"BÔNUS "+b.id} onClick={()=>onOpenBonus(b.id)}/>)}
-  </Rail>
+  <section className="eixo-catalog-discovery" aria-label="Explorar biblioteca">
+    <div><span>EXPLORE A BIBLIOTECA</span><h3>Escolha seu próximo conteúdo.</h3><p>Capas verticais 9:16 com acesso direto aos materiais disponíveis.</p></div>
+    <label className="eixo-catalog-search"><span>BUSCAR CONTEÚDOS</span><input type="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Buscar por tema ou título..." aria-label="Buscar conteúdos"/></label>
+    <div className="eixo-catalog-filters" aria-label="Filtrar conteúdos">{([["todos","Tudo"],["jornada","Jornada"],["bonus","Materiais"],["pendentes","Não concluídos"]] as const).map(([id,label])=><button key={id} type="button" aria-pressed={filter===id} className={filter===id?"active":""} onClick={()=>setFilter(id)}>{label}</button>)}</div>
+    <span className="eixo-catalog-results" role="status">{visibleLessons.length+visibleBonuses.length} conteúdo(s) encontrado(s)</span>
+  </section>
+  {visibleLessons.length>0&&<Rail title="Sua jornada, um dia por vez" eyebrow="01 / CONTINUE ASSISTINDO E EXPLORANDO" description="Sete etapas com atividades práticas e reflexões.">
+   {visibleLessons.map(l=><Poster key={l.day} cover={lessonCovers[l.day-1]||lessonCovers[0]} kicker={"DIA "+String(l.day).padStart(2,"0")+" · "+l.estimatedMinutes+" MIN"} title={l.title} number={String(l.day).padStart(2,"0")+"/07"} caption={l.phase} completed={completedDays.includes(l.day)} onClick={()=>onOpenLesson(l.day)}/>)}
+  </Rail>}
+  {visibleBonuses.length>0&&<Rail title="Materiais exclusivos" eyebrow="02 / BIBLIOTECA EIXO" description="Guias e exercícios complementares já disponíveis para você.">
+   {visibleBonuses.map(b=><Poster key={b.id} cover={bonusCovers[b.id-1]||bonusCovers[0]} kicker={b.duration} title={b.title} number={String(b.id).padStart(2,"0")+"/05"} caption={"BÔNUS "+b.id} onClick={()=>onOpenBonus(b.id)}/>)}
+  </Rail>}
+  {visibleLessons.length+visibleBonuses.length===0&&<div className="eixo-catalog-empty">Nenhum conteúdo encontrado. Experimente outro termo ou selecione “Tudo”.</div>}
 
   <div className="eixo-catalog-media-note"><span className="eixo-catalog-media-note-icon">◉</span><div><strong>Biblioteca preparada para vídeo e áudio.</strong><p>As capas atualmente abrem as atividades e guias já existentes. Os players de vídeo/áudio serão vinculados a conteúdos próprios ou autorizados, sem apresentar aulas fictícias como se estivessem disponíveis.</p></div></div>
  </section>;

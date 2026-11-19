@@ -6,6 +6,7 @@ import "./app.css";
 import {MemberOnboarding,type MemberProfile} from "./member-onboarding";
 import {MemberCatalog} from "./member-catalog";
 import {EixoMemberCalendar,EixoCalendarPreview} from "./member-calendar";
+import {EixoJourney} from "./member-journey";
 
 type Lesson={day:number;phase:string;title:string;estimatedMinutes:number;intro:string;steps:{title:string;description:string}[];closing:string};
 type Bonus={id:number;title:string;subtitle:string;duration:string;sections:{title:string;paragraphs:string[]}[]};
@@ -109,10 +110,7 @@ export default function EixoMembersPage(){
             <div className="eixo-member-bonus-grid">{data.bonuses.map(b=><button className="eixo-member-bonus-card" key={b.id} onClick={()=>openBonus(b.id)}><span className="eixo-member-bonus-numeral">{String(b.id).padStart(2,"0")}</span><span className="eixo-member-bonus-card-text"><small>BÔNUS INCLUÍDO · {b.duration}</small><strong>{b.title}</strong><span>{b.subtitle}</span><em>ABRIR MATERIAL <span>↗</span></em></span></button>)}</div>}
           </section>}
           {tab==="calendario"&&<EixoMemberCalendar/>}
-          {tab==="progresso"&&<section className="eixo-member-tracking" aria-labelledby="eixo-member-track-title">
-            <div className="eixo-member-section-heading"><span>04 / ACOMPANHAMENTO</span><h2 id="eixo-member-track-title">Sua evolução <em>sem comparações.</em></h2><p>Seu progresso é registrado apenas quando você marca um dia concluído. Isso não mede desempenho sexual nem prevê resultados.</p></div>
-            <div className="eixo-member-track-card"><div className="eixo-member-track-top"><strong>{completed.length} de 7 dias</strong><span>{percent}% concluído</span></div><div className="eixo-member-track-bar"><span style={{width:percent+"%"}}/></div><div className="eixo-member-track-days">{data.lessons.map(l=><button key={l.day} aria-label={`Abrir o dia ${l.day}`} onClick={()=>openLesson(l.day)} className={completed.includes(l.day)?"done":""}>{completed.includes(l.day)?"✓":l.day}</button>)}</div><p>Um dia concluído indica apenas que você leu ou realizou a atividade proposta.</p><button className="eixo-member-primary" onClick={()=>openLesson(currentDay)}>CONTINUAR MEU ROTEIRO <span>↗</span></button></div>
-          </section>}
+          {tab==="progresso"&&<EixoJourney lessons={data.lessons} completedDays={completed} onOpenLesson={openLesson}/>}
           {tab==="perfil"&&<section className="eixo-member-profile" aria-label="Editar meus dados">
             <div className="eixo-member-section-heading"><span>07 / CONTA E PREFERÊNCIAS</span><h2>Meu perfil <em>privado.</em></h2><p>Você pode atualizar seus dados pessoais e o foco das orientações quando quiser. Informações de saúde ou intimidade não são solicitadas aqui.</p></div>
             <MemberOnboarding initial={data.profile} onComplete={async()=>{await load();setTab("inicio");}}/>
